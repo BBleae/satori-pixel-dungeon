@@ -110,6 +110,6 @@ public class Gold extends Item {
 
 	@Override
 	public int price() {
-		return 100 * quantity;
+		return 50 * quantity;
 	}
 }

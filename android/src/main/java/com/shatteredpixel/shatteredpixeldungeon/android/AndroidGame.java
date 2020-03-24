@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ public class AndroidGame extends AndroidApplication {
 	
 	private AndroidPlatformSupport support;
 	
+	@SuppressLint("SourceLockedOrientationActivity")
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

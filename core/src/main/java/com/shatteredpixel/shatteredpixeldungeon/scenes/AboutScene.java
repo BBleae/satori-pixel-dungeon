@@ -33,24 +33,23 @@ import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.PointerArea;
-import com.watabou.utils.DeviceCompat;
 
 public class AboutScene extends PixelScene {
 
+	private static final String TTL_SPD = "Satori's Pixel Dungeon v1.7.3.X";
+
+	private static final String TXT_SPD =
+			"Code & Graphics: Tomnycui\n" +
+					"Companion and Instructor: BBleae";
+
+	private static final String LNK_SPD = "https://gitee.com/satori-pixel-dungeon-team";
+
 	private static final String TTL_SHPX = "Shattered Pixel Dungeon";
 
-	private static final String TXT_SHPX =
-			"Design, Code, & Graphics: Evan";
+	private static final String TXT_SHPX = "Design, Code, & Graphics: Evan";
 
-	private static final String LNK_SHPX = "ShatteredPixel.com";
-
-	private static final String TTL_WATA = "Satori's Pixel Dungeon v1.7.3.X";
-
-	private static final String TXT_WATA =
-			"Code & Graphics: Tomnycui" +
-			"";
 	
-	private static final String LNK_WATA = "";
+	private static final String LNK_SHPX = "ShatteredPixel.com";;
 	
 	@Override
 	public void create() {
@@ -60,32 +59,32 @@ public class AboutScene extends PixelScene {
 		final float colTop = (Camera.main.height / 2) - (SPDSettings.landscape() ? 30 : 90);
 		final float wataOffset = SPDSettings.landscape() ? colWidth : 0;
 
-		Image shpx = Icons.SHPX.get();
-		shpx.x = (colWidth - shpx.width()) / 2;
-		shpx.y = colTop;
-		align(shpx);
-		add( shpx );
+		Image spd = Icons.WATA.get();
+		spd.x = (colWidth - spd.width()) / 2;
+		spd.y = colTop;
+		align(spd);
+		add( spd );
 
-		new Flare( 7, 64 ).color( 0x225511, true ).show( shpx, 0 ).angularSpeed = +20;
+		new Flare( 7, 64 ).color( 0x225511, true ).show( spd, 0 ).angularSpeed = +20;
 
-		RenderedTextBlock shpxtitle = renderTextBlock( TTL_SHPX, 8 );
+		RenderedTextBlock shpxtitle = renderTextBlock(TTL_SPD, 8 );
 		shpxtitle.hardlight( Window.SHPX_COLOR );
 		add( shpxtitle );
 
 		shpxtitle.setPos(
 				(colWidth - shpxtitle.width()) / 2,
-				shpx.y + shpx.height + 5
+				spd.y + spd.height + 5
 		);
 		align(shpxtitle);
 
-		RenderedTextBlock shpxtext = renderTextBlock( TXT_SHPX, 8 );
+		RenderedTextBlock shpxtext = renderTextBlock(TXT_SPD, 8 );
 		shpxtext.maxWidth((int)Math.min(colWidth, 120));
 		add( shpxtext );
 
 		shpxtext.setPos((colWidth - shpxtext.width()) / 2, shpxtitle.bottom() + 12);
 		align(shpxtext);
 
-		RenderedTextBlock shpxlink = renderTextBlock( LNK_SHPX, 8 );
+		RenderedTextBlock shpxlink = renderTextBlock(LNK_SPD, 8 );
 		shpxlink.maxWidth(shpxtext.maxWidth());
 		shpxlink.hardlight( Window.SHPX_COLOR );
 		add( shpxlink );
@@ -101,27 +100,27 @@ public class AboutScene extends PixelScene {
 		};
 		add( shpxhotArea );
 
-		Image wata = Icons.WATA.get();
-		wata.x = wataOffset + (colWidth - wata.width()) / 2;
-		wata.y = SPDSettings.landscape() ?
+		Image shpx = Icons.SHPX.get();
+		shpx.x = wataOffset + (colWidth - shpx.width()) / 2;
+		shpx.y = SPDSettings.landscape() ?
 						colTop:
-						shpxlink.top() + wata.height + 20;
-		align(wata);
-		add( wata );
+						shpxlink.top() + shpx.height + 20;
+		align(shpx);
+		add( shpx );
 
-		new Flare( 7, 64 ).color( 0x112233, true ).show( wata, 0 ).angularSpeed = +20;
+		new Flare( 7, 64 ).color( 0x112233, true ).show( shpx, 0 ).angularSpeed = +20;
 
-		RenderedTextBlock wataTitle = renderTextBlock( TTL_WATA, 8 );
+		RenderedTextBlock wataTitle = renderTextBlock(TTL_SHPX, 8 );
 		wataTitle.hardlight(Window.TITLE_COLOR);
 		add( wataTitle );
 
 		wataTitle.setPos(
 				wataOffset + (colWidth - wataTitle.width()) / 2,
-				wata.y + wata.height + 11
+				shpx.y + shpx.height + 11
 		);
 		align(wataTitle);
 
-		RenderedTextBlock wataText = renderTextBlock( TXT_WATA, 8 );
+		RenderedTextBlock wataText = renderTextBlock(TXT_SHPX, 8 );
 		wataText.maxWidth((int)Math.min(colWidth, 120));
 		wataText.setHightlighting(false); //underscore in cube_code
 		add( wataText );
@@ -129,7 +128,7 @@ public class AboutScene extends PixelScene {
 		wataText.setPos(wataOffset + (colWidth - wataText.width()) / 2, wataTitle.bottom() + 12);
 		align(wataText);
 		
-		RenderedTextBlock wataLink = renderTextBlock( LNK_WATA, 8 );
+		RenderedTextBlock wataLink = renderTextBlock(LNK_SHPX, 8 );
 		wataLink.maxWidth((int)Math.min(colWidth, 120));
 		wataLink.hardlight(Window.TITLE_COLOR);
 		add(wataLink);

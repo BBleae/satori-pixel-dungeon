@@ -30,7 +30,7 @@ public class DarkGold extends Item {
 		image = ItemSpriteSheet.ORE;
 		
 		stackable = true;
-		unique = true;
+		unique = false;
 	}
 	
 	@Override
@@ -41,5 +41,10 @@ public class DarkGold extends Item {
 	@Override
 	public boolean isIdentified() {
 		return true;
+	}
+
+	@Override
+	public int price() {
+		return 25*quantity;
 	}
 }
