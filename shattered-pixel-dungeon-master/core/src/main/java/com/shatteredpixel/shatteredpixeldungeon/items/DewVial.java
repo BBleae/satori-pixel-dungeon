@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class DewVial extends Item {
 
-	private static final int MAX_VOLUME	= 20;
+	private static final int MAX_VOLUME	= 40;
 
 	private static final String AC_DRINK	= "DRINK";
 
@@ -130,6 +130,10 @@ public class DewVial extends Item {
 	@Override
 	public boolean isIdentified() {
 		return true;
+	}
+
+	public boolean isEnough() {
+		return volume >= 20;
 	}
 
 	public boolean isFull() {
