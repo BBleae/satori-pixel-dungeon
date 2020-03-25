@@ -101,7 +101,7 @@ public class Potion extends Item {
 			PotionOfPurity.class,
 			PotionOfInvisibility.class,
 			PotionOfHaste.class,
-			PotionOfFrost.class
+			PotionOfFrost.class,
 	};
 
 	private static final HashMap<String, Integer> colors = new HashMap<String, Integer>() {

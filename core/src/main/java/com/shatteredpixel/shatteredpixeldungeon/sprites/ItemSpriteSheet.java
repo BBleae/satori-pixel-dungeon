@@ -659,6 +659,12 @@ public class ItemSpriteSheet {
 		assignItemRect(SHARD,    8, 10);
 	}
 
+	private static final int Reagent = 										xy(1, 30);  //1 slot
+	public static final int REAGENTOFPELLOUXITE	= Reagent + 0;
+	static {
+		assignItemRect(REAGENTOFPELLOUXITE,		16,	16);
+	}
+
 	private static final int BAGS       =                                   xy(1, 31);  //16 slots
 	public static final int VIAL        = BAGS+0;
 	public static final int POUCH       = BAGS+1;
