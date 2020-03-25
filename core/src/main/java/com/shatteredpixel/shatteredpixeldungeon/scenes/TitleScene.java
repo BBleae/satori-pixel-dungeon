@@ -46,7 +46,7 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.utils.DeviceCompat;
 
 public class TitleScene extends PixelScene {
-	public final static String gameversion = "1.3.7.X";
+	public final static String gameversion = "1.7.3.X";
 	
 	@Override
 	public void create() {

@@ -72,7 +72,7 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"修复了部分文本错误~\n_-_恢复了蓄血圣杯的伤害显示。\n_-_删除了过重护甲的错误显示信息。\n_-_删除了过重武器的错误显示信息。\n_-_增加了魔法少女服的文本显示。\n_-_提升了露水瓶的容量上限。"));
+				"修复了部分文本错误~\n_-_恢复了蓄血圣杯的伤害显示。\n_-_删除了过重护甲的错误显示信息。\n_-_删除了过重武器的错误显示信息。\n_-_增加了魔法少女服的文本显示。\n_-_提升了露水瓶的容量上限。\n_-_修正了露水瓶的祝福用量。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 0, 12, 11), "恋恋强化",
 				"_-_恋恋开局的石子增加到了4个，恋恋的刀现在可无视boss层发动传送。\n_-_恋恋的核动力特甲造成的麻痹时间增加到5回合。"));
