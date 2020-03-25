@@ -66,7 +66,7 @@ public class WornShortsword extends Weapon {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		actions.add(AC_EQUIP);
+		//actions.add(AC_EQUIP);
 		actions.add(AC_TP);
 		return actions;
 	}
