@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
@@ -146,6 +147,7 @@ public enum HeroClass {
 		stones.quantity(4).collect();
 		Dungeon.quickslot.setSlot(0, stones);
 
+		//new ChaliceOfBlood().identify().collect();
 
 		//Ankh ak;
 		//for(int i=0;i<4;i++) {ak = new Ankh();ak.blessed=true;ak.collect();}

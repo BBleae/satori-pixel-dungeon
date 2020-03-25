@@ -86,8 +86,11 @@ public class ChaliceOfBlood extends Artifact {
 		}
 	}
 	private int countdmg(Hero hero) {
-		int damage = 3*(level()*level());
+		return 3*(level()*level());
+	}
 
+	private void prick(Hero hero){
+		int damage = countdmg( hero );
 		Earthroot.Armor armor = hero.buff(Earthroot.Armor.class);
 		if (armor != null) {
 			damage = armor.absorb(damage);
@@ -97,12 +100,6 @@ public class ChaliceOfBlood extends Artifact {
 		if (rockArmor != null) {
 			damage = rockArmor.absorb(damage);
 		}
-		return damage;
-	}
-
-	private void prick(Hero hero){
-		int damage = countdmg( hero );
-
 		damage -= hero.drRoll();
 
 		hero.sprite.operate( hero.pos );
@@ -157,10 +154,10 @@ public class ChaliceOfBlood extends Artifact {
 		String desc;
 
 		if (level() < levelCap){
-			desc = Messages.get(this,"desc",curUser.buff(Regeneration.class).getregendelay(),countdmg(Dungeon.hero));
+			desc = Messages.get(this,"desc",countdmg(curUser));
 		}
 		else {
-			desc = Messages.get(this,"desc_maxlvl",curUser.buff(Regeneration.class).getregendelay());
+			desc = Messages.get(this,"desc_maxlvl");
 		}
 
 		if (isEquipped (Dungeon.hero)){

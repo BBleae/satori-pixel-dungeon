@@ -40,7 +40,8 @@ public class AboutScene extends PixelScene {
 
 	private static final String TXT_SPD =
 			"Code & Graphics: Tomnycui\n" +
-					"Companion & Instructor: BBleae";
+			"Companion & Instructor: BBleae\n" +
+			"Graphics: 万里 & Missing Power";
 
 	private static final String LNK_SPD = "https://gitee.com/\nsatori-pixel-dungeon-team";
 

@@ -67,12 +67,23 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.4", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_修复了部分文本错误~\n"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
+				"_-_改回了jar+apk双签名方法。\n_-_修复了蓄血圣杯的致命性错误。" ));
+
+
 		changes = new ChangeInfo("SPD v1.7.3.3", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"修复了部分文本错误~\n_-_恢复了蓄血圣杯的伤害显示。\n_-_删除了过重护甲的错误显示信息。\n_-_删除了过重武器的错误显示信息。\n_-_增加了魔法少女服的文本显示。\n_-_提升了露水瓶的容量上限。\n_-_修正了露水瓶的祝福用量。"));
+				"修复了部分文本错误~\n_-_恢复了蓄血圣杯的伤害显示。\n_-_删除了过重护甲的错误显示信息。\n_-_删除了过重武器的错误显示信息。\n_-_增加了魔法少女服的文本显示。\n_-_提升了露水瓶的容量上限。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 0, 12, 11), "恋恋强化",
 				"_-_恋恋开局的石子增加到了4个，恋恋的刀现在可无视boss层发动传送。\n_-_恋恋的核动力特甲造成的麻痹时间增加到5回合。"));
@@ -84,7 +95,7 @@ public class v0_7_X_Changes {
 				"芙兰朵露的最终护甲：魔法少女服的吸血能力加强了。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
-				"_-_改用了旧版签名方法，以支持更多版本的Android系统。\n_-_修复了26层的错误。" ));
+				"_-_改用了旧版签名方法，以支持更多版本的Android系统。\n_-_修复了26层的错误。\n_-_修正了露水瓶的祝福用量。" ));
 
 		changes = new ChangeInfo("SPD v1.7.3.2", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
