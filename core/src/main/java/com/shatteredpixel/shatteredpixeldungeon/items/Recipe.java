@@ -168,7 +168,8 @@ public abstract class Recipe {
 	private static Recipe[] oneIngredientRecipes = new Recipe[]{
 		new AlchemistsToolkit.upgradeKit(),
 		new Scroll.ScrollToStone(),
-		new StewedMeat.oneMeat()
+		new StewedMeat.oneMeat(),
+		new DewVial.fill()
 	};
 	
 	private static Recipe[] twoIngredientRecipes = new Recipe[]{

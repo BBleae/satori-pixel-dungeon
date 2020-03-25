@@ -24,7 +24,9 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -164,9 +166,51 @@ public class DewVial extends Item {
 		updateQuickslot();
 	}
 
+	public void absorbEnergy( int energy ){
+		if (energy + volume < MAX_VOLUME) volume += energy;
+		else volume = MAX_VOLUME;
+		updateQuickslot();
+	}
+
 	@Override
 	public String status() {
 		return Messages.format( TXT_STATUS, volume, MAX_VOLUME );
+	}
+
+	public static class fill extends Recipe {
+
+		@Override
+		public boolean testIngredients(ArrayList<Item> ingredients) {
+			return ingredients.get(0) instanceof DewVial;
+		}
+
+		private static int lastCost;
+
+		@Override
+		public int cost(ArrayList<Item> ingredients) {
+			return lastCost = Math.max(1, AlchemyScene.availableEnergy());
+		}
+
+		@Override
+		public Item brew(ArrayList<Item> ingredients) {
+			DewVial existing = (DewVial) ingredients.get(0);
+
+			existing.absorbEnergy(lastCost);
+
+			return existing;
+		}
+
+		@Override
+		public Item sampleOutput(ArrayList<Item> ingredients) {
+			DewVial sample = new DewVial();
+			//sample.identify();
+
+			DewVial existing = (DewVial) ingredients.get(0);
+
+			sample.volume = existing.volume;
+			sample.absorbEnergy(AlchemyScene.availableEnergy());
+			return sample;
+		}
 	}
 
 }

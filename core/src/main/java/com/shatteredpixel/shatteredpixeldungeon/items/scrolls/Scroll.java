@@ -306,13 +306,13 @@ public abstract class Scroll extends Item {
 			amnts.put(ScrollOfMirrorImage.class,    3);
 			
 			stones.put(ScrollOfRetribution.class,   StoneOfBlast.class);
-			amnts.put(ScrollOfRetribution.class,    2);
+			amnts.put(ScrollOfRetribution.class,    3);
 			
 			stones.put(ScrollOfRage.class,          StoneOfAggression.class);
 			amnts.put(ScrollOfRage.class,           3);
 			
 			stones.put(ScrollOfRecharging.class,    StoneOfShock.class);
-			amnts.put(ScrollOfRecharging.class,     1);
+			amnts.put(ScrollOfRecharging.class,     3);
 			
 			stones.put(ScrollOfRemoveCurse.class,   StoneOfDisarming.class);
 			amnts.put(ScrollOfRemoveCurse.class,    3);
@@ -324,10 +324,10 @@ public abstract class Scroll extends Item {
 			amnts.put(ScrollOfTerror.class,         3);
 			
 			stones.put(ScrollOfTransmutation.class, StoneOfAugmentation.class);
-			amnts.put(ScrollOfTransmutation.class,  2);
+			amnts.put(ScrollOfTransmutation.class,  3);
 			
 			stones.put(ScrollOfUpgrade.class,       StoneOfEnchantment.class);
-			amnts.put(ScrollOfUpgrade.class,        1);
+			amnts.put(ScrollOfUpgrade.class,        3);
 		}
 		
 		@Override

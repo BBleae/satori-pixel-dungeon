@@ -72,10 +72,10 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_修复了部分文本错误~\n"));
+				"_-_修复了部分文本错误~\n将各个卷轴的符石拆解所得数量调为3"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
-				"_-_改回了jar+apk双签名方法。\n_-_修复了蓄血圣杯的致命性错误。" ));
+				"_-_改回了jar+apk双签名方法。\n_-_修复了蓄血圣杯的致命性错误。\n_-_芙兰朵露不会再被水汽伤到。" ));
 
 
 		changes = new ChangeInfo("SPD v1.7.3.3", false, null);

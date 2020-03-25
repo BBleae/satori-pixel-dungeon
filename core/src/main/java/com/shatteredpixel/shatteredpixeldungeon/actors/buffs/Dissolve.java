@@ -60,8 +60,11 @@ public class Dissolve extends FlavourBuff implements Hero.Doom{
 	@Override
 	public boolean act() {
 		if (target.isAlive() && target == Dungeon.hero){
-			if (Dungeon.level.map[target.pos] == Terrain.WATER)
-				if ( Dungeon.hero.heroClass == HeroClass.MAHOU_SHOUJO) target.damage(1,this);
+			if (Dungeon.level.map[target.pos] == Terrain.WATER && target.buff(Levitation.class) == null)
+				if ( Dungeon.hero.heroClass == HeroClass.MAHOU_SHOUJO) {
+					target.sprite.showStatus(CharSprite.NEGATIVE,this.toString());
+					target.damage(1,this);
+				}
 			spend( TICK );
 		}
 		else {
