@@ -67,6 +67,16 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.5", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_修复了部分文本错误~"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 144, 0, 16, 16),"芙兰强化",
+				"_-_芙兰朵露开局50瓶生石灰。" ));
+
 		changes = new ChangeInfo("SPD v1.7.3.4", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
