@@ -122,6 +122,13 @@ public class DewVial extends Item {
 
 	public void empty() {volume = 0; updateQuickslot();}
 
+	public void empty( int cost ){
+		if ( cost < volume) volume -= cost;
+		else volume = 0;
+
+		updateQuickslot();
+	}
+
 	@Override
 	public boolean isUpgradable() {
 		return false;

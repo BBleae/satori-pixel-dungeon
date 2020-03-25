@@ -77,7 +77,7 @@ public class Ankh extends Item {
 			DewVial vial = hero.belongings.getItem(DewVial.class);
 			if (vial != null){
 				blessed = true;
-				vial.empty();
+				vial.empty( 20 );
 				GLog.p( Messages.get(this, "bless") );
 				hero.spend( 1f );
 				hero.busy();
