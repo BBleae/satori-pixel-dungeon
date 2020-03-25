@@ -42,11 +42,15 @@ public class ThrowingKnife extends MissileWeapon {
 		tier = 1;
 		baseUses = 1;
 	}
+
+	@Override
+	public int min(int lvl) {
+		return 0;
+	}
 	
 	@Override
 	public int max(int lvl) {
-		return  6 * tier +                      //6 base, up from 5
-				(tier == 1 ? 2*lvl : tier*lvl); //scaling unchanged
+		return 0;
 	}
 	
 	private Char enemy;
@@ -71,25 +75,17 @@ public class ThrowingKnife extends MissileWeapon {
 		this.quantity(1).collect();
 		//super.onThrow(cell);
 	}
+
+	@Override
+	public String info() {
+
+		String info = desc();
+
+		return info;
+	}
 	
 	@Override
 	public int damageRoll(Char owner) {
-		if (owner instanceof Hero) {
-			Hero hero = (Hero)owner;
-
-			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-				//deals 75% toward max to max on surprise, instead of min to max.
-				int diff = max() - min();
-				int damage = augment.damageFactor(Random.NormalIntRange(
-						min() + Math.round(diff*0.75f),
-						max()));
-				int exStr = hero.STR() - STRReq();
-				if (exStr > 0) {
-					damage += Random.IntRange(0, exStr);
-				}
-				return damage;
-			}
-		}
-		return super.damageRoll(owner);
+		return 0;
 	}
 }
