@@ -30,7 +30,7 @@ import com.watabou.utils.Random;
 public abstract class NPC extends Mob {
 
 	{
-		HP = HT = 1;
+		HP = HT = 999;
 		EXP = 0;
 
 		alignment = Alignment.NEUTRAL;
