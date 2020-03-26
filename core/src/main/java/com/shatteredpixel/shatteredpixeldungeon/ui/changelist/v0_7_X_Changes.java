@@ -72,10 +72,13 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_修复了部分文本错误~"));
+				"_-_修复了部分文本错误~\n_-_在生命条下方增加了灵力条。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 144, 0, 16, 16),"芙兰强化",
-				"_-_芙兰朵露开局50瓶生石灰。" ));
+		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 16, 16),"芙兰强化",
+				"_-_芙兰朵露开局25瓶生石灰。" ));
+
+		changes.addButton( new ChangeButton(new Image(Assets.ROGUE,12,0,16,16),"紫削弱",
+				"_-_紫开局力量下调两点。"));
 
 		changes = new ChangeInfo("SPD v1.7.3.4", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
@@ -95,13 +98,13 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"修复了部分文本错误~\n_-_恢复了蓄血圣杯的伤害显示。\n_-_删除了过重护甲的错误显示信息。\n_-_删除了过重武器的错误显示信息。\n_-_增加了魔法少女服的文本显示。\n_-_提升了露水瓶的容量上限。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 0, 12, 11), "恋恋强化",
+		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 0, 16, 16), "恋恋强化",
 				"_-_恋恋开局的石子增加到了4个，恋恋的刀现在可无视boss层发动传送。\n_-_恋恋的核动力特甲造成的麻痹时间增加到5回合。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12, 0, 12, 11), "紫强化",
+		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12, 0, 16, 16), "紫强化",
 				"紫的最终护甲：护身隙间的能力强化了，现在其特殊技能的距离限制增加到100格，且其技能对敌怪加的buff更为强力。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 11), "芙兰强化",
+		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 16, 16), "芙兰强化",
 				"芙兰朵露的最终护甲：魔法少女服的吸血能力加强了。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
@@ -111,13 +114,13 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
-		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 11), "魔法少女正式加入",
+		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 16, 16), "魔法少女正式加入",
 				"这下算是正式写完了芙兰朵露。芙兰朵露的定位是一个前期弱而后期强的角色。\n目前在正式版本解锁芙兰朵露的条件是在一次游戏中使用四次祝福过的复活十字架。\n真是非常挑战性的条件呢~"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12,0,12,11),"八云紫的空间碎片",
+		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12,0,16,16),"八云紫的空间碎片",
 				"将八云紫的\"路牌\"改成了\"空间碎片\"，现在投掷不会消耗了，并用牺牲了攻击力的代价加入了非常厉害的传送能力。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12,0,12,11),"八云紫的空间碎片",
+		changes.addButton( new ChangeButton(new Image(Assets.ROGUE, 12,0,16,16),"八云紫的空间碎片",
 				"给八云紫的\"护身隙间\"加入了使用灵力充能的功能。消耗10灵力"));
 
 		changes = new ChangeInfo("SPD v1.7.3.1", false, null);
@@ -127,7 +130,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"完成了这个更新列表的改造喵~"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12,0,12,11),"恋恋削弱啦！",
+		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12,0,16,16),"恋恋削弱啦！",
 				"恋恋的刀现在的攻击力和等级是二次关系，不是指数关系了"));
 	}
 	

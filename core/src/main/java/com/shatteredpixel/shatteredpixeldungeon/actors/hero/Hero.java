@@ -227,6 +227,7 @@ public class Hero extends Char {
 		
 		HP = HT = 20;
 		STR = STARTING_STR;
+		if (heroClass == HeroClass.ROGUE) STR -= 2;
 		
 		belongings = new Belongings( this );
 		
