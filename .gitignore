@@ -25,4 +25,8 @@ journal.dat
 badges.dat
 bones.dat
 rankings.dat
+
+#compiled binary
+/core/bin/
+/SPD-classes/bin/
 /desktop/bin/
