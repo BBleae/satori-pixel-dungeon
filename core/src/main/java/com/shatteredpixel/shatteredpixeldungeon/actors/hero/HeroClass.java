@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfHumor;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
@@ -223,6 +224,7 @@ public enum HeroClass {
         (hero.belongings.weapon = staff).identify();
         hero.belongings.weapon.upgrade(0);
         hero.belongings.weapon.activate(hero);
+        //new WandOfLightning().identify().collect();
 
         Dungeon.quickslot.setSlot(0, staff);
 
@@ -233,7 +235,7 @@ public enum HeroClass {
         new PotionOfHealing().identify();
         //new WandOfMagicMissile().upgrade(3).identify().collect();
 		//new TomeOfMastery().collect();
-		new ReagentOfPellouxite().quantity(50).collect();
+		new ReagentOfPellouxite().quantity(25).collect();
     }
 	
 	public String title() {

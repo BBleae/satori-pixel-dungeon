@@ -60,6 +60,7 @@ import java.util.ArrayList;
 public abstract class Wand extends Item {
 
 	public static final String AC_ZAP	= "ZAP";
+	public static final String AC_CHARGE = "CHARGE";
 
 	private static final float TIME_TO_ZAP	= 1f;
 	
@@ -92,7 +93,9 @@ public abstract class Wand extends Item {
 		if (curCharges > 0 || !curChargeKnown) {
 			actions.add( AC_ZAP );
 		}
-
+		if (curCharges < maxCharges && hero.heroClass == HeroClass.MAHOU_SHOUJO) {
+			actions.add( AC_CHARGE );
+		}
 		return actions;
 	}
 	
@@ -102,11 +105,14 @@ public abstract class Wand extends Item {
 		super.execute( hero, action );
 
 		if (action.equals( AC_ZAP )) {
-			//if (hero.heroClass!=HeroClass.MAHOU_SHOUJO){
-				curUser = hero;
-				curItem = this;
-				GameScene.selectCell( zapper );
-			//}
+			curUser = hero;
+			curItem = this;
+			GameScene.selectCell( zapper );
+		}
+		else if (action.equals( AC_CHARGE )) {
+			curUser = hero;
+			curItem = this;
+			ForceCharge(hero);
 		}
 	}
 	
@@ -114,6 +120,24 @@ public abstract class Wand extends Item {
 
 	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
 	public abstract void onHit( MahoStaff staff, Char attacker, Char defender, int damage);
+
+	public void ForceCharge(Hero owner) {
+		if (owner.mana >= manaRequirement){
+			if (owner.subClass == HeroSubClass.DEVIL){
+				GLog.w(Messages.get(this,"use_mana"));
+				gainCharge(2);
+				owner.mana -= manaRequirement;
+			}
+			else {
+				GLog.w(Messages.get(this,"use_mana"));
+				gainCharge(1);
+				owner.mana -= manaRequirement;
+			}
+		}
+		else {
+			GLog.w( Messages.get(this, "not_enough_mana"),owner.mana,owner.getMaxmana(),manaRequirement);
+		}
+	}
 
 	public boolean tryToZap( Hero owner, int target ){
 
@@ -124,26 +148,6 @@ public abstract class Wand extends Item {
 
 		if ( curCharges >= (cursed ? 1 : chargesPerCast())){
 			return true;
-		}
-		else if (owner.heroClass == HeroClass.MAHOU_SHOUJO) {
-			if (owner.mana >= manaRequirement){
-				if (owner.subClass == HeroSubClass.DEVIL){
-					GLog.w(Messages.get(this,"use_mana"));
-					gainCharge(2);
-					owner.mana -= manaRequirement;
-					return false;
-				}
-				else {
-					GLog.w(Messages.get(this,"use_mana"));
-					gainCharge(1);
-					owner.mana -= manaRequirement;
-					return false;
-				}
-			}
-			else {
-				GLog.w( Messages.get(this, "not_enough_mana"),owner.mana,owner.getMaxmana(),manaRequirement);
-				return false;
-			}
 		}
 		else {
 			GLog.w(Messages.get(this, "fizzles"));

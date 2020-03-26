@@ -345,7 +345,7 @@ public class WndStartGame extends Window {
 							break;
 						case MAHOU_SHOUJO:
 							heroItem.icon(new ItemSprite(ItemSpriteSheet.MAGES_STAFF,null));
-							heroLoadout.icon(new ItemSprite(ItemSpriteSheet.HOLDER, null));
+							heroLoadout.icon(new ItemSprite(ItemSpriteSheet.REAGENTOFPELLOUXITE, null));
 							heroMisc.icon(new ItemSprite(ItemSpriteSheet.WAND_DISINTEGRATION, null));
 							break;
 					}

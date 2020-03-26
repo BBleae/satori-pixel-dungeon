@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -59,6 +60,7 @@ public class MahoStaff extends MeleeWeapon {
 
 	public static final String AC_IMBUE = "IMBUE";
 	public static final String AC_ZAP	= "ZAP";
+	public static final String AC_CHARGE = "CHARGE";
 
 	private static final float STAFF_SCALE_FACTOR = 0.75f;
 
@@ -107,6 +109,9 @@ public class MahoStaff extends MeleeWeapon {
 		if (wand!= null && wand.curCharges > 0) {
 			actions.add( AC_ZAP );
 		}
+		if (wand.curCharges < wand.maxCharges && hero.heroClass == HeroClass.MAHOU_SHOUJO) {
+			actions.add( AC_CHARGE );
+		}
 		return actions;
 	}
 
@@ -135,6 +140,11 @@ public class MahoStaff extends MeleeWeapon {
 			if (cursed || hasCurseEnchant()) wand.cursed = true;
 			else                             wand.cursed = false;
 			wand.execute(hero, AC_ZAP);
+		}
+		else if (action.equals( AC_CHARGE )) {
+			curUser = hero;
+			curItem = this;
+			wand.ForceCharge(hero);
 		}
 	}
 
