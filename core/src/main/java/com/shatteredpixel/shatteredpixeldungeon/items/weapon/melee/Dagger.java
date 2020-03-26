@@ -38,9 +38,16 @@ public class Dagger extends MeleeWeapon {
 	}
 
 	@Override
+	public int STRReq(int lvl){
+		lvl = Math.max(0, lvl);
+		//strength req decreases at +1,+3,+6,+10,etc.
+		return (6 + tier * 2) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
+	}
+
+	@Override
 	public int max(int lvl) {
 		return  4*(tier+1) +    //8 base, down from 10
-				lvl*(tier+1);   //scaling unchanged
+				lvl*(tier+3);   //scaling changed
 	}
 	
 	@Override

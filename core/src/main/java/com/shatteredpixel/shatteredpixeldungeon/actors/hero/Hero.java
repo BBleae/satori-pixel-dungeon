@@ -227,7 +227,6 @@ public class Hero extends Char {
 		
 		HP = HT = 20;
 		STR = STARTING_STR;
-		if (heroClass == HeroClass.ROGUE) STR -= 2;
 		
 		belongings = new Belongings( this );
 		
@@ -255,6 +254,7 @@ public class Hero extends Char {
 		int STR = this.STR;
 
 		STR += RingOfMight.strengthBonus( this );
+		STR -= heroClass == HeroClass.ROGUE ? 2 : 0;
 		
 		AdrenalineSurge buff = buff(AdrenalineSurge.class);
 		if (buff != null){

@@ -39,7 +39,7 @@ public class ThrowingKnife extends MissileWeapon {
 		image = ItemSpriteSheet.THROWING_KNIFE;
 		
 		bones = false;
-		tier = 1;
+		tier = 0;
 		baseUses = 1;
 	}
 

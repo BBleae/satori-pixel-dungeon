@@ -78,7 +78,7 @@ public class v0_7_X_Changes {
 				"_-_芙兰朵露开局25瓶生石灰。" ));
 
 		changes.addButton( new ChangeButton(new Image(Assets.ROGUE,12,0,16,16),"紫削弱",
-				"_-_紫开局力量下调两点。"));
+				"_-_紫开局力量下调两点,但折扇的初始力量需求同样下调两点。"));
 
 		changes = new ChangeInfo("SPD v1.7.3.4", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
