@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -140,6 +141,27 @@ public class TitleScene extends PixelScene {
 					*/
 				};
 				parent.add(wnd);
+			}
+			@Override
+			protected boolean onLongClick() {
+				//making it easier to start runs quickly while debugging
+				if (!Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE)) {
+					Badges.displayBadge(Badges.Badge.UNLOCK_ROGUE);
+					return true;
+				}
+				if (!Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS)) {
+					Badges.displayBadge(Badges.Badge.UNLOCK_HUNTRESS);
+					return true;
+				}
+				if (!Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE)) {
+					Badges.displayBadge(Badges.Badge.UNLOCK_MAGE);
+					return true;
+				}
+				if (!Badges.isUnlocked(Badges.Badge.UNLOCK_MAHO_SHOUJO)) {
+					Badges.displayBadge(Badges.Badge.UNLOCK_MAHO_SHOUJO);
+					return true;
+				}
+				return super.onLongClick();
 			}
 		};
 		btnSupport.icon(Icons.get(Icons.GOLD));
