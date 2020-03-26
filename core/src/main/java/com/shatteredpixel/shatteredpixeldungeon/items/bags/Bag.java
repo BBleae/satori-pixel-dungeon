@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
