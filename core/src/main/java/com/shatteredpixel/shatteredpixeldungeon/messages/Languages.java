@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.messages;
 import java.util.Locale;
 
 public enum Languages {
-	ENGLISH("english",      "",   Status.REVIEWED,   null, null),
+	//ENGLISH("english",      "",   Status.REVIEWED,   null, null),
 	
 	//KOREAN("한국어",         "ko", Status.UNREVIEWED, new String[]{"Flameblast12", "GameConqueror", "Korean2017"}, new String[]{"Cocoa", "WondarRabb1t", "ddojin0115", "eeeei", "hancyel", "linterpreteur", "lsiebnie" }),
 	//RUSSIAN("русский",      "ru", Status.UNREVIEWED, new String[]{"ConsideredHamster", "Inevielle", "yarikonline"}, new String[]{"AttHawk46", "BlueberryShortcake", "HerrGotlieb", "HoloTheWise", "Ilbko", "JleHuBbluKoT", "MrXantar", "Raymundo", "Shamahan", "apxwn", "kirusyaga", "perefrazz", "roman.yagodin", "un_logic", "Вoвa"}),
@@ -43,7 +43,7 @@ public enum Languages {
 	//CATALAN("català",       "ca", Status.INCOMPLETE, new String[]{"Illyatwo2"}, new String[]{"n1ngu"}),
 	//BASQUE("euskara",       "eu", Status.REVIEWED,   new String[]{"Deathrevenge", "Osoitz"}, null),
 	//ESPERANTO("esperanto",  "eo", Status.UNREVIEWED, new String[]{"Verdulo"}, new String[]{"Raizin"}),
-	CHINESE("中文",          "zh", Status.UNREVIEWED, new String[]{"Jinkeloid(zdx00793)"}, new String[]{"931451545", "HoofBumpBlurryface", "Lery", "Lyn_0401", "ShatteredFlameBlast", "endlesssolitude", "hmdzl001", "tempest102"});
+	CHINESE("中文",          "zh", Status.REVIEWED, null, null);
 
 
 	public enum Status{
@@ -98,7 +98,7 @@ public enum Languages {
 			if (lang.code().equals(code))
 				return lang;
 		}
-		return ENGLISH;
+		return CHINESE;
 	}
 
 }
