@@ -152,6 +152,9 @@ public class MagesStaff extends MeleeWeapon {
 			}
 			else {
 				curUser = hero;
+				hero.spend(1f);
+				hero.busy();
+				hero.sprite.operate(hero.pos);
 				GameScene.show( new WndChooseCurseLevel(this, curselevel) );
 			}
 		}

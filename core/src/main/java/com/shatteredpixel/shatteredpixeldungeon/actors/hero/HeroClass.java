@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.SmallRation;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
@@ -153,7 +154,8 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, stones);
 
 		//new ChaliceOfBlood().identify().collect();
-
+		//new PotionOfExperience().quantity(3).identify().collect();
+		//new TomeOfMastery().collect();
 		//Ankh ak;
 		//for(int i=0;i<4;i++) {ak = new Ankh();ak.blessed=true;ak.collect();}
 

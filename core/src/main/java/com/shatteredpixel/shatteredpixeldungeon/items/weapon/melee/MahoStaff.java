@@ -144,6 +144,9 @@ public class MahoStaff extends MeleeWeapon {
 		else if (action.equals( AC_CHARGE )) {
 			curUser = hero;
 			curItem = this;
+			hero.spend(1f);
+			hero.busy();
+			hero.sprite.operate(hero.pos);
 			wand.ForceCharge(hero);
 		}
 	}
