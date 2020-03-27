@@ -1617,8 +1617,9 @@ public class Hero extends Char {
 
 		if (subClass == HeroSubClass.DEVIL){
 			if (hit) {
-				Buff.affect(this,Healing.class).setHeal( (int)(lastdamage*0.5f),1,0);
+				Buff.affect(this,Healing.class).setHeal( (int)(lastdamage*0.4f),1,0);
 				Buff.affect( enemy, Bleeding.class ).set(lastdamage * 0.1f);
+				Buff.affect(this, Hunger.class).satisfy(lastdamage*0.4f);
 			}
 		}
 		
