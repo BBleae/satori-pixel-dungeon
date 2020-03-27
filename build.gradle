@@ -11,11 +11,11 @@ buildscript {
 allprojects {
 
     ext {
-        appName = 'Shattered Pixel Dungeon'
-        appPackageName = 'com.shatteredpixel.shatteredpixeldungeon'
+        appName = 'Satori\'s Pixel Dungeon'
+        appPackageName = 'com.satorispixeldungeonteam.satorispixeldungeon'
 
         appVersionCode = 382
-        appVersionName = '0.7.5e'
+        appVersionName = '1.7.3.x'
 
         appAndroidCompileSDK = 29
         appAndroidMinSDK = 9
