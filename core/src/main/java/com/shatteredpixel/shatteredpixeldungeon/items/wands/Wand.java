@@ -415,6 +415,7 @@ public abstract class Wand extends Item {
 	private static final String CUR_CHARGE_KNOWN    = "curChargeKnown";
 	private static final String PARTIALCHARGE       = "partialCharge";
 	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
+	private static final String CURSE_LEVEL			= "curselevel";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -425,6 +426,7 @@ public abstract class Wand extends Item {
 		bundle.put( CUR_CHARGE_KNOWN, curChargeKnown );
 		bundle.put( PARTIALCHARGE , partialCharge );
 		bundle.put(CURSE_INFUSION_BONUS, curseInfusionBonus );
+		bundle.put(CURSE_LEVEL, curselevel);
 	}
 	
 	@Override
@@ -442,6 +444,7 @@ public abstract class Wand extends Item {
 		curChargeKnown = bundle.getBoolean( CUR_CHARGE_KNOWN );
 		partialCharge = bundle.getFloat( PARTIALCHARGE );
 		curseInfusionBonus = bundle.getBoolean(CURSE_INFUSION_BONUS);
+		curselevel = bundle.getInt(CURSE_LEVEL);
 	}
 	
 	@Override

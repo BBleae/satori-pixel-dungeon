@@ -47,15 +47,19 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.CursingTrap;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.PitfallTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.ShockingTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.SummoningTrap;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -414,6 +418,34 @@ public class CursedWand {
 			case 2:
 				try {
 					Dungeon.saveAll();
+					if( Dungeon.bossLevel() || Dungeon.depth > 25){
+						GLog.w(Messages.get(PitfallTrap.class, "no_pit"));
+						return;
+					}
+					int pos = bolt.collisionPos;
+
+					Heap heap = Dungeon.level.heaps.get( pos );
+
+					if (heap != null){
+						for (Item item : heap.items){
+							Dungeon.dropToChasm(item);
+						}
+						heap.sprite.kill();
+						GameScene.discard(heap);
+						Dungeon.level.heaps.remove( pos );
+					}
+
+					Char ch = Actor.findChar( pos );
+
+					if (ch != null && !ch.flying) {
+						if (ch == Dungeon.hero) {
+							Chasm.heroFall(pos);
+						} else {
+							Chasm.mobFall((Mob) ch);
+						}
+					}
+
+                    afterZap.call();
 					/*
 					if(Messages.lang() != Languages.ENGLISH){
 						//Don't bother doing this joke to none-english speakers, I doubt it would translate.

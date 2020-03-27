@@ -300,11 +300,13 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	private static final String WAND = "wand";
+	private static final String CURSELEVEL = "curselevel";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(WAND, wand);
+		bundle.put(CURSELEVEL,curselevel);
 	}
 
 	@Override
@@ -315,6 +317,7 @@ public class MagesStaff extends MeleeWeapon {
 			wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
 			name = Messages.get(wand, "staff_name");
 		}
+		curselevel = bundle.getInt(CURSELEVEL);
 	}
 
 	@Override
