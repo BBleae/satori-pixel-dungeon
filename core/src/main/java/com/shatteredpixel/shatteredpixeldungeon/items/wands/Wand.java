@@ -74,6 +74,8 @@ public abstract class Wand extends Item {
 	private boolean curChargeKnown = false;
 	
 	public boolean curseInfusionBonus = false;
+
+	public int curselevel = 0;
 	
 	private static final int USES_TO_ID = 10;
 	private int usesLeftToID = USES_TO_ID;
@@ -347,7 +349,7 @@ public abstract class Wand extends Item {
 		particle.radiateXY(0.5f);
 	}
 
-	protected void wandUsed() {
+	public void wandUsed() {
 		if (!isIdentified() && availableUsesToID >= 1) {
 			availableUsesToID--;
 			usesLeftToID--;
@@ -493,12 +495,7 @@ public abstract class Wand extends Item {
 						CursedWand.cursedZap(curWand,
 								curUser,
 								new Ballistica(curUser.pos, target, Ballistica.MAGIC_BOLT),
-								new Callback() {
-									@Override
-									public void call() {
-										curWand.wandUsed();
-									}
-								});
+								() -> curWand.wandUsed(), ((Wand) curItem).curselevel);
 					} else {
 						curWand.fx(shot, new Callback() {
 							public void call() {

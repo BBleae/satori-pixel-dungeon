@@ -82,20 +82,38 @@ public class CursedWand {
 	private static float RARE_CHANCE = 0.09f;
 	private static float VERY_RARE_CHANCE = 0.01f;
 
-	public static void cursedZap(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
-		switch (Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE})){
+
+    public static void cursedZap(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+        cursedZap(origin, user, bolt,afterZap,0);
+    }
+
+	public static void cursedZap(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap, final int curselevel){
+		int what;
+		switch (curselevel){
+            case 0: default:
+                what = Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE});
+                break;
+            case 1: case 2: case 3: case 4:
+                what = curselevel - 1;
+                break;
+        }
+		switch (what){
 			case 0:
 			default:
 				commonEffect(origin, user, bolt, afterZap);
+				GLog.w("1 zap ");
 				break;
 			case 1:
 				uncommonEffect(origin, user, bolt, afterZap);
+				GLog.w("2 zap ");
 				break;
 			case 2:
 				rareEffect(origin, user, bolt, afterZap);
+				GLog.w("3 zap ");
 				break;
 			case 3:
 				veryRareEffect(origin, user, bolt, afterZap);
+				GLog.w("4 zap ");
 				break;
 		}
 	}
@@ -392,14 +410,16 @@ public class CursedWand {
 				});
 				break;
 
-			//crashes the game, yes, really.
+			//crashes the game, yes, really. Tomnycui:That's not good.
 			case 2:
 				try {
 					Dungeon.saveAll();
+					/*
 					if(Messages.lang() != Languages.ENGLISH){
 						//Don't bother doing this joke to none-english speakers, I doubt it would translate.
 						GLog.i(Messages.get(CursedWand.class, "nothing"));
 						afterZap.call();
+
 					} else {
 						GameScene.show(
 								new WndOptions("CURSED WAND ERROR", "this application will now self-destruct", "abort", "retry", "fail") {
@@ -415,7 +435,7 @@ public class CursedWand {
 									}
 								}
 						);
-					}
+					}*/
 				} catch(IOException e){
 					ShatteredPixelDungeon.reportException(e);
 					//oookay maybe don't kill the game if the save failed.
@@ -428,10 +448,11 @@ public class CursedWand {
 			case 3:
 				//skips this effect if there is no item to transmogrify
 				if (origin == null || !Dungeon.hero.belongings.contains(origin)){
+					GLog.w("3 failed");
 					cursedZap(origin, user, bolt, afterZap);
 					return;
 				}
-				origin.detach(user.belongings.backpack);
+				//
 				Item result;
 				do {
 					result = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
@@ -440,8 +461,10 @@ public class CursedWand {
 				if (result.isUpgradable()) result.upgrade();
 				result.cursed = result.cursedKnown = true;
 				if (origin instanceof Wand){
+					//origin.detach(user.belongings.backpack);
 					GLog.w( Messages.get(CursedWand.class, "transmogrify_wand") );
 				} else {
+					origin.detach(user.belongings.backpack);
 					GLog.w( Messages.get(CursedWand.class, "transmogrify_other") );
 				}
 				Dungeon.level.drop(result, user.pos).sprite.drop();

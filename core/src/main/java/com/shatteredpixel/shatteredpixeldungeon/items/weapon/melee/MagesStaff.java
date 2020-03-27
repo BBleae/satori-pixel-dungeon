@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorrosion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfCorruption;
@@ -38,19 +39,23 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfDisintegration
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndChooseCurseLevel;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
+import java.text.Format;
 import java.util.ArrayList;
 
 public class MagesStaff extends MeleeWeapon {
@@ -59,8 +64,11 @@ public class MagesStaff extends MeleeWeapon {
 
 	public static final String AC_IMBUE = "IMBUE";
 	public static final String AC_ZAP	= "ZAP";
+	public static final String AC_CURSE = "CURSE";
 
 	private static final float STAFF_SCALE_FACTOR = 0.75f;
+
+	public int curselevel = 0;
 
 	{
 		image = ItemSpriteSheet.MAGES_STAFF;
@@ -101,6 +109,7 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand!= null && wand.curCharges > 0) {
 			actions.add( AC_ZAP );
 		}
+		actions.add(AC_CURSE);
 		return actions;
 	}
 
@@ -126,9 +135,25 @@ public class MagesStaff extends MeleeWeapon {
 				return;
 			}
 
-			if (cursed || hasCurseEnchant()) wand.cursed = true;
-			else                             wand.cursed = false;
+			if (cursed || hasCurseEnchant()) {
+			    wand.cursed = true;
+			    wand.curselevel = this.curselevel;
+            }
+			else{
+			    wand.cursed = false;
+			    wand.curselevel = 0;
+            }
 			wand.execute(hero, AC_ZAP);
+		}
+		else if (action.equals(AC_CURSE)){
+			if (wand == null) {
+				GameScene.show(new WndItem(null, this, true));
+				return;
+			}
+			else {
+				curUser = hero;
+				GameScene.show( new WndChooseCurseLevel(this, curselevel) );
+			}
 		}
 	}
 
@@ -258,7 +283,7 @@ public class MagesStaff extends MeleeWeapon {
 			//perhaps reword to fit in journal better
 			//info += "\n\n" + Messages.get(this, "no_wand");
 		} else {
-			info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name")) + " " + wand.statsDesc();
+			info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name")) +(curselevel == 0 ? "" : String.format(new String(" L%1$d"), curselevel)+ " " + wand.statsDesc()) ;
 		}
 
 		return info;

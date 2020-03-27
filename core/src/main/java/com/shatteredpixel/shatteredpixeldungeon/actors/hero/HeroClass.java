@@ -169,7 +169,7 @@ public enum HeroClass {
 		staff = new MagesStaff(new WandOfMagicMissile());
 
 		(hero.belongings.weapon = staff).identify();
-		hero.belongings.weapon.upgrade(0);
+		hero.belongings.weapon.upgrade(8);
 		hero.belongings.weapon.activate(hero);
 
 		Dungeon.quickslot.setSlot(0, staff);
@@ -180,9 +180,10 @@ public enum HeroClass {
 		new ScrollOfUpgrade().identify();
 		new PotionOfLiquidFlame().identify();
 
-		WandOfHumor woh = new WandOfHumor();
-		woh.collect();
-		woh.identify();
+		//WandOfHumor woh = new WandOfHumor();
+		//woh.level(8);
+		//woh.collect();
+		//woh.identify();
 	}
 
 	private static void initRogue( Hero hero ) {
