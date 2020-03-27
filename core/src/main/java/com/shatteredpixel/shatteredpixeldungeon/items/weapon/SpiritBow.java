@@ -85,8 +85,6 @@ public class SpiritBow extends Weapon {
 		return actions;
 	}
 
-	public boolean isCao = false;
-
 	@Override
 	public void execute(Hero hero, String action) {
 		
@@ -101,14 +99,13 @@ public class SpiritBow extends Weapon {
 		if (action.equals(AC_CAO)){
 			curUser = hero;
 			curItem = this;
-			if (hero.mana>=7){
-				isCao = true;
+			if (hero.mana>=10){
 				//GameScene.selectCell( shooter );
 				cao(hero.pos);
-				hero.mana-=7;
+				hero.mana-=10;
 			}
 			else{
-				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),7);
+				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),10);
 			}
 		}
 	}
@@ -253,7 +250,7 @@ public class SpiritBow extends Weapon {
 
 		ArrayList<Integer> plantCandidates = new ArrayList<>();
 
-		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 2 );
+		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 3 );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				Char ch = Actor.findChar(i);
@@ -262,6 +259,9 @@ public class SpiritBow extends Weapon {
 						//same as a healing potion
 						Buff.affect( ch, Healing.class ).setHeal((int)(0.2f*ch.HT + 14), 0.25f, 0);
 						PotionOfHealing.cure(ch);
+					}
+					else {
+						Buff.affect( ch, Roots.class, 5f);
 					}
 				} else if ( Dungeon.level.map[i] == Terrain.EMPTY ||
 						Dungeon.level.map[i] == Terrain.EMBERS ||
@@ -276,7 +276,7 @@ public class SpiritBow extends Weapon {
 			}
 		}
 
-		int plants = Random.chances(new float[]{0, 6, 3, 1});
+		int plants = Random.chances(new float[]{0, 9, 6, 3, 2, 1});
 
 		for (int i = 0; i < plants; i++) {
 			Integer plantPos = Random.element(plantCandidates);

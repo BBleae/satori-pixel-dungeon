@@ -384,7 +384,8 @@ public class Generator {
 			
 			MIS_T1.classes = new Class<?>[]{
 					ThrowingStone.class,
-					ThrowingKnife.class
+					//ThrowingKnife.class,
+					Shuriken.class
 			};
 			MIS_T1.probs = new float[]{ 6, 5 };
 			

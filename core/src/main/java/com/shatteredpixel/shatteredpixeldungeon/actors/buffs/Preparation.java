@@ -98,6 +98,10 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	private int turnsInvis = 0;
+
+	public void setTurnsInvis(int value){
+		turnsInvis = value;
+	}
 	
 	@Override
 	public boolean act() {

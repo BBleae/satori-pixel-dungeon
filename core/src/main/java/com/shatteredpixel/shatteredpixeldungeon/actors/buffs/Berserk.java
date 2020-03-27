@@ -43,17 +43,17 @@ public class Berserk extends Buff {
 	private static final float LEVEL_RECOVER_START = 2f;
 	private float levelRecovery;
 	
-	private float power = 0;
+	private int lasttime = 0;
 
 	private static final String STATE = "state";
 	private static final String LEVEL_RECOVERY = "levelrecovery";
-	private static final String POWER = "power";
+	private static final String LAST_TIME = "lasttime";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(STATE, state);
-		bundle.put(POWER, power);
+		bundle.put(LAST_TIME, lasttime);
 		if (state == State.RECOVERING) bundle.put(LEVEL_RECOVERY, levelRecovery);
 	}
 
@@ -66,10 +66,10 @@ public class Berserk extends Buff {
 		} else {
 			state = bundle.getEnum(STATE, State.class);
 		}
-		if (bundle.contains(POWER)){
-			power = bundle.getFloat(POWER);
+		if (bundle.contains(LAST_TIME)){
+			lasttime = bundle.getInt(LAST_TIME);
 		} else {
-			power = 1f;
+			lasttime = 1;
 		}
 		if (state == State.RECOVERING) levelRecovery = bundle.getFloat(LEVEL_RECOVERY);
 	}
@@ -95,12 +95,10 @@ public class Berserk extends Buff {
 				levelRecovery = LEVEL_RECOVER_START;
 				BuffIndicator.refreshHero();
 				if (buff != null) buff.absorbDamage(buff.shielding());
-				power = 0f;
 			}
 		} else if (state == State.NORMAL) {
-			power -= GameMath.gate(0.1f, power, 1f) * 0.067f * Math.pow((target.HP/(float)target.HT), 2);
-			
-			if (power <= 0){
+			lasttime -= 1;
+			if (lasttime <= 0){
 				detach();
 			}
 			BuffIndicator.refreshHero();
@@ -110,12 +108,15 @@ public class Berserk extends Buff {
 	}
 
 	public int damageFactor(int dmg){
+		/*
 		float bonus = Math.min(1.5f, 1f + (power / 2f));
 		return Math.round(dmg * bonus);
+		 */
+		return dmg;			//no more bonus now
 	}
 
 	public boolean berserking(){
-		if (target.HP == 0 && state == State.NORMAL && power >= 1f){
+		if (target.HP == 0 && state == State.NORMAL){
 
 			WarriorShield shield = target.buff(WarriorShield.class);
 			if (shield != null){
@@ -133,9 +134,9 @@ public class Berserk extends Buff {
 		return state == State.BERSERK && target.shielding() > 0;
 	}
 	
-	public void damage(int damage){
+	public void damage(){
 		if (state == State.RECOVERING) return;
-		power = Math.min(1.1f, power + (damage/(float)target.HT)/3f );
+		lasttime += 2;
 		BuffIndicator.refreshHero();
 	}
 
@@ -152,49 +153,23 @@ public class Berserk extends Buff {
 
 	@Override
 	public int icon() {
-		return BuffIndicator.BERSERK;
+		//return BuffIndicator.BERSERK;
+		if (levelRecovery > 0 ) return BuffIndicator.BERSERK;
+		return BuffIndicator.NONE;
 	}
 	
 	@Override
 	public void tintIcon(Image icon) {
-		switch (state){
-			case NORMAL: default:
-				if (power < 0.5f)       icon.hardlight(1f, 1f, 1f - 2*(power));
-				else if (power < 1f)    icon.hardlight(1f, 1.5f - power, 0f);
-				else                    icon.hardlight(1f, 0f, 0f);
-				break;
-			case BERSERK:
-				icon.hardlight(1f, 0f, 0f);
-				break;
-			case RECOVERING:
-				icon.hardlight(1f - (levelRecovery*0.5f), 1f - (levelRecovery*0.3f), 1f);
-				break;
-		}
+
 	}
 	
 	@Override
 	public String toString() {
-		switch (state){
-			case NORMAL: default:
-				return Messages.get(this, "angered");
-			case BERSERK:
-				return Messages.get(this, "berserk");
-			case RECOVERING:
-				return Messages.get(this, "recovering");
-		}
+		return Messages.get(this, "berserk");
 	}
 
 	@Override
 	public String desc() {
-		float dispDamage = (damageFactor(10000) / 100f) - 100f;
-		switch (state){
-			case NORMAL: default:
-				return Messages.get(this, "angered_desc", Math.floor(power * 100f), dispDamage);
-			case BERSERK:
-				return Messages.get(this, "berserk_desc");
-			case RECOVERING:
-				return Messages.get(this, "recovering_desc", levelRecovery);
-		}
-		
+		return Messages.get(this, "berserk_desc");
 	}
 }

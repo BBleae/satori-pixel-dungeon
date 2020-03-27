@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Mana;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
@@ -105,6 +106,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Flail;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -510,7 +513,9 @@ public class Hero extends Char {
 	
 	public float attackDelay() {
 
-		if (subClass == HeroSubClass.WARDEN) return belongings.weapon.speedFactor(this) / 2f;
+		if (subClass == HeroSubClass.SNIPER && belongings.weapon instanceof MeleeWeapon) {
+			return belongings.weapon.speedFactor(this) / 2f;
+		}
 		if (belongings.weapon != null) {
 			
 			return belongings.weapon.speedFactor( this );
@@ -1016,6 +1021,13 @@ public class Hero extends Char {
 		KindOfWeapon wep = belongings.weapon;
 
 		if (wep != null) damage = wep.proc( this, enemy, damage );
+
+		if (heroClass == HeroClass.MAGE && wep instanceof MagesStaff){
+			if (mana >= (int)(maxmana / 2f)){
+				mana -= (int)(maxmana * 0.1f);
+				damage += lvl;
+			}
+		}
 		
 		switch (subClass) {
 		case SNIPER:
@@ -1055,12 +1067,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
-		
-		if (damage > 0 && subClass == HeroSubClass.BERSERKER){
-			Berserk berserk = Buff.affect(this, Berserk.class);
-			berserk.damage(damage);
-		}
-		
+
 		if (belongings.armor != null) {
 			damage = belongings.armor.proc( enemy, this, damage );
 		}
@@ -1073,6 +1080,15 @@ public class Hero extends Char {
 		WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
 		if (rockArmor != null) {
 			damage = rockArmor.absorb(damage);
+		}
+
+		if (damage > 0 && subClass == HeroSubClass.BERSERKER){				//抑制「スーパーエゴ」
+			Berserk berserk = Buff.affect(this, Berserk.class);
+			berserk.damage();
+			if (HP > 0) {
+				Buff.affect(this,Invisibility.class,1f);
+				Buff.affect( this, Preparation.class).setTurnsInvis(Math.max((int)(damage/HP * 10f), 1));
+			}
 		}
 		
 		return damage;

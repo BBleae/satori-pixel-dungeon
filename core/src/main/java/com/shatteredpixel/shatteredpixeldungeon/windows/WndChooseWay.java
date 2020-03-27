@@ -58,7 +58,7 @@ public class WndChooseWay extends Window {
 				tome.choose( way1 );
 			}
 		};
-		btnWay1.setRect( 0, hl.bottom() + GAP, (WIDTH - GAP) / 2, BTN_HEIGHT );
+		btnWay1.setRect( 0, hl.bottom() + GAP, WIDTH, BTN_HEIGHT );
 		add( btnWay1 );
 		
 		RedButton btnWay2 = new RedButton( way2.title().toUpperCase() ) {
@@ -68,7 +68,7 @@ public class WndChooseWay extends Window {
 				tome.choose( way2 );
 			}
 		};
-		btnWay2.setRect( btnWay1.right() + GAP, btnWay1.top(), btnWay1.width(), BTN_HEIGHT );
+		btnWay2.setRect( 0, btnWay1.bottom() + GAP, btnWay1.width(), BTN_HEIGHT );
 		add( btnWay2 );
 		
 		RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {

@@ -114,7 +114,7 @@ public class WndChooseCurseLevel extends Window {
 				staff.cursedKnown = true;
 			}
 		};
-		btnL0.setRect(btnL1.left(),btnL3.bottom() + GAP,btnL1.width() * 2,BTN_HEIGHT);
+		btnL0.setRect(btnL1.left(),btnL3.bottom() + GAP,WIDTH,BTN_HEIGHT);
 		add( btnL0 );
 		
 		RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
@@ -123,7 +123,7 @@ public class WndChooseCurseLevel extends Window {
 				hide();
 			}
 		};
-		btnCancel.setRect( btnL1.left(), btnL0.bottom() + GAP, btnL0.width(), BTN_HEIGHT );
+		btnCancel.setRect( btnL1.left(), btnL0.bottom() + GAP, WIDTH, BTN_HEIGHT );
 		add( btnCancel );
 		
 		resize( WIDTH, (int)btnCancel.bottom() + (int)GAP );
