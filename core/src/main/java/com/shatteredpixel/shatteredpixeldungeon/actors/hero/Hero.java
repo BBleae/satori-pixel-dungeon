@@ -1038,9 +1038,13 @@ public class Hero extends Char {
 			}
 			break;
 		case DESTORYER:
-			if (Random.Int(0,2) == 1) damage *= 2;
+			if (Random.Int(0,3) == 1) damage *= 2;
 			damage += HT - HP ;
 			break;
+		case DEVIL:
+		    damage *= 0.8f;
+		    damage += (int)((HT-HP)*0.25f);
+		    break;
 		default:
 			break;
 		}
