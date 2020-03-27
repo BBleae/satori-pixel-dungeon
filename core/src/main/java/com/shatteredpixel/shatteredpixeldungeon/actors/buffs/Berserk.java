@@ -154,22 +154,30 @@ public class Berserk extends Buff {
 	@Override
 	public int icon() {
 		//return BuffIndicator.BERSERK;
-		if (levelRecovery > 0 ) return BuffIndicator.BERSERK;
+		if (levelRecovery > 0 || state == State.BERSERK) return BuffIndicator.BERSERK;
 		return BuffIndicator.NONE;
 	}
 	
 	@Override
 	public void tintIcon(Image icon) {
-
+	    if (state == State.RECOVERING)
+            icon.hardlight(1f - (levelRecovery*0.5f), 1f - (levelRecovery*0.3f), 1f);
 	}
 	
 	@Override
 	public String toString() {
-		return Messages.get(this, "berserk");
+        switch (state){
+            case NORMAL: default:
+                return Messages.get(this, "angered");
+            case BERSERK:
+                return Messages.get(this, "berserk");
+            case RECOVERING:
+                return Messages.get(this, "recovering");
+        }
 	}
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "berserk_desc");
+        return Messages.get(this, "recovering_desc", levelRecovery);
 	}
 }

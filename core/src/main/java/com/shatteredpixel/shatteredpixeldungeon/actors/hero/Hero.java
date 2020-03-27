@@ -1085,10 +1085,8 @@ public class Hero extends Char {
 		if (damage > 0 && subClass == HeroSubClass.BERSERKER){				//抑制「スーパーエゴ」
 			Berserk berserk = Buff.affect(this, Berserk.class);
 			berserk.damage();
-			if (HP > 0) {
-				Buff.affect(this,Invisibility.class,1f);
-				Buff.affect( this, Preparation.class).setTurnsInvis(Math.max((int)(damage/HP * 10f), 1));
-			}
+			Buff.affect(this,Invisibility.class,1f);
+			Buff.affect( this, Preparation.class).setTurnsInvis(Math.max((int)(damage/Math.max(HP,1) * 50f), 1));
 		}
 		
 		return damage;

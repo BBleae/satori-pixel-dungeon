@@ -67,6 +67,19 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.6", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_修复了部分文本错误~\n_-_更改了APK包名。"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 14, 12, 14), "恋恋强化",
+				"_-_抑制·超我的恋技能完全改变。"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.MAGE, 12, 0, 12, 14),"鵺强化",
+				"_-_鵺现在可以主动诅咒或消除诅咒，但是仅限于主法杖。_-_为鵺的早期灵力使用加入了被动技能。" ));
+
 		changes = new ChangeInfo("SPD v1.7.3.5", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
