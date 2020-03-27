@@ -121,7 +121,7 @@ public enum HeroClass {
 		}
 		
 		new ScrollOfIdentify().identify();
-		new TomeOfMastery().collect();
+		//new TomeOfMastery().collect();
 
 		//new ScrollOfTransmutation().collect();
 
