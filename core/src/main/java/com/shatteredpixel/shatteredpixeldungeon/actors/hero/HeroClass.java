@@ -128,7 +128,7 @@ public enum HeroClass {
 
 		//for testing
 		//new ScrollOfUpgrade().collect();
-		new TestItem().collect();
+		//new TestItem().collect();
 	}
 
 	public Badges.Badge masteryBadge() {
