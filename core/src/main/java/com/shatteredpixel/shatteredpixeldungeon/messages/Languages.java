@@ -43,7 +43,7 @@ public enum Languages {
 	//CATALAN("català",       "ca", Status.INCOMPLETE, new String[]{"Illyatwo2"}, new String[]{"n1ngu"}),
 	//BASQUE("euskara",       "eu", Status.REVIEWED,   new String[]{"Deathrevenge", "Osoitz"}, null),
 	//ESPERANTO("esperanto",  "eo", Status.UNREVIEWED, new String[]{"Verdulo"}, new String[]{"Raizin"}),
-	CHINESE("中文",          "zh", Status.REVIEWED, null, null);
+	CHINESE("中文",          "zh", Status.REVIEWED, new String[]{"Tomny Cui"}, new String[]{"Tomny Cui"});
 
 
 	public enum Status{

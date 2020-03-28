@@ -36,6 +36,7 @@ import com.watabou.noosa.Game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WndLangs extends Window {
 
@@ -81,7 +82,7 @@ public class WndLangs extends Window {
 					});
 				}
 			};
-			if (currLang == langs.get(i)){
+			if (currLang == langs.get(i) && langs.get(i)!= Languages.ENGLISH){
 				btn.textColor(TITLE_COLOR);
 			} else {
 				switch (langs.get(i).status()) {
@@ -121,10 +122,10 @@ public class WndLangs extends Window {
 		PixelScene.align(title);
 		add(title);
 
-		if (currLang == Languages.ENGLISH){
+		if (currLang == Languages.CHINESE){
 
 			RenderedTextBlock info = PixelScene.renderTextBlock(6);
-			info.text("This is the source language, written by the developer.", width - textLeft);
+			info.text("这是开发者所用的母语，建议使用这个语言。", width - textLeft);
 			info.setPos(textLeft, title.bottom() + 4);
 			add(info);
 
@@ -197,7 +198,7 @@ public class WndLangs extends Window {
 					
 					creds = creds.substring(0, creds.length()-1);
 
-					Window credits = new Window( 0, 0, 0, Chrome.get(Chrome.Type.TOAST) );
+					Window credits = new Window( 0, 0, 0, Objects.requireNonNull(Chrome.get(Chrome.Type.TOAST)));
 					
 					int w = wide? 135 : 65;
 

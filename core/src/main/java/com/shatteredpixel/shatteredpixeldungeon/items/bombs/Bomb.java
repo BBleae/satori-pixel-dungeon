@@ -320,7 +320,7 @@ public class Bomb extends Item {
 			if (bomb.doPickUp(hero)) {
 				//isaaaaac.... (don't bother doing this when not in english)
 				if (SPDSettings.language() == Languages.CHINESE)
-					hero.sprite.showStatus(CharSprite.NEUTRAL, "1+1 free!");
+					hero.sprite.showStatus(CharSprite.NEUTRAL, "超值1+1");
 				return true;
 			}
 			return false;

@@ -34,13 +34,19 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.LloydsBeacon;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Firebomb;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.ShrapnelBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.DM300Sprite;
@@ -80,12 +86,49 @@ public class DM300 extends Mob {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 10);
 	}
-	
+
+
+	/*准备更改DM300的行为模式，加入远程攻击动作。此处的act也被部分改写，但是没有完成，改写内容来自于毒飞镖陷阱。*/
+
+	protected boolean canTarget( Char ch ){
+		return ch != this;
+	}
+
+	private void fangpao() {
+		Char target = Actor.findChar(pos);
+
+		if (target != null && !canTarget(target)){
+			target = null;
+		}
+
+		//find the closest char that can be aimed at
+		if (target == null){
+			for (Char ch : Actor.chars()){
+				Ballistica bolt = new Ballistica(pos, ch.pos, Ballistica.PROJECTILE);
+				if (canTarget(ch) && bolt.collisionPos == ch.pos &&
+						(target == null || Dungeon.level.trueDistance(pos, ch.pos) < Dungeon.level.trueDistance(pos, target.pos))){
+					target = ch;
+				}
+			}
+		}
+
+		if (target != null) {
+			//new Bomb().explode(target.pos);
+			//Sample.INSTANCE.play( Assets.SND_BLAST );
+			//CellEmitter.center(target.pos).burst(BlastParticle.FACTORY, 30);
+			final Ballistica shot = new Ballistica( this.pos, target.pos, Ballistica.PROJECTILE);
+			new WandOfBlastWave().zap2(shot);
+			if (target == Dungeon.hero && !target.isAlive()) {
+				Dungeon.fail(DM300.class);
+			}
+		}
+	}
+
 	@Override
 	public boolean act() {
 		
 		GameScene.add( Blob.seed( pos, 30, ToxicGas.class ) );
-		
+		if (Random.Int(0,9) == 1) fangpao();
 		return super.act();
 	}
 	
@@ -142,7 +185,9 @@ public class DM300 extends Mob {
 	public void die( Object cause ) {
 		
 		super.die( cause );
-		
+		//new Bomb().explode(pos);
+		new ShrapnelBomb().explode(pos);
+		//GLog.w(Messages.get(this,"die"));
 		GameScene.bossSlain();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.depth  ), pos ).sprite.drop();
 		
