@@ -72,7 +72,7 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_修复了部分文本错误~\n_-_更改了APK包名。"));
+				"_-_修复了部分文本错误~\n_-_更改了APK包名。强化了一些Boss"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 14, 12, 14), "恋恋强化",
 				"_-_抑制·超我的恋技能完全改变。"));
