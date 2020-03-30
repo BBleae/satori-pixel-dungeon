@@ -123,15 +123,17 @@ public class Yog extends Mob {
             fist4.pos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
             //fist3.pos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
         } while (!Dungeon.level.passable[fist3.pos] || !Dungeon.level.passable[fist4.pos] || fist3.pos == fist4.pos );
-
+        GLog.n(Messages.get(this,"morefist"));
         GameScene.add( fist3 , 1);
         GameScene.add( fist4 , 1);
     }
 
+    private int HEALTHREGEN = 2;
+
 	@Override
 	protected boolean act() {
 		//heals 1 health per turn
-		HP = Math.min( HT, HP+1 );
+		HP = Math.min( HT, HP + HEALTHREGEN );
 		if (HP <= HT / 2 && !smode) {
 		    spawnFists2();
 		    smode = true;
@@ -196,6 +198,8 @@ public class Yog extends Mob {
 
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist) {
+			    HEALTHREGEN += 2;
+			    GLog.n(Messages.get(this,"regenup"));
 				mob.die( cause );
 			}
 		}
