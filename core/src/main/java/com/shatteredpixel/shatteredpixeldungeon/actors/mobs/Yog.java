@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -65,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.YogSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -122,8 +124,8 @@ public class Yog extends Mob {
             //fist3.pos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
         } while (!Dungeon.level.passable[fist3.pos] || !Dungeon.level.passable[fist4.pos] || fist3.pos == fist4.pos );
 
-        GameScene.add( fist3 );
-        GameScene.add( fist4 );
+        GameScene.add( fist3 , 1);
+        GameScene.add( fist4 , 1);
     }
 
 	@Override
@@ -538,7 +540,7 @@ public class Yog extends Mob {
         }
 
         //used so resistances can differentiate between melee and magical attacks
-        public static class DarkBolt{}
+        static class DarkBolt{}
 
         @Override
         public boolean attack( Char enemy ) {
