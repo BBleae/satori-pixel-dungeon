@@ -78,7 +78,7 @@ public class v0_7_X_Changes {
 				"_-_抑制·超我的恋技能完全改变。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.MAGE, 12, 0, 12, 14),"鵺强化",
-				"_-_鵺现在可以主动诅咒或消除诅咒，但是仅限于主法杖。_-_为鵺的早期灵力使用加入了被动技能。" ));
+				"_-_鵺现在可以主动诅咒或消除诅咒，但是仅限于主法杖。_-_鵺的灵力使用在她的被动技能上，包括攻击和防御。" ));
 
 		changes = new ChangeInfo("SPD v1.7.3.5", false, null);
 		changes.hardlight( Window.TITLE_COLOR );

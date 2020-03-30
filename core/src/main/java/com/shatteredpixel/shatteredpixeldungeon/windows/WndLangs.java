@@ -52,7 +52,7 @@ public class WndLangs extends Window {
 		super();
 
 		final ArrayList<Languages> langs = new ArrayList<>(Arrays.asList(Languages.values()));
-
+		langs.remove(Languages.ENGLISH);
 		Languages nativeLang = Languages.matchLocale(Locale.getDefault());
 		langs.remove(nativeLang);
 		//move the native language to the top.
@@ -125,7 +125,7 @@ public class WndLangs extends Window {
 		if (currLang == Languages.CHINESE){
 
 			RenderedTextBlock info = PixelScene.renderTextBlock(6);
-			info.text("这是开发者所用的母语，建议使用这个语言。", width - textLeft);
+			info.text("这是开发者所用的母语，建议使用这个语言。请放心，我已经把其他语言移除掉了，因为懒得翻译。", width - textLeft);
 			info.setPos(textLeft, title.bottom() + 4);
 			add(info);
 

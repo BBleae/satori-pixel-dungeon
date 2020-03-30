@@ -123,7 +123,7 @@ public class DM300 extends Mob {
 		return ch != this;
 	}
 
-	private void fangpao() {
+	private void fangpao(int mode) {
 		Char target = Actor.findChar(pos);
 
 		if (target != null && !canTarget(target)){
@@ -150,21 +150,21 @@ public class DM300 extends Mob {
 			final Ballistica shot = new Ballistica( this.pos, target.pos + PathFinder.NEIGHBOURS9[Random.Int(9)], Ballistica.PROJECTILE);
 			Sample.INSTANCE.play( Assets.SND_ZAP );
 
-			switch (curmode){
-				case MODE1: default:
+			switch (mode){
+				case 0: default:
 					break;
-				case MODE2:
+				case 1:
 					((WandOfBlastWave)(new WandOfBlastWave().upgrade(2))).zap2(shot);
 					//target.damage((damageRoll()/2),this);
 					break;
-				case MODE3:
+				case 2:
 					((WandOfBlastWave)(new WandOfBlastWave().upgrade(2))).zap2(shot);
-					new Bomb().explode(target.pos,damageRoll()/3);
+					new Bomb().explode(target.pos,damageRoll()/2,true);
 					break;
-				case MODE_BK:
+				case 3:
 					((WandOfBlastWave)(new WandOfBlastWave().upgrade(1))).zap2(shot);
-					((WandOfFireblast)(new WandOfFireblast().upgrade(1))).zap2(shot);
-					new Bomb().explode(target.pos,damageRoll()/2);
+					((WandOfFireblast)(new WandOfFireblast().upgrade(10))).zap2(shot);
+					new Bomb().explode(target.pos, damageRoll(),true);
 					break;
 			}
 			if (target == Dungeon.hero && !target.isAlive()) {
@@ -182,36 +182,45 @@ public class DM300 extends Mob {
 		return super.act();
 	}
 
-	private boolean meleeattack = true;
+	private int atkmode = 0;
 
 	@Override
 	protected boolean canAttack( Char enemy ) {
-		if (new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos){
-			meleeattack = false;
-			return true;
-		}
-		else {
-			meleeattack = true;
-			return super.canAttack(enemy);
+		switch (curmode){
+			case MODE1: default:
+				atkmode = 0;
+				return super.canAttack( enemy );
+			case MODE2:
+				if (Random.Int(0,9) == 1) {
+					atkmode = 1;return true;
+				}
+				else return super.canAttack( enemy );
+			case MODE3:
+				if (Random.Int(0,6) == 1) {
+					atkmode = 2;return true;
+				}
+				else return super.canAttack( enemy );
+			case MODE_BK:
+				if (Random.Int(0,3) == 1) {
+					atkmode = 3;return true;
+				}
+				else return super.canAttack( enemy );
 		}
 	}
 
 	@Override
 	public boolean attack( Char enemy ) {
-		if (!meleeattack){
-			if (Random.Int(0,9) == 1 && curmode == ACMODE.MODE2) fangpao();
-			if (Random.Int(0,6) == 1 && curmode == ACMODE.MODE3) fangpao();
-			if (Random.Int(0,3) == 1 && curmode == ACMODE.MODE_BK) fangpao();
-			return true;
+		switch (atkmode){
+			case 0: default:
+				return super.attack( enemy );
+			case 1: case 2: case 3:
+				fangpao(atkmode);
+				break;
 		}
-		else {
-			return super.attack( enemy );
-		}
+		return true;
 /*
 		if (!Dungeon.level.adjacent( pos, enemy.pos )) {
 			spend( attackDelay() );
-
-
 		} else {
 			return super.attack( enemy );
 		}*/
@@ -225,7 +234,7 @@ public class DM300 extends Mob {
 			if (curmode == ACMODE.MODE1)HP += Random.Int( 1, (HT - HP) / 2 );
 			if (curmode == ACMODE.MODE2)HP += Random.Int( 1, (HT - HP) / 5 );
 			if (curmode == ACMODE.MODE3)HP += Random.Int(1,HT - HP);
-			if (curmode == ACMODE.MODE_BK)HP += Random.Int(1,(HT - HP) / 4);
+			//if (curmode == ACMODE.MODE_BK)HP += Random.Int(1,(HT - HP) / 4);
 			sprite.emitter().burst( ElmoParticle.FACTORY, 5 );
 			
 			if (Dungeon.level.heroFOV[step] && Dungeon.hero.isAlive()) {
@@ -266,7 +275,7 @@ public class DM300 extends Mob {
 		if (HP - dmg <= 0){
 			if (curmode != ACMODE.MODE_BK){
 				curmode = ACMODE.MODE_BK;
-				HP = HT / 10 + dmg;
+				HP = 20 + dmg;
 				GLog.n( Messages.get(this, "mode_bk") );
 			}
 			//if (curmode == ACMODE.MODE_BK) curmode = ACMODE.MODE1;
@@ -280,7 +289,7 @@ public class DM300 extends Mob {
 	public void die( Object cause ) {
 		super.die( cause );
 		GameScene.bossSlain();
-		//new ShrapnelBomb().explode(pos);
+		new ShrapnelBomb().explode(pos);
 
 		Dungeon.level.drop( new SkeletonKey( Dungeon.depth  ), pos ).sprite.drop();
 		

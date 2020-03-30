@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM300;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
@@ -132,10 +133,10 @@ public class Bomb extends Item {
 	}
 
 	public void explode(int cell){
-		explode(cell,0);
+		explode(cell,0,false);
 	}
 
-	public void explode(int cell,int setdmg){
+	public void explode(int cell,int setdmg,boolean isDM){
 		//We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
 		Sample.INSTANCE.play( Assets.SND_BLAST );
@@ -184,8 +185,9 @@ public class Bomb extends Item {
 
 				dmg -= ch.drRoll();
 
-				if (dmg > 0) {
-					ch.damage(dmg, this);
+				if (dmg > 0 ) {
+					if(!isDM)ch.damage(dmg, this);
+					if(isDM && !(ch instanceof DM300))ch.damage(dmg, this);
 				}
 				
 				if (ch == Dungeon.hero && !ch.isAlive()) {

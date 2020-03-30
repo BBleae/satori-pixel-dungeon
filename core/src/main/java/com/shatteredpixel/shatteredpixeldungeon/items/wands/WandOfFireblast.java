@@ -71,7 +71,7 @@ public class WandOfFireblast extends DamageWand {
 	private int direction = 0;
 
 	public void zap2(Ballistica bolt) {
-		onZap(bolt);
+		fx(bolt, () -> onZap(bolt));
 	}
 	
 	@Override

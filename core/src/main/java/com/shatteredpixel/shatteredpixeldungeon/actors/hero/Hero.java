@@ -1022,10 +1022,12 @@ public class Hero extends Char {
 
 		if (wep != null) damage = wep.proc( this, enemy, damage );
 
-		if (heroClass == HeroClass.MAGE && wep instanceof MagesStaff){
-			if (mana >= (int)(maxmana / 2f)){
-				mana -= (int)(maxmana * 0.1f);
-				damage += lvl;
+		if (heroClass == HeroClass.MAGE){
+			if (mana >= maxmana / 2){
+				int manaatk = Random.Int(5,mana/2);
+				mana -= manaatk;
+				damage += manaatk;
+				GLog.w(Messages.get(this,"manaatk",manaatk));
 			}
 		}
 		
@@ -1087,6 +1089,15 @@ public class Hero extends Char {
 			berserk.damage();
 			Buff.affect(this,Invisibility.class,1f);
 			Buff.affect( this, Preparation.class).setTurnsInvis(Math.max((int)(damage/Math.max(HP,1) * 50f), 1));
+		}
+
+		if (damage > 0 && heroClass == HeroClass.MAGE){
+			if(mana >= 20){
+				int manadef = Random.Int(5,mana);
+				damage -= manadef * 2;
+				mana -= manadef;
+				GLog.w(Messages.get(this,"manadef",manadef * 2));
+			}
 		}
 		
 		return damage;
