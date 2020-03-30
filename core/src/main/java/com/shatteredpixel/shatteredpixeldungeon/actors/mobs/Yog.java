@@ -30,13 +30,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
@@ -79,7 +82,7 @@ public class Yog extends Mob {
 	{
 		spriteClass = YogSprite.class;
 		
-		HP = HT = 500;
+		HP = HT = 100;
 		
 		EXP = 50;
 		
@@ -174,7 +177,9 @@ public class Yog extends Mob {
 		if (spawnPoints.size() > 0) {
 			Larva larva = new Larva();
 			larva.pos = Random.element( spawnPoints );
-			
+			Buff.affect(larva, Adrenaline.class,20f);
+			Buff.affect(larva, MagicImmune.class,5f);
+			Buff.affect(larva, Barkskin.class).set(20,1);
 			GameScene.add( larva );
 			Actor.addDelayed( new Pushing( larva, pos, larva.pos ), -1 );
 		}
@@ -199,8 +204,11 @@ public class Yog extends Mob {
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist) {
 			    HEALTHREGEN += 2;
+			    HT += 100;
+			    HP += Random.Int(HT-HP);
 			    GLog.n(Messages.get(this,"regenup"));
 				mob.die( cause );
+				return;
 			}
 		}
 		
@@ -622,7 +630,7 @@ public class Yog extends Mob {
 		{
 			spriteClass = LarvaSprite.class;
 			
-			HP = HT = 25;
+			HP = HT = 10;
 			defenseSkill = 20;
 			
 			EXP = 0;
