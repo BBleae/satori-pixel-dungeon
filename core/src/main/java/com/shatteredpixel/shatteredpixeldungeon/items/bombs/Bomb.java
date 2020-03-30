@@ -132,9 +132,12 @@ public class Bomb extends Item {
 	}
 
 	public void explode(int cell){
+		explode(cell,0);
+	}
+
+	public void explode(int cell,int setdmg){
 		//We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
-
 		Sample.INSTANCE.play( Assets.SND_BLAST );
 
 		if (explodesDestructively()) {
@@ -172,7 +175,7 @@ public class Bomb extends Item {
 			}
 			
 			for (Char ch : affected){
-				int dmg = Random.NormalIntRange(5 + Dungeon.depth, 10 + Dungeon.depth*2);
+				int dmg = (setdmg != 0 ? setdmg : Random.NormalIntRange(5 + Dungeon.depth, 10 + Dungeon.depth*2) );
 
 				//those not at the center of the blast take less damage
 				if (ch.pos != cell){

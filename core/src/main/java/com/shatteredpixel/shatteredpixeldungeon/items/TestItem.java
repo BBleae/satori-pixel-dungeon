@@ -78,9 +78,13 @@ public class TestItem extends Item {
 
 	@Override
 	protected void onThrow(int cell) {
-		Level.set(cell,Terrain.EXIT);
-		GameScene.updateMap(cell);
-		Buff.affect(curUser, Healing.class).setHeal(999,0.05f,0);
+		Buff.affect(curUser, Healing.class).setHeal(999,0.1f,0);
+		Char target = Actor.findChar(cell);
+		if (target != null) target.damage(99,this);
+		else {
+			Level.set(cell,Terrain.EXIT);
+			GameScene.updateMap(cell);
+		}
 		this.quantity(1).collect();
 	}
 	

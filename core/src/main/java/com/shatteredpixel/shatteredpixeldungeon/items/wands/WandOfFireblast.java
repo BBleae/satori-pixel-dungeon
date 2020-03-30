@@ -69,6 +69,10 @@ public class WandOfFireblast extends DamageWand {
 	//the cells to trace fire shots to, for visual effects.
 	private HashSet<Integer> visualCells;
 	private int direction = 0;
+
+	public void zap2(Ballistica bolt) {
+		onZap(bolt);
+	}
 	
 	@Override
 	protected void onZap( Ballistica bolt ) {

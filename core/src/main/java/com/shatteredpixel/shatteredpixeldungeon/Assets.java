@@ -87,6 +87,8 @@ public class Assets {
 	public static final String SCORPIO	= "scorpio.png";
 	public static final String ROTTING	= "rotting_fist.png";
 	public static final String BURNING	= "burning_fist.png";
+	public static final String FREEZING	= "freezing_fist.png";
+	public static final String ELECTTRICITY	= "electricity_fist.png";
 	public static final String YOG		= "yog.png";
 	public static final String LARVA	= "larva.png";
 	public static final String GHOST	= "ghost.png";

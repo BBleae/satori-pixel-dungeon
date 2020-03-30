@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
@@ -44,11 +45,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bombs.ShrapnelBomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.DM300Sprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -71,10 +74,36 @@ public class DM300 extends Mob {
 		properties.add(Property.BOSS);
 		properties.add(Property.INORGANIC);
 	}
+
+	private ACMODE curmode = ACMODE.MODE1;
+	private enum ACMODE{
+		MODE1,MODE2,MODE3,MODE_BK
+	}
+	private void modechange() {
+		if (curmode != ACMODE.MODE_BK) {
+			if (HP <= HT / 2 && curmode == ACMODE.MODE1){
+				curmode = ACMODE.MODE2;
+				if (Dungeon.level.heroFOV[pos] && Dungeon.hero.isAlive()) {
+					GLog.n( Messages.get(this, "mode2") );
+				}
+			}
+			if (HP <= HT / 4 && curmode == ACMODE.MODE2){
+				curmode = ACMODE.MODE3;
+				if (Dungeon.level.heroFOV[pos] && Dungeon.hero.isAlive()) {
+					GLog.n( Messages.get(this, "mode3") );
+				}
+			}
+		}
+	}
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 20, 25 );
+		switch (curmode){
+			default:
+				return Random.NormalIntRange( 20, 25 );
+			case MODE_BK:
+				return 2 * Random.NormalIntRange( 20, 25 );
+		}
 	}
 	
 	@Override
@@ -116,8 +145,28 @@ public class DM300 extends Mob {
 			//new Bomb().explode(target.pos);
 			//Sample.INSTANCE.play( Assets.SND_BLAST );
 			//CellEmitter.center(target.pos).burst(BlastParticle.FACTORY, 30);
-			final Ballistica shot = new Ballistica( this.pos, target.pos, Ballistica.PROJECTILE);
-			new WandOfBlastWave().zap2(shot);
+			GLog.w(Messages.get(this,"fangpao"));
+
+			final Ballistica shot = new Ballistica( this.pos, target.pos + PathFinder.NEIGHBOURS9[Random.Int(9)], Ballistica.PROJECTILE);
+			Sample.INSTANCE.play( Assets.SND_ZAP );
+
+			switch (curmode){
+				case MODE1: default:
+					break;
+				case MODE2:
+					((WandOfBlastWave)(new WandOfBlastWave().upgrade(2))).zap2(shot);
+					//target.damage((damageRoll()/2),this);
+					break;
+				case MODE3:
+					((WandOfBlastWave)(new WandOfBlastWave().upgrade(2))).zap2(shot);
+					new Bomb().explode(target.pos,damageRoll()/3);
+					break;
+				case MODE_BK:
+					((WandOfBlastWave)(new WandOfBlastWave().upgrade(1))).zap2(shot);
+					((WandOfFireblast)(new WandOfFireblast().upgrade(1))).zap2(shot);
+					new Bomb().explode(target.pos,damageRoll()/2);
+					break;
+			}
 			if (target == Dungeon.hero && !target.isAlive()) {
 				Dungeon.fail(DM300.class);
 			}
@@ -126,10 +175,46 @@ public class DM300 extends Mob {
 
 	@Override
 	public boolean act() {
-		
+		modechange();
+
 		GameScene.add( Blob.seed( pos, 30, ToxicGas.class ) );
-		if (Random.Int(0,9) == 1) fangpao();
+
 		return super.act();
+	}
+
+	private boolean meleeattack = true;
+
+	@Override
+	protected boolean canAttack( Char enemy ) {
+		if (new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos){
+			meleeattack = false;
+			return true;
+		}
+		else {
+			meleeattack = true;
+			return super.canAttack(enemy);
+		}
+	}
+
+	@Override
+	public boolean attack( Char enemy ) {
+		if (!meleeattack){
+			if (Random.Int(0,9) == 1 && curmode == ACMODE.MODE2) fangpao();
+			if (Random.Int(0,6) == 1 && curmode == ACMODE.MODE3) fangpao();
+			if (Random.Int(0,3) == 1 && curmode == ACMODE.MODE_BK) fangpao();
+			return true;
+		}
+		else {
+			return super.attack( enemy );
+		}
+/*
+		if (!Dungeon.level.adjacent( pos, enemy.pos )) {
+			spend( attackDelay() );
+
+
+		} else {
+			return super.attack( enemy );
+		}*/
 	}
 	
 	@Override
@@ -137,8 +222,10 @@ public class DM300 extends Mob {
 		super.move( step );
 		
 		if (Dungeon.level.map[step] == Terrain.INACTIVE_TRAP && HP < HT) {
-			
-			HP += Random.Int( 1, HT - HP );
+			if (curmode == ACMODE.MODE1)HP += Random.Int( 1, (HT - HP) / 2 );
+			if (curmode == ACMODE.MODE2)HP += Random.Int( 1, (HT - HP) / 5 );
+			if (curmode == ACMODE.MODE3)HP += Random.Int(1,HT - HP);
+			if (curmode == ACMODE.MODE_BK)HP += Random.Int(1,(HT - HP) / 4);
 			sprite.emitter().burst( ElmoParticle.FACTORY, 5 );
 			
 			if (Dungeon.level.heroFOV[step] && Dungeon.hero.isAlive()) {
@@ -176,6 +263,14 @@ public class DM300 extends Mob {
 
 	@Override
 	public void damage(int dmg, Object src) {
+		if (HP - dmg <= 0){
+			if (curmode != ACMODE.MODE_BK){
+				curmode = ACMODE.MODE_BK;
+				HP = HT / 10 + dmg;
+				GLog.n( Messages.get(this, "mode_bk") );
+			}
+			//if (curmode == ACMODE.MODE_BK) curmode = ACMODE.MODE1;
+		}
 		super.damage(dmg, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null && !isImmune(src.getClass())) lock.addTime(dmg*1.5f);
@@ -183,12 +278,10 @@ public class DM300 extends Mob {
 
 	@Override
 	public void die( Object cause ) {
-		
 		super.die( cause );
-		//new Bomb().explode(pos);
-		new ShrapnelBomb().explode(pos);
-		//GLog.w(Messages.get(this,"die"));
 		GameScene.bossSlain();
+		//new ShrapnelBomb().explode(pos);
+
 		Dungeon.level.drop( new SkeletonKey( Dungeon.depth  ), pos ).sprite.drop();
 		
 		//60% chance of 2 shards, 30% chance of 3, 10% chance for 4. Average of 2.5
@@ -217,6 +310,7 @@ public class DM300 extends Mob {
 		if (!BossHealthBar.isAssigned()) {
 			BossHealthBar.assignBoss(this);
 			yell(Messages.get(this, "notice"));
+			GLog.n(Messages.get(this,"mode1"));
 			for (Char ch : Actor.chars()){
 				if (ch instanceof DriedRose.GhostHero){
 					GLog.n("\n");
@@ -231,9 +325,18 @@ public class DM300 extends Mob {
 		immunities.add( Terror.class );
 	}
 
+	private static String MODE = "MODE";
+
+	@Override
+	public void storeInBundle( Bundle bundle ){
+		super.storeInBundle(bundle);
+		bundle.put(MODE,curmode);
+	}
+
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
+		curmode = bundle.getEnum(MODE,ACMODE.class);
 	}
 }
