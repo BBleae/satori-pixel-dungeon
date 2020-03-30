@@ -150,10 +150,12 @@ public class Yog extends Mob {
 		HashSet<Mob> fists = new HashSet<>();
 
 		for (Mob mob : Dungeon.level.mobs)
-			if (mob instanceof RottingFist || mob instanceof BurningFist)
+			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist)
 				fists.add( mob );
 
-		dmg >>= fists.size();
+		for (int i=1;i<=fists.size();i++) {
+		    dmg /=5;
+        }
 		
 		super.damage( dmg, src );
 

@@ -150,6 +150,16 @@ public class King extends Mob {
 	@Override
 	public void die( Object cause ) {
 
+		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
+			if (mob instanceof Undead && HT > 50) {
+				HT -= 50;
+				HP += Random.Int(HT-HP);
+				GLog.n(Messages.get(this,"regenup"));
+				mob.die( cause );
+				return;
+			}
+		}
+
 		GameScene.bossSlain();
 		Dungeon.level.drop( new ArmorKit(), pos ).sprite.drop();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
