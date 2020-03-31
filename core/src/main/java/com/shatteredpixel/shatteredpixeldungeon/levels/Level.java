@@ -263,6 +263,10 @@ public abstract class Level implements Bundlable {
 
 		Random.seed();
 	}
+
+	public int getPos(int x, int y){
+		return (y-1)*width+x;
+	}
 	
 	public void setSize(int w, int h){
 		

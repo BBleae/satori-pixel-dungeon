@@ -81,7 +81,10 @@ public class LastLevel extends Level {
 		Painter.fill( this, mid - 2, 9, 5, 7, Terrain.EMPTY);
 		Painter.fill( this, mid - 3, 10, 7, 5, Terrain.EMPTY);
 
-		entrance = (height-2) * width() + mid;
+		//entrance = (height-2) * width() + mid;
+		entrance = getPos(mid,height - 1);
+
+		//Painter.fill( this, mid - 1,17,5,1,Terrain.CHASM);
 		map[entrance] = Terrain.ENTRANCE;
 
 		pedestal = 12*(width()) + mid;

@@ -142,9 +142,11 @@ public class TitleScene extends PixelScene {
 				};
 				parent.add(wnd);
 			}
+			/*
 			@Override
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
+
 				if (!Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE)) {
 					Badges.displayBadge(Badges.Badge.UNLOCK_ROGUE);
 					return true;
@@ -163,6 +165,7 @@ public class TitleScene extends PixelScene {
 				}
 				return super.onLongClick();
 			}
+			*/
 		};
 		btnSupport.icon(Icons.get(Icons.GOLD));
 		add(btnSupport);

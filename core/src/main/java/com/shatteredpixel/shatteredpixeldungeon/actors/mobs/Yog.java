@@ -152,10 +152,13 @@ public class Yog extends Mob {
 		for (Mob mob : Dungeon.level.mobs)
 			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist)
 				fists.add( mob );
+		float tmp = dmg;
 
 		for (int i=1;i<=fists.size();i++) {
-		    dmg /=5;
+		    tmp *=1.1f;
         }
+
+		dmg = (int) tmp;
 		
 		super.damage( dmg, src );
 
@@ -166,6 +169,11 @@ public class Yog extends Mob {
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
+
+		if (damage > HT / 10) {
+			//HEALTHREGEN += 1;
+			damage = HT / 10;
+		}
 
 		ArrayList<Integer> spawnPoints = new ArrayList<>();
 		
@@ -202,9 +210,14 @@ public class Yog extends Mob {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void die( Object cause ) {
+		if ( !smode ) {
+			HT += 200;
+			HP = HT;
+
+		}
 
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
-			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist) {
+			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof ElectricityFist || mob instanceof FreezingFist ) {
 			    HEALTHREGEN += 2;
 			    HT += 100;
 			    HP += Random.Int(HT-HP);
@@ -248,6 +261,7 @@ public class Yog extends Mob {
 		immunities.add( ScrollOfRetribution.class );
 		immunities.add( ScrollOfPsionicBlast.class );
 		immunities.add( Vertigo.class );
+		immunities.add( Frost.class );
 	}
 
 	@Override
@@ -513,6 +527,8 @@ public class Yog extends Mob {
 			immunities.add( Sleep.class );
 			immunities.add( Terror.class );
 			immunities.add( Vertigo.class );
+			immunities.add( Chill.class );
+			immunities.add( Frost.class );
 		}
 	}
 
@@ -624,6 +640,7 @@ public class Yog extends Mob {
             immunities.add( Vertigo.class );
             immunities.add( Frost.class );
             immunities.add( Chill.class );
+            immunities.add( Paralysis.class );
         }
     }
 	

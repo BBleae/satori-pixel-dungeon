@@ -213,7 +213,7 @@ public class StatusPane extends Component {
 		shieldedHP.scale.x = health/max;
 		rawShielding.scale.x = shield/max;
 
-		mp.scale.x = mana/maxmana;
+		mp.scale.x = Math.min( mana/maxmana , 1);
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();
 

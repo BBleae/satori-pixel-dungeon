@@ -98,6 +98,8 @@ public class Mana extends Buff implements Hero.Doom {
 		else if (hero.mana + (int) (regenmana * manafactor) < hero.getMaxmana()){
 			hero.setMana(hero.mana + (int) (regenmana * regenmana));
 		}
+
+		if (hero.mana > hero.getMaxmana())hero.setMana(hero.getMaxmana());
 	}
 
 	@Override

@@ -93,7 +93,7 @@ public class SpiritBow extends Weapon {
 		if (action.equals(AC_SHOOT)) {
 			curUser = hero;
 			curItem = this;
-			GameScene.selectCell( shooter );
+			GameScene.selectCell(shooter);
 		}
 
 		if (action.equals(AC_CAO)){
@@ -355,7 +355,7 @@ public class SpiritBow extends Weapon {
 			else if( enemy == curUser ){
 				parent = null;
 				Splash.at( cell, 0xCC99FFFF, 1 );
-				Buff.affect(enemy, Barkskin.class).set(STRReq(),1);
+				Buff.affect(enemy, Barkskin.class).set(level(),1);
 			}
 			else {
 				if (!curUser.shoot(enemy, this)) {

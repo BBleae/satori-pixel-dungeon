@@ -420,6 +420,7 @@ public class CursedWand {
 					Dungeon.saveAll();
 					if( Dungeon.bossLevel() || Dungeon.depth > 25){
 						GLog.w(Messages.get(PitfallTrap.class, "no_pit"));
+						afterZap.call();
 						return;
 					}
 					int pos = bolt.collisionPos;

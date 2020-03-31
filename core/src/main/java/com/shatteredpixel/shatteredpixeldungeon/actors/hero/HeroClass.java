@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ReagentOfPellouxite;
@@ -128,7 +129,7 @@ public enum HeroClass {
 
 		//for testing
 		//new ScrollOfUpgrade().collect();
-		//new TestItem().collect();new PotionOfExperience().quantity(20).collect();
+		//new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
 	}
 
 	public Badges.Badge masteryBadge() {
@@ -142,7 +143,7 @@ public enum HeroClass {
 			case HUNTRESS:
 				return Badges.Badge.MASTERY_HUNTRESS;
 			case MAHOU_SHOUJO:
-				return Badges.Badge.MASTERY_MAHO_SHOUJO;
+				return Badges.Badge.MASTERY_MAHOU_SHOUJO;
 		}
 		return null;
 	}
@@ -330,7 +331,7 @@ public enum HeroClass {
 			case HUNTRESS:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
             case MAHOU_SHOUJO:
-                return Badges.isUnlocked(Badges.Badge.UNLOCK_MAHO_SHOUJO);
+                return Badges.isUnlocked(Badges.Badge.UNLOCK_MAHOU_SHOUJO);
 		}
 	}
 	

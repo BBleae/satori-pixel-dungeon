@@ -83,6 +83,7 @@ public class Badges {
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
 		BOSS_SLAIN_1_HUNTRESS,
+		BOSS_SLAIN_1_MAHOU_SHOUJO,
 		BOSS_SLAIN_1( 12 ),
 		BOSS_SLAIN_2( 13 ),
 		BOSS_SLAIN_3( 14 ),
@@ -96,11 +97,14 @@ public class Badges {
 		BOSS_SLAIN_3_ASSASSIN,
 		BOSS_SLAIN_3_SNIPER,
 		BOSS_SLAIN_3_WARDEN,
+		BOSS_SLAIN_3_DEVIL,
+		BOSS_SLAIN_3_DESTORYER,
 		BOSS_SLAIN_3_ALL_SUBCLASSES( 33, true ),
 		VICTORY_WARRIOR,
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
 		VICTORY_HUNTRESS,
+		VICTORY_MAHOU_SHOUJO,
 		VICTORY( 34 ),
 		VICTORY_ALL_CLASSES( 35, true ),
 		HAPPY_END( 36 ),
@@ -119,11 +123,11 @@ public class Badges {
 		MASTERY_MAGE,
 		MASTERY_ROGUE,
 		MASTERY_HUNTRESS,
-		MASTERY_MAHO_SHOUJO,
+		MASTERY_MAHOU_SHOUJO,
 		UNLOCK_MAGE( 65 ),
 		UNLOCK_ROGUE( 66 ),
 		UNLOCK_HUNTRESS( 67 ),
-		UNLOCK_MAHO_SHOUJO(68),
+		UNLOCK_MAHOU_SHOUJO(68),
 		ITEM_LEVEL_1( 48 ),
 		ITEM_LEVEL_2( 49 ),
 		ITEM_LEVEL_3( 50 ),
@@ -568,6 +572,8 @@ public class Badges {
 		case 20:
 			badge = Badge.BOSS_SLAIN_4;
 			break;
+		default:
+			return;
 		}
 		
 		if (badge != null) {
@@ -588,6 +594,11 @@ public class Badges {
 				case HUNTRESS:
 					badge = Badge.BOSS_SLAIN_1_HUNTRESS;
 					break;
+				case MAHOU_SHOUJO:
+					badge = Badge.BOSS_SLAIN_1_MAHOU_SHOUJO;
+					break;
+				default:
+					return;
 				}
 				local.add( badge );
 				if (!global.contains( badge )) {
@@ -598,7 +609,8 @@ public class Badges {
 				if (global.contains( Badge.BOSS_SLAIN_1_WARRIOR ) &&
 					global.contains( Badge.BOSS_SLAIN_1_MAGE ) &&
 					global.contains( Badge.BOSS_SLAIN_1_ROGUE ) &&
-					global.contains( Badge.BOSS_SLAIN_1_HUNTRESS)) {
+					global.contains( Badge.BOSS_SLAIN_1_HUNTRESS ) &&
+					global.contains( Badge.BOSS_SLAIN_1_MAHOU_SHOUJO )) {
 					
 					badge = Badge.BOSS_SLAIN_1_ALL_CLASSES;
 					if (!global.contains( badge )) {
@@ -634,6 +646,12 @@ public class Badges {
 				case WARDEN:
 					badge = Badge.BOSS_SLAIN_3_WARDEN;
 					break;
+				case DEVIL:
+					badge = Badge.BOSS_SLAIN_3_DEVIL;
+					break;
+				case DESTORYER:
+					badge = Badge.BOSS_SLAIN_3_DESTORYER;
+					break;
 				default:
 					return;
 				}
@@ -650,7 +668,9 @@ public class Badges {
 					global.contains( Badge.BOSS_SLAIN_3_FREERUNNER ) &&
 					global.contains( Badge.BOSS_SLAIN_3_ASSASSIN ) &&
 					global.contains( Badge.BOSS_SLAIN_3_SNIPER ) &&
-					global.contains( Badge.BOSS_SLAIN_3_WARDEN )) {
+					global.contains( Badge.BOSS_SLAIN_3_WARDEN ) &&
+					global.contains( Badge.BOSS_SLAIN_3_DEVIL ) &&
+					global.contains( Badge.BOSS_SLAIN_3_DESTORYER )) {
 					
 					badge = Badge.BOSS_SLAIN_3_ALL_SUBCLASSES;
 					if (!global.contains( badge )) {
@@ -679,6 +699,11 @@ public class Badges {
 		case HUNTRESS:
 			badge = Badge.MASTERY_HUNTRESS;
 			break;
+		case MAHOU_SHOUJO:
+			badge = Badge.MASTERY_MAHOU_SHOUJO;
+			break;
+		default:
+			return;
 		}
 		
 		if (!global.contains( badge )) {
@@ -706,8 +731,8 @@ public class Badges {
 	}
 
 	public static void validateMaho_shoujoUnlock(){
-		if (Statistics.ankhsUsed > 2 && !global.contains(Badge.UNLOCK_MAHO_SHOUJO)){
-			displayBadge( Badge.UNLOCK_MAHO_SHOUJO );
+		if (Statistics.ankhsUsed > 2 && !global.contains(Badge.UNLOCK_MAHOU_SHOUJO)){
+			displayBadge( Badge.UNLOCK_MAHOU_SHOUJO );
 		}
 	}
 	
@@ -737,6 +762,9 @@ public class Badges {
 		case HUNTRESS:
 			badge = Badge.VICTORY_HUNTRESS;
 			break;
+		case MAHOU_SHOUJO:
+			badge = Badge.VICTORY_MAHOU_SHOUJO;
+			break;
 		}
 		local.add( badge );
 		if (!global.contains( badge )) {
@@ -747,7 +775,8 @@ public class Badges {
 		if (global.contains( Badge.VICTORY_WARRIOR ) &&
 			global.contains( Badge.VICTORY_MAGE ) &&
 			global.contains( Badge.VICTORY_ROGUE ) &&
-			global.contains( Badge.VICTORY_HUNTRESS )) {
+			global.contains( Badge.VICTORY_HUNTRESS )&&
+			global.contains( Badge.VICTORY_MAHOU_SHOUJO )) {
 			
 			badge = Badge.VICTORY_ALL_CLASSES;
 			displayBadge( badge );

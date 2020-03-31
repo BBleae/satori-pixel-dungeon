@@ -109,6 +109,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Flail;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -187,7 +188,20 @@ public class Hero extends Char {
 				break;
 		}
 	}
-	public int getMaxmana() { return maxmana; };
+	public int getMaxmana() {
+		switch (heroClass)
+		{
+			case MAGE:
+				return 10 + 10 + lvl;
+			case MAHOU_SHOUJO:
+				return 10 + lvl*2;
+			case WARRIOR:
+			case ROGUE:
+			case HUNTRESS:
+			default:
+				return 10 + lvl;
+		}
+	}
 
 	public boolean ready = false;
 	private boolean damageInterrupt = true;
@@ -1478,6 +1492,7 @@ public class Hero extends Char {
 		curAction = null;
 
 		Ankh ankh = null;
+		ThrowingKnife knive = null;
 
 		//look for ankhs in player inventory, prioritize ones which are blessed.
 		for (Item item : belongings){
@@ -1485,6 +1500,9 @@ public class Hero extends Char {
 				if (ankh == null || ((Ankh) item).isBlessed()) {
 					ankh = (Ankh) item;
 				}
+			}
+			if (item instanceof ThrowingKnife) {
+				knive = (ThrowingKnife) item;
 			}
 		}
 
@@ -1501,7 +1519,11 @@ public class Hero extends Char {
 
 			ankh.detach(belongings.backpack);
 
-
+			if (knive != null)
+                if (knive.quantity() > 0) {
+                    knive.detach(belongings.backpack);
+                    GLog.w(Messages.get(this,"lostknive"));
+                }
 
 			Sample.INSTANCE.play( Assets.SND_TELEPORT );
 			GLog.w( Messages.get(this, "revive") );
