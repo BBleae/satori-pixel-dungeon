@@ -1036,13 +1036,19 @@ public class Hero extends Char {
 
 		if (wep != null) damage = wep.proc( this, enemy, damage );
 
-		if (heroClass == HeroClass.MAGE){
-			if (mana >= maxmana / 2){
-				int manaatk = Random.Int(5,mana/2);
-				mana -= manaatk;
-				damage += manaatk;
-				GLog.w(Messages.get(this,"manaatk",manaatk));
-			}
+		switch (heroClass) {
+			case MAGE:
+				if (mana >= maxmana / 2){
+					int manaatk = Random.Int(5,mana/2);
+					mana -= manaatk;
+					damage += manaatk;
+					GLog.w(Messages.get(this,"manaatk",manaatk));
+				}
+				break;
+			case HUNTRESS:
+				damage *= 0.95f;
+			default:
+				break;
 		}
 		
 		switch (subClass) {
@@ -1108,6 +1114,9 @@ public class Hero extends Char {
 		if (damage > 0 && heroClass == HeroClass.MAGE){
 			if(mana >= 20){
 				int manadef = Random.Int(5,mana);
+				if (damage - manadef * 2 < 0) {
+					manadef = damage / 2 - 1;
+				}
 				damage -= manadef * 2;
 				mana -= manadef;
 				GLog.w(Messages.get(this,"manadef",manadef * 2));

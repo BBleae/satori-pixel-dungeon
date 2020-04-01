@@ -99,13 +99,13 @@ public class SpiritBow extends Weapon {
 		if (action.equals(AC_CAO)){
 			curUser = hero;
 			curItem = this;
-			if (hero.mana>=10){
+			if (hero.mana>=20){
 				//GameScene.selectCell( shooter );
 				cao(hero.pos);
-				hero.mana-=10;
+				hero.mana-=20;
 			}
 			else{
-				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),10);
+				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),20);
 			}
 		}
 	}
@@ -257,8 +257,8 @@ public class SpiritBow extends Weapon {
 				if (ch != null){
 					if (ch.alignment == Dungeon.hero.alignment) {
 						//same as a healing potion
-						Buff.affect( ch, Healing.class ).setHeal((int)(0.2f*ch.HT + 14), 0.25f, 0);
-						PotionOfHealing.cure(ch);
+						//Buff.affect( ch, Healing.class ).setHeal((int)(0.2f*ch.HT + 14), 0.25f, 0);
+						//PotionOfHealing.cure(ch);
 					}
 					else {
 						Buff.affect( ch, Roots.class, 5f);
@@ -272,7 +272,7 @@ public class SpiritBow extends Weapon {
 
 					plantCandidates.add(i);
 				}
-				GameScene.add( Blob.seed( i, 1, Regrowth.class ) );
+				GameScene.add( Blob.seed( i, 3, Regrowth.class ) );
 			}
 		}
 
