@@ -127,11 +127,17 @@ public abstract class Wand extends Item {
 		if (owner.mana >= manaRequirement){
 			if (owner.subClass == HeroSubClass.DEVIL){
 				GLog.w(Messages.get(this,"use_mana"));
+				owner.spend(0.25f);
+				owner.busy();
+				owner.sprite.operate(owner.pos);
 				gainCharge(2);
 				owner.mana -= manaRequirement;
 			}
 			else {
 				GLog.w(Messages.get(this,"use_mana"));
+				owner.spend(0.25f);
+				owner.busy();
+				owner.sprite.operate(owner.pos);
 				gainCharge(1);
 				owner.mana -= manaRequirement;
 			}
