@@ -57,6 +57,7 @@ public class WildEnergy extends TargetedSpell {
 				for (int i = 0; i < 4; i++){
 					if (hero.belongings.misc1 instanceof Artifact) ((Artifact) hero.belongings.misc1).charge(hero);
 					if (hero.belongings.misc2 instanceof Artifact) ((Artifact) hero.belongings.misc2).charge(hero);
+					if (hero.belongings.misc3 instanceof Artifact) ((Artifact) hero.belongings.misc3).charge(hero);
 				}
 
 				Buff.affect(hero, Recharging.class, 8f);

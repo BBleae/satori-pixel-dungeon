@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -32,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.ReagentOfPellouxite;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
@@ -43,6 +45,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -130,6 +135,7 @@ public enum HeroClass {
 		//for testing
 		//new ScrollOfUpgrade().collect();
 		//new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
+		//new ChaliceOfBlood().collect();new RingOfAccuracy().collect();new RingOfEnergy().collect();new Amulet().collect();new RingOfElements().collect();
 	}
 
 	public Badges.Badge masteryBadge() {

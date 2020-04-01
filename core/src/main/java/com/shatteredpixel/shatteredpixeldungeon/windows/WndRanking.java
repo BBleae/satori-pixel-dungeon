@@ -244,6 +244,9 @@ public class WndRanking extends WndTabbed {
 			if (stuff.misc2 != null) {
 				addItem( stuff.misc2);
 			}
+			if (stuff.misc3 != null) {
+				addItem( stuff.misc3);
+			}
 
 			pos = 0;
 			for (int i = 0; i < 4; i++){
@@ -289,7 +292,7 @@ public class WndRanking extends WndTabbed {
 	
 	private class ItemButton extends Button {
 		
-		public static final int HEIGHT	= 28;
+		public static final int HEIGHT	= 20;
 		
 		private Item item;
 		

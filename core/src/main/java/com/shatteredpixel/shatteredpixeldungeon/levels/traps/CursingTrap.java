@@ -101,6 +101,11 @@ public class CursingTrap extends Trap {
 			canCurse.add(misc2);
 		}
 
+		KindofMisc misc3 = hero.belongings.misc3;
+		if (misc3 != null){
+			canCurse.add(misc3);
+		}
+
 		Collections.shuffle(priorityCurse);
 		Collections.shuffle(canCurse);
 

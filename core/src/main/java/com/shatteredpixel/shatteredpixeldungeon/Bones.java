@@ -85,7 +85,10 @@ public class Bones {
 				case 3:
 					item = hero.belongings.misc2;
 					break;
-				case 4: case 5:
+				case 4:
+					item = hero.belongings.misc3;
+					break;
+				case 5: default:
 					item = Dungeon.quickslot.randomNonePlaceholder();
 					break;
 			}

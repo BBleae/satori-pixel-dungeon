@@ -92,11 +92,11 @@ public class WndBag extends WndTabbed {
 		NOT_EQUIPPED
 	}
 
-	protected static final int COLS_P    = 4;
-	protected static final int COLS_L    = 6;
+	protected static final int COLS_P    = 5;
+	protected static final int COLS_L    = 9;
 	
-	protected static final int SLOT_WIDTH	= 28;
-	protected static final int SLOT_HEIGHT	= 28;
+	protected static final int SLOT_WIDTH	= 24;
+	protected static final int SLOT_HEIGHT	= 24;
 	protected static final int SLOT_MARGIN	= 1;
 	
 	protected static final int TITLE_HEIGHT	= 14;
@@ -218,6 +218,7 @@ public class WndBag extends WndTabbed {
 		placeItem( stuff.armor != null ? stuff.armor : new Placeholder( ItemSpriteSheet.ARMOR_HOLDER ) );
 		placeItem( stuff.misc1 != null ? stuff.misc1 : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
 		placeItem( stuff.misc2 != null ? stuff.misc2 : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
+		placeItem( stuff.misc3 != null ? stuff.misc3 : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
 
 		// Items in the bag
 		for (Item item : container.items.toArray(new Item[0])) {
