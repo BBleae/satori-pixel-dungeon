@@ -270,13 +270,20 @@ public class DM300 extends Mob {
 		}
 	}
 
+	private boolean isprotected = false;
+
 	@Override
 	public void damage(int dmg, Object src) {
 		if (HP - dmg <= 0){
 			if (curmode != ACMODE.MODE_BK){
 				curmode = ACMODE.MODE_BK;
 				HP = 20 + dmg;
+				isprotected = true;
 				GLog.n( Messages.get(this, "mode_bk") );
+			}
+			if (isprotected) {
+				HP += dmg;
+				isprotected = false;
 			}
 			//if (curmode == ACMODE.MODE_BK) curmode = ACMODE.MODE1;
 		}
