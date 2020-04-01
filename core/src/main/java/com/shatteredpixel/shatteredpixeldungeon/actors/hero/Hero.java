@@ -1114,12 +1114,15 @@ public class Hero extends Char {
 		if (damage > 0 && heroClass == HeroClass.MAGE){
 			if(mana >= 20){
 				int manadef = Random.Int(5,mana);
-				if (damage - manadef * 2 < 0) {
-					manadef = damage / 2 - 1;
+				if (manadef <= damage) {
+					damage -= manadef;
 				}
-				damage -= manadef * 2;
+				if (damage < manadef) {
+					manadef = damage;
+					damage = 0;
+				}
 				mana -= manadef;
-				GLog.w(Messages.get(this,"manadef",manadef * 2));
+				GLog.w(Messages.get(this,"manadef",manadef));
 			}
 		}
 		
