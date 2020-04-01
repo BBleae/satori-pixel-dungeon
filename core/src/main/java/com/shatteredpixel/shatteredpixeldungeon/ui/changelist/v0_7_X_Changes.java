@@ -67,12 +67,22 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.7", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_稍微削弱了妖梦。\n_-_增加了物品栏大小。"));
+
+		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
+				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。"));
+
 		changes = new ChangeInfo("SPD v1.7.3.6", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_修复了部分文本错误~\n_-_更改了APK包名。强化了一些Boss\n_-_稍微削弱了妖梦。\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。"));
+				"_-_修复了部分文本错误~\n_-_更改了APK包名。强化了一些Boss"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.WARRIOR, 12, 14, 12, 14), "恋恋强化",
 				"_-_抑制·超我的恋技能完全改变。"));
