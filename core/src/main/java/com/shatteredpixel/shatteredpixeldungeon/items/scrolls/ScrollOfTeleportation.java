@@ -70,7 +70,7 @@ public class ScrollOfTeleportation extends Scroll {
 		Sample.INSTANCE.play( Assets.SND_PHONE );
 		Invisibility.dispel();
 
-		teleportPreferringUnseen( curUser,false,false );
+		teleportPreferringUnseen( curUser,false,true );
 		setKnown();
 
 		readAnimation();
