@@ -72,7 +72,7 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_稍微削弱了妖梦。\n_-_增加了物品栏大小。"));
+				"_-_稍微削弱了妖梦。\n_-_增加了物品栏大小。\n_-_加入了真正意义上的剧情。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
 				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。"));
