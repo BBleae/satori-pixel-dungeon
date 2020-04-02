@@ -183,7 +183,10 @@ public class InterlevelScene extends PixelScene {
 		add(im);
 
 		String text = Messages.get(Mode.class, mode.name());
-		if (loadingDepth == 1) text = Messages.get(Hero.class,"start_load") ;
+		if (loadingDepth == 1 && !Dungeon.start_descended) {
+			text = Messages.get(Hero.class,"start_load") ;
+			Dungeon.start_descended = true;
+		}
 		if (!Dungeon.haveplayed) text = Messages.get(Hero.class,"before_start") ;
 		
 		message = PixelScene.renderTextBlock( text, 9 );

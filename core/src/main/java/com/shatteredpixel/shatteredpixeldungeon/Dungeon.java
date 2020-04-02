@@ -165,6 +165,7 @@ public class Dungeon {
 	public static long seed;
 
 	public static boolean haveplayed;
+	public static boolean start_descended;
 	
 	public static void init() {
 
@@ -196,6 +197,7 @@ public class Dungeon {
 		depth = -1;
 		gold = 0;
 		haveplayed = true;
+		start_descended = false;
 
 		droppedItems = new SparseArray<>();
 		portedItems = new SparseArray<>();
@@ -482,6 +484,11 @@ public class Dungeon {
 	private static final String CHAPTERS	= "chapters";
 	private static final String QUESTS		= "quests";
 	private static final String BADGES		= "badges";
+	private static final String PLAYED		= "haveplayed";
+	private static final String DESCENDED	= "start_descended";
+
+	//haveplayed;
+	//start_descended;
 	
 	public static void saveGame( int save ) {
 		try {
@@ -494,6 +501,8 @@ public class Dungeon {
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
+			bundle.put( PLAYED, haveplayed );
+			bundle.put( DESCENDED, start_descended );
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -588,6 +597,9 @@ public class Dungeon {
 		
 		Dungeon.level = null;
 		Dungeon.depth = -1;
+
+		haveplayed = bundle.getBoolean( PLAYED );
+		start_descended = bundle.getBoolean( DESCENDED );
 		
 		Scroll.restore( bundle );
 		Potion.restore( bundle );

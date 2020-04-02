@@ -142,6 +142,18 @@ public class King extends Mob {
 
 	@Override
 	public void damage(int dmg, Object src) {
+		if (dmg >= HP) {
+			for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
+				if (mob instanceof Undead && HT > 99) {
+					HT -= 50;
+					HP += Random.Int(HT - HP);
+					GLog.n(Messages.get(this, "regenup"));
+					mob.die(src);
+					return;
+				}
+			}
+		}
+
 		super.damage(dmg, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg);
@@ -151,7 +163,7 @@ public class King extends Mob {
 	public void die( Object cause ) {
 
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
-			if (mob instanceof Undead && HT > 50) {
+			if (mob instanceof Undead && HT > 99) {
 				HT -= 50;
 				HP += Random.Int(HT-HP);
 				GLog.n(Messages.get(this,"regenup"));

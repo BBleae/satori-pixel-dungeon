@@ -435,9 +435,10 @@ public class GameScene extends PixelScene {
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
 				if (Dungeon.depth == 0)
 					GLog.h(Messages.get(this, "in_study"));
-				else if (Dungeon.depth == 1) {
+				else if (Dungeon.depth == 1 ) {
 					GamesInProgress.selectedClass.initHero( Dungeon.hero );
 					GLog.h(Messages.get(this, "start_descend"), Dungeon.depth);
+					//Dungeon.start_descended = true;
 				}
 				else GLog.h(Messages.get(this, "descend"), Dungeon.depth);
 
