@@ -921,28 +921,40 @@ public class Hero extends Char {
 			return false;
 		}
 	}
+
+	private boolean haventstart = true;
 	
 	private boolean actDescend( HeroAction.Descend action ) {
 		int stairs = action.dst;
 		if (pos == stairs) {
-			
-			curAction = null;
+			if (Dungeon.depth == 0) Statistics.qualifiedForNoKilling = false;
 
-			Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
-			if (buff != null) buff.detach();
-			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
-			if (buff != null) buff.detach();
-			
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-			Game.switchScene( InterlevelScene.class );
+			if (Dungeon.depth == 0 && haventstart) {
+				haventstart = false;
+				Game.runOnRenderThread(() -> GameScene.show( new WndMessage( Messages.get(Hero.this, "start") ) ));
+				ready();
+			}
+			else {
 
+				curAction = null;
+
+				Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
+				if (buff != null) buff.detach();
+				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+				if (buff != null) buff.detach();
+
+				GLog.h(Messages.get(this,"game_start"));
+				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+				Game.switchScene(InterlevelScene.class);
+			}
 			return false;
-
-		} else if (getCloser( stairs )) {
+		}
+		else if (getCloser( stairs )) {
 
 			return true;
 
-		} else {
+		}
+		else {
 			ready();
 			return false;
 		}
@@ -953,7 +965,7 @@ public class Hero extends Char {
 		if (pos == stairs && Dungeon.depth > 0) {
 			
 			if (Dungeon.depth == 1) {
-				
+
 				if (belongings.getItem( Amulet.class ) == null) {
 					Game.runOnRenderThread(() -> GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) ));
 					ready();

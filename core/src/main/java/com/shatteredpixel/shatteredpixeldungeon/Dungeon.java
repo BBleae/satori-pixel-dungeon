@@ -164,7 +164,7 @@ public class Dungeon {
 
 	public static long seed;
 
-	public static boolean haventplayed;
+	public static boolean haveplayed;
 	
 	public static void init() {
 
@@ -195,7 +195,7 @@ public class Dungeon {
 		
 		depth = -1;
 		gold = 0;
-		haventplayed = true;
+		haveplayed = true;
 
 		droppedItems = new SparseArray<>();
 		portedItems = new SparseArray<>();
@@ -216,8 +216,9 @@ public class Dungeon {
 		hero.live();
 		
 		Badges.reset();
-		
-		GamesInProgress.selectedClass.initHero( hero );
+
+		GamesInProgress.selectedClass.fakeinit( hero );
+		//GamesInProgress.selectedClass.initHero( hero );
 	}
 
 	public static boolean isChallenged( int mask ) {

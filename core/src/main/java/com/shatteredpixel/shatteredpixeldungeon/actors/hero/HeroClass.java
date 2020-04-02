@@ -86,6 +86,11 @@ public enum HeroClass {
 		this.subClasses = subClasses;
 	}
 
+	public void fakeinit( Hero hero ) {
+		hero.heroClass = this;
+		fakeCommon( hero );
+	}
+
 	public void initHero( Hero hero ) {
 
 		hero.heroClass = this;
@@ -116,10 +121,18 @@ public enum HeroClass {
 		
 	}
 
-	private static void initCommon( Hero hero ) {
+	private static void fakeCommon( Hero hero ) {
 		Item i = new ClothArmor().identify();
 		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+	}
 
+	private static void initCommon( Hero hero ) {
+
+		Item i;
+		/*
+		i = new ClothArmor().identify();
+		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+		*/
 		i = new Food();
 		if (!Challenges.isItemBlocked(i)) i.collect();
 

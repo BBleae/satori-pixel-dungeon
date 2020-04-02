@@ -180,7 +180,6 @@ public class SurfaceLevel extends Level {
 	private static final int P = Terrain.PEDESTAL;
 	private static final int T = Terrain.SIGN;
 
-	//TODO if I ever need to store more static maps I should externalize them instead of hard-coding
 	//Especially as I means I won't be limited to legal identifiers
 	private static final int[] MAP_START =
 			{       W, W, W, W, W, W, W, W, W, W,
