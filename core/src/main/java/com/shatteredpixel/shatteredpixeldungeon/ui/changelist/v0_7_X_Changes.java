@@ -77,6 +77,9 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
 				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。"));
 
+		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 14),"芙兰削弱",
+				"_-_芙兰朵露的所有法杖都不能自动回复充能。" ));
+
 		changes = new ChangeInfo("SPD v1.7.3.6", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);

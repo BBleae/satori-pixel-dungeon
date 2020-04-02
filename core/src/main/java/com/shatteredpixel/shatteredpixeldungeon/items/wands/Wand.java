@@ -547,7 +547,15 @@ public abstract class Wand extends Item {
 		public boolean act() {
 			if (curCharges < maxCharges)
 				recharge();
-			
+
+			if (target instanceof Hero){
+				Hero hero = (Hero)target;
+				if (hero.heroClass == HeroClass.MAHOU_SHOUJO) {
+					partialCharge = 0;
+				}
+			}
+
+
 			while (partialCharge >= 1 && curCharges < maxCharges) {
 				partialCharge--;
 				curCharges++;
