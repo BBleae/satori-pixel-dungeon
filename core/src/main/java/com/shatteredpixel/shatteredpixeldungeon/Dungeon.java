@@ -58,6 +58,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.OldPrisonBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.PrisonLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
+import com.shatteredpixel.shatteredpixeldungeon.levels.SurfaceLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
@@ -162,6 +163,8 @@ public class Dungeon {
 	public static int version;
 
 	public static long seed;
+
+	public static boolean haventplayed;
 	
 	public static void init() {
 
@@ -190,8 +193,9 @@ public class Dungeon {
 		quickslot.reset();
 		QuickSlotButton.reset();
 		
-		depth = 0;
+		depth = -1;
 		gold = 0;
+		haventplayed = true;
 
 		droppedItems = new SparseArray<>();
 		portedItems = new SparseArray<>();
@@ -239,6 +243,8 @@ public class Dungeon {
 		Level level;
 		switch (depth) {
 			case 0:
+				level = new SurfaceLevel();
+				break;
 			case 1:
 			case 2:
 			case 3:
@@ -681,9 +687,17 @@ public class Dungeon {
 		
 		Level level = (Level)bundle.get( LEVEL );
 		
-		if (level == null){
-			throw new IOException();
-		} else {
+		if (level == null) {
+			/*
+			if (haventplayed) {
+				haventplayed = false;
+				return newLevel();
+			}
+			else throw new IOException();
+			*/
+			return newLevel();
+		}
+		else {
 			return level;
 		}
 	}

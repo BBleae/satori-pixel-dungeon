@@ -950,17 +950,12 @@ public class Hero extends Char {
 	
 	private boolean actAscend( HeroAction.Ascend action ) {
 		int stairs = action.dst;
-		if (pos == stairs) {
+		if (pos == stairs && Dungeon.depth > 0) {
 			
 			if (Dungeon.depth == 1) {
 				
 				if (belongings.getItem( Amulet.class ) == null) {
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) );
-						}
-					});
+					Game.runOnRenderThread(() -> GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) ));
 					ready();
 				} else {
 					Badges.silentValidateHappyEnd();
