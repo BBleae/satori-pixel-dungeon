@@ -162,25 +162,16 @@ public class SurfaceLevel extends Level {
 
 	private static final int W = Terrain.WALL;
 	private static final int D = Terrain.DOOR;
-	private static final int L = Terrain.LOCKED_DOOR;
-	private static final int e = Terrain.EMPTY;
-	private static final int A = Terrain.WATER;
 	private static final int m = Terrain.EMPTY_SP;
-	private static final int g = Terrain.GRASS;
 	private static final int B = Terrain.BOOKSHELF;
-
 	private static final int S = Terrain.STATUE_SP;
 	private static final int s = Terrain.STATUE;
-
 	private static final int E = Terrain.ENTRANCE;
 	private static final int X = Terrain.EXIT;
-
-	private static final int M = Terrain.WALL_DECO;
 	private static final int w = Terrain.EMPTY_WELL;
 	private static final int P = Terrain.PEDESTAL;
-	private static final int T = Terrain.SIGN;
 
-	//Especially as I means I won't be limited to legal identifiers
+	//我最喜欢字符画了，笨蛋大Evan。
 	private static final int[] MAP_START =
 			{       W, W, W, W, W, W, W, W, W, W,
 					W, B, B, B, B, B, B, B, B, W,

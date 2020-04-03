@@ -55,6 +55,9 @@ public class ThrowingKnife extends MissileWeapon {
 	public int max(int lvl) {
 		return 0;
 	}
+
+	@Override
+	public boolean isUpgradable() {return false;}
 	
 	private Char enemy;
 
