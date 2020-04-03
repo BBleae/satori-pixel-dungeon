@@ -188,6 +188,10 @@ public class Belongings implements Iterable<Item> {
 			misc2.identify();
 			Badges.validateItemLevelAquired(misc2);
 		}
+		if (misc3 != null) {
+			misc3.identify();
+			Badges.validateItemLevelAquired(misc3);
+		}
 		for (Item item : backpack) {
 			if (item instanceof EquipableItem || item instanceof Wand) {
 				item.cursedKnown = true;
