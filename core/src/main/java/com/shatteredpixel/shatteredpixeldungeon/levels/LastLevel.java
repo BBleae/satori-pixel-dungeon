@@ -91,7 +91,8 @@ public class LastLevel extends Level {
 		map[pedestal] = Terrain.PEDESTAL;
 		map[pedestal-1-width()] = map[pedestal+1-width()] = map[pedestal-1+width()] = map[pedestal+1+width()] = Terrain.STATUE_SP;
 
-		exit = pedestal;
+		exit =9*(width()) + mid;
+		map[exit] = Terrain.EXIT;
 
 		int pos = pedestal;
 

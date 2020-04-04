@@ -62,7 +62,7 @@ public class DesktopLauncher {
 		// it would be nice to be able to fetch them from gradle in some way
 		config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
 		if (config.title == null) {
-			config.title = "Sstori\'s PD INDEV";
+			config.title = "Satori\'s PD INDEV";
 		}
 		
 		Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
