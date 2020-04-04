@@ -72,7 +72,7 @@ public class ThrowingKnife extends MissileWeapon {
 	protected void onThrow(int cell) {
 		enemy = Actor.findChar(cell);
 
-		if (enemy != null){
+		if (enemy != null && ! (enemy instanceof Hero) ){
             int postmp = enemy.pos;
             int postmp2 = curUser.pos;
             ScrollOfTeleportation.teleportToLocation(enemy,Dungeon.level.randomRespawnCell());
