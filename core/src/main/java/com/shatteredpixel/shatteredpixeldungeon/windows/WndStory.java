@@ -49,6 +49,7 @@ public class WndStory extends Window {
 	public static final int ID_CITY     	= 3;
 	public static final int ID_HALLS		= 4;
 	public static final int ID_LAST			= 5;
+	public static final int ID_HALLOW		= 6;
 	
 	private static final SparseArray<String> CHAPTERS = new SparseArray<>();
 	
@@ -59,6 +60,7 @@ public class WndStory extends Window {
 		CHAPTERS.put( ID_CITY, "city" );
 		CHAPTERS.put( ID_HALLS, "halls" );
 		CHAPTERS.put( ID_LAST, "last" );
+		CHAPTERS.put( ID_HALLOW, "hallow" );
 	}
 	
 	private RenderedTextBlock tf;
