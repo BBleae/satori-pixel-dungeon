@@ -200,7 +200,7 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor, weapon, misc1, misc2);
+		ScrollOfRemoveCurse.uncurse( owner, armor, weapon, misc1, misc2, misc3);
 	}
 	
 	public Item randomUnequipped() {
@@ -244,6 +244,10 @@ public class Belongings implements Iterable<Item> {
 			misc2.cursed = false;
 			misc2.activate( owner );
 		}
+		if (misc3 != null) {
+			misc3.cursed = false;
+			misc3.activate( owner );
+		}
 	}
 	
 	public int charge( float charge ) {
@@ -269,7 +273,7 @@ public class Belongings implements Iterable<Item> {
 		
 		private Iterator<Item> backpackIterator = backpack.iterator();
 		
-		private Item[] equipped = {weapon, armor, misc1, misc2};
+		private Item[] equipped = {weapon, armor, misc1, misc2, misc3};
 		private int backpackIndex = equipped.length;
 		
 		@Override

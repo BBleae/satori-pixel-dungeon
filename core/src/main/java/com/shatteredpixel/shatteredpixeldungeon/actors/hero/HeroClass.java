@@ -67,6 +67,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MahoStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 
@@ -145,10 +146,14 @@ public enum HeroClass {
 
 		//new ScrollOfTransmutation().collect();
 
-		//for testing
-		//new ScrollOfUpgrade().collect();
-		//new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
-		//new ChaliceOfBlood().collect();new RingOfAccuracy().collect();new RingOfEnergy().collect();new Amulet().collect();new RingOfElements().collect();
+
+		if (DeviceCompat.isDebug()){
+			//for testing
+			new ScrollOfUpgrade().quantity(10).collect();
+			new PotionOfLiquidFlame().collect();
+			new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
+			new ChaliceOfBlood().collect();new RingOfAccuracy().collect();new RingOfEnergy().collect();new Amulet().collect();new RingOfElements().collect();
+		}
 	}
 
 	public Badges.Badge masteryBadge() {
