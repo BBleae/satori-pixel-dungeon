@@ -47,7 +47,7 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.utils.DeviceCompat;
 
 public class TitleScene extends PixelScene {
-	public final static String gameversion = "1.7.3.X";
+	//public final static String gameversion = "1.7.3.X";
 	
 	@Override
 	public void create() {
@@ -230,7 +230,7 @@ public class TitleScene extends PixelScene {
 			btnSupport.setRect(btnPlay.left(), btnAbout.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
 		}
 
-		BitmapText version = new BitmapText( "v" + gameversion, pixelFont);
+		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);
 		version.measure();
 		version.hardlight( 0x888888 );
 		version.x = w - version.width() - 4;

@@ -51,8 +51,8 @@ public class DesktopLauncher {
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
-		config.width = 1920;
-		config.height = 1080;
+		config.width = 1920/6;
+		config.height = 1080/2;
 		
 		//uncapped (but vsynced) framerate when focused, paused when not focused
 		config.foregroundFPS = 0;
@@ -62,12 +62,12 @@ public class DesktopLauncher {
 		// it would be nice to be able to fetch them from gradle in some way
 		config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
 		if (config.title == null) {
-			config.title = "ShatteredPD INDEV";
+			config.title = "Sstori\'s PD INDEV";
 		}
 		
 		Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
 		if (Game.version == null) {
-			Game.version = "0.7.5e-INDEV";
+			Game.version = "1.7.3.x-INDEV";
 		}
 		
 		try {
