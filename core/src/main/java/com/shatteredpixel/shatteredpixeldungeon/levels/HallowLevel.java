@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Torch;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.HallowPainter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.HallsPainter;
@@ -86,17 +87,18 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public void create() {
 		//addItemToSpawn( new Torch() );
+		if(Dungeon.depth == 30)addItemToSpawn(new TestItem());
 		super.create();
 	}
 	
 	@Override
 	public String tilesTex() {
-		return Assets.TILES_HALLS;
+		return Assets.TILES_HALLOW;
 	}
 	
 	@Override
 	public String waterTex() {
-		return Assets.WATER_HALLS;
+		return Assets.WATER_SEWERS;
 	}
 	
 	@Override
@@ -118,6 +120,7 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public String tileName( int tile ) {
 		switch (tile) {
+			/*
 			case Terrain.WATER:
 				return Messages.get(HallowLevel.class, "water_name");
 			case Terrain.GRASS:
@@ -127,6 +130,7 @@ public class HallowLevel extends RegularLevel {
 			case Terrain.STATUE:
 			case Terrain.STATUE_SP:
 				return Messages.get(HallowLevel.class, "statue_name");
+				*/
 			default:
 				return super.tileName( tile );
 		}
@@ -135,6 +139,7 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
+			/*
 			case Terrain.WATER:
 				return Messages.get(HallowLevel.class, "water_desc");
 			case Terrain.STATUE:
@@ -142,6 +147,7 @@ public class HallowLevel extends RegularLevel {
 				return Messages.get(HallowLevel.class, "statue_desc");
 			case Terrain.BOOKSHELF:
 				return Messages.get(HallowLevel.class, "bookshelf_desc");
+				*/
 			default:
 				return super.tileDesc( tile );
 		}
@@ -150,11 +156,11 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public Group addVisuals() {
 		super.addVisuals();
-		addHallsVisuals( this, visuals );
+		addHallowVisuals( this, visuals );
 		return visuals;
 	}
 	
-	public static void addHallsVisuals( Level level, Group group ) {
+	public static void addHallowVisuals( Level level, Group group ) {
 		for (int i=0; i < level.length(); i++) {
 			if (level.map[i] == Terrain.WATER) {
 				group.add( new Stream( i ) );

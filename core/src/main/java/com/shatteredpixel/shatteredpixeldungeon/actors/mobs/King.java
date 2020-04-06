@@ -129,6 +129,7 @@ public class King extends Mob {
 	
 	@Override
 	protected boolean act() {
+		if (HP == 0)die(Dungeon.hero);
 		if (canTryToSummon() && pos == ((CityBossLevel)Dungeon.level).pedestal( nextPedestal )) {
 			summon();
 			return true;
@@ -165,7 +166,7 @@ public class King extends Mob {
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
 			if (mob instanceof Undead && HT > 99) {
 				HT -= 50;
-				HP += Random.Int(HT-HP);
+				HP += Random.Int(HT-HP-1) + 1;
 				GLog.n(Messages.get(this,"regenup"));
 				mob.die( cause );
 				return;

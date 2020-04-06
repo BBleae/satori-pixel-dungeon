@@ -75,7 +75,7 @@ public class v0_7_X_Changes {
 				"_-_稍微削弱了妖梦。\n_-_增加了物品栏大小。\n_-_加入了真正意义上的剧情。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
-				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。"));
+				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。\n_-_把国王不死的可能删除了。"));
 
 		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 14),"芙兰削弱",
 				"_-_芙兰朵露的所有法杖都不能自动回复充能。" ));
