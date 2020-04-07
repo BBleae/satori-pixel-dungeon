@@ -187,7 +187,7 @@ public class Bestiary {
 
 			case 27: case 28: case 29: case 30:
 				return new ArrayList<>(Arrays.asList(
-						Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class,Succubus.class));
+						Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class));
 		}
 		
 	}

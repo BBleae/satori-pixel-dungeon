@@ -98,7 +98,7 @@ public class HallowLevel extends RegularLevel {
 	
 	@Override
 	public String waterTex() {
-		return Assets.WATER_SEWERS;
+		return Assets.WATER_HALLOW;
 	}
 	
 	@Override
@@ -120,7 +120,6 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public String tileName( int tile ) {
 		switch (tile) {
-			/*
 			case Terrain.WATER:
 				return Messages.get(HallowLevel.class, "water_name");
 			case Terrain.GRASS:
@@ -130,7 +129,6 @@ public class HallowLevel extends RegularLevel {
 			case Terrain.STATUE:
 			case Terrain.STATUE_SP:
 				return Messages.get(HallowLevel.class, "statue_name");
-				*/
 			default:
 				return super.tileName( tile );
 		}
@@ -139,7 +137,6 @@ public class HallowLevel extends RegularLevel {
 	@Override
 	public String tileDesc(int tile) {
 		switch (tile) {
-			/*
 			case Terrain.WATER:
 				return Messages.get(HallowLevel.class, "water_desc");
 			case Terrain.STATUE:
@@ -147,7 +144,6 @@ public class HallowLevel extends RegularLevel {
 				return Messages.get(HallowLevel.class, "statue_desc");
 			case Terrain.BOOKSHELF:
 				return Messages.get(HallowLevel.class, "bookshelf_desc");
-				*/
 			default:
 				return super.tileDesc( tile );
 		}

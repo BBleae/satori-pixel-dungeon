@@ -85,7 +85,7 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_完成了物品快捷栏的重写。"));
+				"_-_Ver Beta\n_-_完成了物品快捷栏的重写。"));
 
 		//changes.addButton( itembutton(new MahoStaff().image,"test","testing") );
 
