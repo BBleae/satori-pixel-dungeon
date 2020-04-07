@@ -51,15 +51,14 @@ public class QuickSlot {
 	}
 
 	public void setSlot(int slot, Item item, String action){
-		String ac = "";
-		if(slotsAction != null)
-			ac += slotsAction[slot];
-		clearItem(item,action); //we don't want to allow the same item in multiple slots.
+		clearItem(item,action); //we don't want to allow the same action in multiple slots.
 		slots[slot] = item;
-		if(ac != null && !ac.equals(""))
-			slotsAction[slot] = ac;
-		if(action != null)
+		if(!action.equals(""))
 			slotsAction[slot] = action;
+		else if (item.defaultAction != null)
+			slotsAction[slot] = item.defaultAction;
+		else
+			slotsAction[slot] = "THROW";
 	}
 /*
 	public void clearSlot(int slot){
@@ -89,6 +88,22 @@ public class QuickSlot {
 		return slotsAction[slot];
 	}
 
+	public String[] getAction(Item item){
+		ArrayList<String> tmpaction = new ArrayList<>();
+		for (int i = 0; i < SIZE; i++) {
+			if (getItem(i) == item && !slotsAction[i].equals("")){
+				tmpaction.add(slotsAction[i]);
+			}
+		}
+
+		String[] result = new String[tmpaction.size()];
+		int j = 0;
+        for (String i : tmpaction) {
+            result[j] = i;
+            j++;
+        }
+		return result;
+	}
 
 	//utility methods, for easier use of the internal array.
 	public int getSlot(Item item) {
@@ -96,6 +111,14 @@ public class QuickSlot {
 			if (getItem(i) == item)
 				return i;
 		return -1;
+	}
+
+	public boolean[] getSlotSet(Item item) {
+		boolean[] itempos = new boolean[SIZE];
+		for (int i = 0; i < SIZE; i++)
+			if (getItem(i) == item)
+				itempos[i] = true;
+		return itempos;				//如果没有找到物品，理应返回[0,0,0,0]
 	}
 
 	public Boolean isPlaceholder(int slot){
@@ -114,7 +137,7 @@ public class QuickSlot {
 	public void clearItem(Item item, String action){
 		if (contains(item))
 		{
-			if (getAction(getSlot(item)) == action)
+			if (getAction(getSlot(item)).equals(action))
 				clearSlot(getSlot(item));
 		}
 	}
@@ -145,7 +168,7 @@ public class QuickSlot {
 		if (placeholder != null && contains(item))
 			for (int i = 0; i < SIZE; i++)
 				if (getItem(i) == item)
-					setSlot( i , placeholder ,null);
+					setSlot( i , placeholder ,"");
 	}
 
 	public Item randomNonePlaceholder(){
@@ -190,9 +213,6 @@ public class QuickSlot {
 				placeholders.add(getItem(i));
 				actionholders[i] = getAction(i);
 				placements[i] = true;
-			}
-			else {
-				actionholders[i] = getAction(i);
 			}
 		}
 		bundle.put( PLACEHOLDERS, placeholders );

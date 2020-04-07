@@ -466,8 +466,8 @@ public class Item implements Bundlable {
 	private static final String LEVEL_KNOWN		= "levelKnown";
 	private static final String CURSED			= "cursed";
 	private static final String CURSED_KNOWN	= "cursedKnown";
-	private static final String QUICKSLOT		= "quickslotpos";
-	private static final String QUICKACTION		= "quickactionpos";
+	private static final String QUICKSLOTSET	= "quickslotposset";
+	private static final String QUICKACTIONLIST	= "quickactionlist";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -477,8 +477,8 @@ public class Item implements Bundlable {
 		bundle.put( CURSED, cursed );
 		bundle.put( CURSED_KNOWN, cursedKnown );
 		if (Dungeon.quickslot.contains(this)) {
-			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
-			bundle.put( QUICKACTION, Dungeon.quickslot.getAction(Dungeon.quickslot.getSlot(this) ) );
+			bundle.put( QUICKSLOTSET, Dungeon.quickslot.getSlotSet(this) );
+			bundle.put( QUICKACTIONLIST, Dungeon.quickslot.getAction(this) );
 		}
 	}
 	
@@ -504,8 +504,21 @@ public class Item implements Bundlable {
 				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
 			}
 			*/
-			if (bundle.contains(QUICKSLOT) && bundle.contains(QUICKACTION)) {
-				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this, bundle.getString(QUICKACTION));
+			if (bundle.contains(QUICKSLOTSET) && bundle.contains(QUICKACTIONLIST)) {
+				//Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this, bundle.getString(QUICKACTION));
+				ArrayList<Integer> j = new ArrayList<>();
+				boolean[] k =  bundle.getBooleanArray(QUICKSLOTSET);
+				for (int i = 0; i < k.length; i++){
+					if (k[i])j.add(i);
+				}
+
+				int l=0;
+				for (String i : bundle.getStringArray(QUICKACTIONLIST)){
+					Dungeon.quickslot.setSlot(j.get(l), this,i);
+					l++;
+				}
+
+
 			}
 		}
 	}
