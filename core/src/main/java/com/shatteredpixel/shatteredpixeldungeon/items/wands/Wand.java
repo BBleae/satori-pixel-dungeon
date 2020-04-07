@@ -67,7 +67,6 @@ public abstract class Wand extends Item {
 	public int maxCharges = initialCharges();
 	public int curCharges = maxCharges;
 	public float partialCharge = 0f;
-	public int manaRequirement = initialmanaRequirement();
 	
 	protected Charger charger;
 	
@@ -124,26 +123,29 @@ public abstract class Wand extends Item {
 	public abstract void onHit( MahoStaff staff, Char attacker, Char defender, int damage);
 
 	public void ForceCharge(Hero owner) {
-		if (owner.mana >= manaRequirement){
-			if (owner.subClass == HeroSubClass.DEVIL){
-				GLog.w(Messages.get(this,"use_mana"));
-				owner.spend(0.25f);
-				owner.busy();
-				owner.sprite.operate(owner.pos);
-				gainCharge(2);
-				owner.mana -= manaRequirement;
-			}
-			else {
-				GLog.w(Messages.get(this,"use_mana"));
-				owner.spend(0.25f);
-				owner.busy();
-				owner.sprite.operate(owner.pos);
-				gainCharge(1);
-				owner.mana -= manaRequirement;
+		if (curCharges < maxCharges) {
+			if (owner.mana >= manaRequirement()) {
+				if (owner.subClass == HeroSubClass.DEVIL) {
+					GLog.w(Messages.get(this, "use_mana"));
+					owner.spend(0.25f);
+					owner.busy();
+					owner.sprite.operate(owner.pos);
+					gainCharge(2);
+					owner.mana -= manaRequirement();
+				} else {
+					GLog.w(Messages.get(this, "use_mana"));
+					owner.spend(0.25f);
+					owner.busy();
+					owner.sprite.operate(owner.pos);
+					gainCharge(1);
+					owner.mana -= manaRequirement();
+				}
+			} else {
+				GLog.w(Messages.get(this, "not_enough_mana"), owner.mana, owner.getMaxmana(), manaRequirement());
 			}
 		}
 		else {
-			GLog.w( Messages.get(this, "not_enough_mana"),owner.mana,owner.getMaxmana(),manaRequirement);
+			GLog.w(Messages.get(this, "charge_full"), owner.mana, owner.getMaxmana(), manaRequirement());
 		}
 	}
 
@@ -322,8 +324,8 @@ public abstract class Wand extends Item {
 		return 2;
 	}
 
-	protected int initialmanaRequirement(){
-		return 5;
+	protected int manaRequirement(){
+		return 5+level();
 	}
 
 	protected int chargesPerCast() {

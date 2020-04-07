@@ -72,6 +72,10 @@ public class RenderedText extends Image {
 		this.size = size;
 		measure();
 	}
+
+	public float baseLine(){
+		return size * scale.y;
+	}
 	
 	private synchronized void measure(){
 		

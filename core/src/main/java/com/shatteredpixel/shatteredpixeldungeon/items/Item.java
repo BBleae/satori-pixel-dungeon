@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -91,7 +92,17 @@ public class Item implements Bundlable {
 			return Generator.Category.order( lhs ) - Generator.Category.order( rhs );
 		}
 	};
-	
+
+	public static Item virtual(Class<? extends Item> aClass) {
+		try {
+			Item item = (Item) aClass.newInstance();
+			item.quantity = 0;return item;
+		}
+		catch (Exception e) {
+			ShatteredPixelDungeon.reportException(e);
+			return null; }
+	}
+
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = new ArrayList<>();
 		actions.add( AC_DROP );
@@ -433,6 +444,10 @@ public class Item implements Bundlable {
 		item.level = level;
 		return item;
 	}
+
+	public static boolean targetAction(String action){
+		return action.equals("THROW") || action.equals("ZAP") || action.equals("LIGHTTHROW" ) || action.equals("CAST");
+	}
 	
 	public Item random() {
 		return this;
@@ -452,6 +467,7 @@ public class Item implements Bundlable {
 	private static final String CURSED			= "cursed";
 	private static final String CURSED_KNOWN	= "cursedKnown";
 	private static final String QUICKSLOT		= "quickslotpos";
+	private static final String QUICKACTION		= "quickactionpos";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -462,6 +478,7 @@ public class Item implements Bundlable {
 		bundle.put( CURSED_KNOWN, cursedKnown );
 		if (Dungeon.quickslot.contains(this)) {
 			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
+			bundle.put( QUICKACTION, Dungeon.quickslot.getAction(Dungeon.quickslot.getSlot(this) ) );
 		}
 	}
 	
@@ -482,8 +499,13 @@ public class Item implements Bundlable {
 
 		//only want to populate slot on first load.
 		if (Dungeon.hero == null) {
+			/*
 			if (bundle.contains(QUICKSLOT)) {
 				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
+			}
+			*/
+			if (bundle.contains(QUICKSLOT) && bundle.contains(QUICKACTION)) {
+				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this, bundle.getString(QUICKACTION));
 			}
 		}
 	}
