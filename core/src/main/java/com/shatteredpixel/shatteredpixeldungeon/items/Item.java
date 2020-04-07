@@ -446,7 +446,7 @@ public class Item implements Bundlable {
 	}
 
 	public static boolean targetAction(String action){
-		return action.equals("THROW") || action.equals("ZAP") || action.equals("LIGHTTHROW" ) || action.equals("CAST");
+		return action.equals("THROW") || action.equals("ZAP") || action.equals("LIGHTTHROW" ) || action.equals("CAST") || action.equals("SHOOT");
 	}
 	
 	public Item random() {
