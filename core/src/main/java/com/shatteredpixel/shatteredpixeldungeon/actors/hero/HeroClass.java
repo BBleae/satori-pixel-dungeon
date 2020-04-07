@@ -150,7 +150,7 @@ public enum HeroClass {
 		if (DeviceCompat.isDebug()){
 			//for testing
 			new ScrollOfUpgrade().quantity(10).collect();
-			new PotionOfLiquidFlame().collect();
+			new PotionOfLiquidFlame().collect();new PotionOfHealing().quantity(10).collect();
 			new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
 			new ChaliceOfBlood().collect();new RingOfAccuracy().collect();new RingOfEnergy().collect();new Amulet().collect();new RingOfElements().collect();
 		}
