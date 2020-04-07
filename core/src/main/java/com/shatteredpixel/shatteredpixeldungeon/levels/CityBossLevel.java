@@ -49,7 +49,7 @@ public class CityBossLevel extends Level {
 	}
 	
 	private static final int TOP			= 2;
-	private static final int HALL_WIDTH		= 7;
+	private static final int HALL_WIDTH		= 11;
 	private static final int HALL_HEIGHT	= 15;
 	private static final int CHAMBER_HEIGHT	= 4;
 

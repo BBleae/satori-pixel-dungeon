@@ -25,6 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BadgeBanner;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.ReagentOfPellouxite;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.UnstableSpellbook;
@@ -41,6 +43,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfTransfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gauntlet;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MahoStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
@@ -52,10 +56,19 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.TextureFilm;
+import com.watabou.utils.RectF;
 
 import java.util.ArrayList;
 
 public class v0_7_X_Changes {
+	private static ChangeButton itembutton(int id, String title, String text) {
+		int l,t,w,h;
+		l = id % ItemSpriteSheet.WIDTH * 16;
+		t = id / ItemSpriteSheet.WIDTH * 16;
+		w = h = 16;
+		return new ChangeButton(new Image(Assets.ITEMS, l,t,w,h), title,text);
+	}
 	
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ){
 		add_v1_7_3_X_Changes(changeInfos);
@@ -74,6 +87,8 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_完成了物品快捷栏的重写。"));
 
+		//changes.addButton( itembutton(new MahoStaff().image,"test","testing") );
+
 		changes = new ChangeInfo("SPD v1.7.3.7", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
@@ -84,8 +99,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16),"BUG修复",
 				"_-_修复了部分文本错误~\n_-_DM300的自爆不会在进入最后阶段时立刻发生了。\n_-_修复了鵺的防御用灵力问题。\n_-_把国王不死的可能删除了。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 14),"芙兰削弱",
-				"_-_芙兰朵露的所有法杖都不能自动回复充能。" ));
+		changes.addButton( itembutton(new MahoStaff().image,"芙兰削弱","_-_芙兰朵露的所有法杖都不能自动回复充能。") );
 
 		changes = new ChangeInfo("SPD v1.7.3.6", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
@@ -107,8 +121,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_修复了部分文本错误~\n_-_在生命条下方增加了灵力条。"));
 
-		changes.addButton( new ChangeButton(new Image(Assets.MAHOU_SHOUJO, 12, 0, 12, 14),"芙兰强化",
-				"_-_芙兰朵露开局25瓶生石灰。" ));
+		changes.addButton( itembutton(new ReagentOfPellouxite().image,"芙兰强化","_-_芙兰朵露开局25瓶生石灰。") );
 
 		changes.addButton( new ChangeButton(new Image(Assets.ROGUE,12,0,12,14),"紫削弱",
 				"_-_紫开局力量下调两点,但折扇的初始力量需求同样下调两点。"));

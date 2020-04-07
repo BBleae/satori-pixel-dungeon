@@ -26,7 +26,7 @@ import com.watabou.noosa.TextureFilm;
 
 public class ItemSpriteSheet {
 
-	private static final int WIDTH = 16;
+	public static final int WIDTH = 16;
 
 	public static TextureFilm film = new TextureFilm( Assets.ITEMS, 16, 16 );
 
