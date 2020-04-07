@@ -53,6 +53,7 @@ public class QuickSlot {
 	public void setSlot(int slot, Item item, String action){
 		clearItem(item,action); //we don't want to allow the same action in multiple slots.
 		slots[slot] = item;
+		if(action == null) action = "";
 		if(!action.equals(""))
 			slotsAction[slot] = action;
 		else if (item.defaultAction != null)
@@ -85,7 +86,10 @@ public class QuickSlot {
 
 
 	public String getAction(int slot){
-		return slotsAction[slot];
+	    if (slotsAction[slot] != null)
+	        return slotsAction[slot];
+	    else
+	        return "";
 	}
 
 	public String[] getAction(Item item){
@@ -135,7 +139,7 @@ public class QuickSlot {
 	}
 
 	public void clearItem(Item item, String action){
-		if (contains(item))
+		if (item != null && contains(item))
 		{
 			if (getAction(getSlot(item)).equals(action))
 				clearSlot(getSlot(item));
@@ -207,6 +211,7 @@ public class QuickSlot {
 		ArrayList<Item> placeholders = new ArrayList<Item>(SIZE);
 		String[] actionholders = new String[SIZE];
 		boolean[] placements = new boolean[SIZE];
+		for (int i = 0; i < SIZE; i++) { actionholders[i] = ""; }
 
 		for (int i = 0; i < SIZE; i++) {
 			if (isPlaceholder(i)) {
