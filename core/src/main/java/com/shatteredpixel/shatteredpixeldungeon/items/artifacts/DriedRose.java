@@ -751,9 +751,14 @@ public class DriedRose extends Artifact {
 				case 3:
 					yell( Messages.get( this, "dialogue_city_" + variant ));
 					break;
-				case 4: default:
+				case 4:
 					yell( Messages.get( this, "dialogue_halls_" + variant ));
 					break;
+				case 5:
+					yell( Messages.get( this, "dialogue_hallow_" + variant ));
+					break;
+				default:
+					yell( Messages.get( this, "dialogue_default" ));
 			}
 			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
 				Sample.INSTANCE.play( Assets.SND_GHOST );
@@ -776,10 +781,20 @@ public class DriedRose extends Artifact {
 				case 3:
 					yell( Messages.get( this, "seen_king_" + Random.IntRange(1, 3) ));
 					break;
-				case 4: default:
+				case 4:
 					yell( Messages.get( this, "seen_yog_" + Random.IntRange(1, 3) ));
 					break;
+				case 5:
+					yell( Messages.get( this, "seen_author_" + Random.IntRange(1, 3) ) );
+				default:
+					yell( Messages.get( this, "dialogue_default" ) );
+					break;
 			}
+			Sample.INSTANCE.play( Assets.SND_GHOST );
+		}
+
+		public void sayAuthorAns(){
+			yell( Messages.get( this, "ans_author_" + Random.IntRange(1, 3) ) );
 			Sample.INSTANCE.play( Assets.SND_GHOST );
 		}
 		

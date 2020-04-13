@@ -144,7 +144,6 @@ public class HallowBossLevel extends Level {
 	private static final int w = Terrain.EMPTY_WELL;
 	private static final int P = Terrain.PEDESTAL;
 
-	//我最喜欢字符画了，笨蛋大Evan。
 	private static final int[] MAP_START =
 			{       W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,
 					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
