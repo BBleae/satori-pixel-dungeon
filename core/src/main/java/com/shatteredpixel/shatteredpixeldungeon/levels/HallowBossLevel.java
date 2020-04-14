@@ -23,14 +23,32 @@ package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yog;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Author;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
+import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeBalancaRoom;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeRoom;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.watabou.noosa.Group;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 import java.util.Arrays;
 
@@ -43,6 +61,18 @@ public class HallowBossLevel extends Level {
 
 	//keep track of that need to be removed as the level is changed. We dump 'em back into the level at the end.
 	//private ArrayList<Item> storedItems = new ArrayList<>();
+
+	private int stairs = -1;
+	private boolean enteredArena = false;
+	private boolean keyDropped = false;
+
+	private static final int WIDTH = 33;
+	private static final int HEIGHT = 33;
+
+	private enum stat{
+		not_started,maze1,maze2,maze3,ended
+	}
+	private stat levelstat = stat.not_started;
 	
 	@Override
 	public String tilesTex() {
@@ -53,21 +83,46 @@ public class HallowBossLevel extends Level {
 	public String waterTex() {
 		return Assets.WATER_HALLOW;
 	}
+
+	private static final String STAIRS	= "stairs";
+	private static final String ENTERED	= "entered";
+	private static final String DROPPED	= "droppped";
+	private static final String STAT	= "stat";
+
+	@Override
+	public void storeInBundle( Bundle bundle ) {
+		super.storeInBundle( bundle );
+		bundle.put( STAIRS, stairs );
+		bundle.put( ENTERED, enteredArena );
+		bundle.put( DROPPED, keyDropped );
+		bundle.put( STAT, levelstat );
+	}
+
+	@Override
+	public void restoreFromBundle( Bundle bundle ) {
+		super.restoreFromBundle( bundle );
+		stairs = bundle.getInt( STAIRS );
+		enteredArena = bundle.getBoolean( ENTERED );
+		keyDropped = bundle.getBoolean( DROPPED );
+		levelstat = bundle.getEnum( STAT, stat.class );
+	}
 	
 	@Override
 	protected boolean build() {
 		
-		setSize(32, 32);
+		setSize(WIDTH, HEIGHT);
 
 		Arrays.fill( map, Terrain.WALL );
-		Painter.fill(this,1,1,30,30,Terrain.EMPTY_SP);
+		Painter.fill(this,1,1,WIDTH-2,HEIGHT-2,Terrain.EMPTY_SP);
 
 		buildFlagMaps();
 		cleanWalls();
 
-		entrance = 1+1*width;
+		entrance = WIDTH/2 + (HEIGHT/2) *width ;
 		map[entrance] = Terrain.ENTRANCE;
 		exit = 1+2*width;
+
+		levelstat = stat.not_started;
 
 		return true;
 	}
@@ -91,7 +146,117 @@ public class HallowBossLevel extends Level {
 
 	@Override
 	protected void createItems() {
-		drop(new TestItem(), 30+30*width);
+		//drop(new TestItem(), 30+30*width);
+	}
+
+	private void doMagic( int cell ) {
+		set( cell, Terrain.EMPTY_SP );
+		CellEmitter.get( cell ).start( FlameParticle.FACTORY, 0.1f, 3 );
+	}
+
+	public void process(){
+		switch (levelstat){
+			case not_started:
+				generatemaze();
+				levelstat = stat.maze1;
+				break;
+			case maze1:
+
+				break;
+			case maze2:
+
+				break;
+			case maze3:
+
+				break;
+			case ended: default:
+
+				break;
+		}
+	}
+
+	private void generatemaze(){
+		MazeBalanca mazeBalanca = new MazeBalanca(8,8);
+		changeMap(mazeBalanca.pFullarray());
+		/*
+		Room maze = new MazeBalancaRoom();
+		maze.set(0,0,WIDTH-1,HEIGHT-1);
+		maze.paint(this);
+		buildFlagMaps();
+		cleanWalls();
+		GameScene.resetMap();
+		*/
+		GameScene.flash(0xFFFFFF);
+		Sample.INSTANCE.play(Assets.SND_BLAST);
+	}
+
+	private void changeMap(int[] map){
+		this.map = map.clone();
+		buildFlagMaps();
+		cleanWalls();
+
+		exit = entrance = 0;
+		for (int i = 0; i < length(); i ++)
+			if (map[i] == Terrain.ENTRANCE)
+				entrance = i;
+			else if (map[i] == Terrain.EXIT)
+				exit = i;
+
+		BArray.setFalse(visited);
+		BArray.setFalse(mapped);
+
+		for (Blob blob: blobs.values()){
+			blob.fullyClear();
+		}
+		addVisuals(); //this also resets existing visuals
+		//resetTraps();
+
+
+		GameScene.resetMap();
+		Dungeon.observe();
+	}
+
+	@Override
+	public void occupyCell( Char ch ) {
+
+		super.occupyCell( ch );
+
+		if (!enteredArena && ch == Dungeon.hero && ch.pos != entrance) {
+			enteredArena = true;
+			seal();
+			doMagic( entrance );
+			GameScene.updateMap();
+
+			Dungeon.observe();
+
+			Author boss = new Author();
+
+			do {
+				boss.pos = Random.Int( length() );
+			}
+			while (!passable[boss.pos] || !heroFOV[boss.pos]);
+
+			CellEmitter.get( boss.pos ).start( SparkParticle.FACTORY, 0.1f, 3 );
+			GameScene.add( boss );
+
+			stairs = entrance;
+			entrance = -1;
+		}
+	}
+
+	@Override
+	public Heap drop( Item item, int cell ) {
+
+		if (!keyDropped && item instanceof SkeletonKey) {
+			keyDropped = true;
+			unseal();
+
+			entrance = stairs;
+			set( entrance, Terrain.ENTRANCE );
+			GameScene.updateMap( entrance );
+		}
+
+		return super.drop( item, cell );
 	}
 
 	@Override
@@ -132,50 +297,4 @@ public class HallowBossLevel extends Level {
 		CityLevel.addCityVisuals(this, visuals);
 		return visuals;
 	}
-
-	private static final int W = Terrain.WALL;
-	private static final int D = Terrain.DOOR;
-	private static final int m = Terrain.EMPTY_SP;
-	private static final int B = Terrain.BOOKSHELF;
-	private static final int S = Terrain.STATUE_SP;
-	private static final int s = Terrain.STATUE;
-	private static final int E = Terrain.ENTRANCE;
-	private static final int X = Terrain.EXIT;
-	private static final int w = Terrain.EMPTY_WELL;
-	private static final int P = Terrain.PEDESTAL;
-
-	private static final int[] MAP_START =
-			{       W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,W,
-					W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,
-			};
-	}
+}

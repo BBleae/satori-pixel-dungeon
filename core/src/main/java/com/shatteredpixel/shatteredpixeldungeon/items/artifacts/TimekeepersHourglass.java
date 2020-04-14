@@ -294,6 +294,7 @@ public class TimekeepersHourglass extends Artifact {
 		float turnsToCost = 0f;
 
 		ArrayList<Integer> presses = new ArrayList<>();
+		private ArrayList<Integer> damages = new ArrayList<>(); // damages delay to give
 
 		public void processTime(float time){
 			turnsToCost -= time;
@@ -317,13 +318,37 @@ public class TimekeepersHourglass extends Artifact {
 				presses.add(cell);
 		}
 
+		public void setDelayedDamage(int dmg) {
+			damages.add(dmg);
+		}
+
 		private void triggerPresses(){
 			for (int cell : presses)
 				Dungeon.level.pressCell(cell);
 
 			presses = new ArrayList<>();
 		}
-
+/*
+		private void triggerDamages() {
+			for (dmg : damages) {
+				(dmg.to as Char?)?.let { ch: Char ->
+					if (ch.isAlive) {
+						ch.takeDamage(dmg)
+						if (Dungeon.visible[ch.pos]) {
+							// effects
+							if (dmg.from is Char) {
+								(dmg.from as Char?)?.let {
+									ch.sprite.bloodBurstA(it.sprite.center(), dmg.value)
+									Sample.INSTANCE.play(Assets.SND_HIT, 1f, 1f, Random.Float(.8f, 1.25f))
+								}
+							}
+						}
+					}
+				}
+			}
+			damages.clear()
+		}
+*/
 		@Override
 		public boolean attachTo(Char target) {
 			if (Dungeon.level != null)
@@ -343,6 +368,7 @@ public class TimekeepersHourglass extends Artifact {
 			super.detach();
 			activeBuff = null;
 			triggerPresses();
+			//triggerDamages();
 			target.next();
 		}
 
