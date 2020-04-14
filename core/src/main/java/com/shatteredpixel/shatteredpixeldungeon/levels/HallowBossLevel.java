@@ -37,9 +37,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
+//import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeBalancaRoom;
+//import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeBalancaRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -176,8 +176,8 @@ public class HallowBossLevel extends Level {
 	}
 
 	private void generatemaze(){
-		MazeBalanca mazeBalanca = new MazeBalanca(8,8);
-		changeMap(mazeBalanca.pFullarray());
+		//MazeBalanca mazeBalanca = new MazeBalanca(8,8);
+		//changeMap(mazeBalanca.pFullarray());
 		/*
 		Room maze = new MazeBalancaRoom();
 		maze.set(0,0,WIDTH-1,HEIGHT-1);
