@@ -37,6 +37,8 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.particles.Emitter;
 
 import java.io.IOException;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 
 public class TestItem extends Item {
 
-	public static final String AC_DAWN	= "DAWN";
+	public static final String AC_DOWN	= "DOWN";
 	
 	public static final float TIME_TO_LIGHT = 1;
 	
@@ -59,7 +61,7 @@ public class TestItem extends Item {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		//actions.add( AC_DAWN );
+		actions.add( AC_DOWN );
 		return actions;
 	}
 	
@@ -68,11 +70,13 @@ public class TestItem extends Item {
 
 		super.execute( hero, action );
 		
-		/*if (action.equals( AC_DAWN )) {
-			//hero
-			//Dungeon.level.
-			Level.set(hero.pos+1,Terrain.EMPTY);
-		}*/
+		if (action.equals( AC_DOWN )) {
+			if (Dungeon.depth<30){
+				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+				Game.switchScene(InterlevelScene.class);
+			}
+			else GLog.n("\nYou cannot get lower than level 30");
+		}
 	}
 
 

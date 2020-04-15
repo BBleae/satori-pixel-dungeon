@@ -290,6 +290,9 @@ public class Hero extends Char {
 	private static final String HUNGER		= "hunger";
 	private static final String MANA		= "mana";
 	private static final String MAXMANA		= "maxmana";
+
+	private static final String HAVENTSTARTED	= "haventstarted";
+	private static final String HAVENTGETDOWN	= "haventgetdown";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -313,6 +316,9 @@ public class Hero extends Char {
 		bundle.put( MANA , mana);
 		bundle.put( MAXMANA , maxmana);
 
+		bundle.put( HAVENTSTARTED , haventstart );
+		bundle.put( HAVENTGETDOWN , haventgetdown );
+
 		belongings.storeInBundle( bundle );
 	}
 	
@@ -335,6 +341,9 @@ public class Hero extends Char {
 		hunger = bundle.getFloat(HUNGER);
 		mana = bundle.getInt(MANA);
 		maxmana = bundle.getInt(MAXMANA);
+
+		haventstart = bundle.getBoolean( HAVENTSTARTED );
+		haventgetdown = bundle.getBoolean( HAVENTGETDOWN );
 		
 		belongings.restoreFromBundle( bundle );
 	}
@@ -923,6 +932,7 @@ public class Hero extends Char {
 	}
 
 	private boolean haventstart = true;
+	private boolean haventgetdown = true;
 	
 	private boolean actDescend( HeroAction.Descend action ) {
 		int stairs = action.dst;
@@ -943,7 +953,12 @@ public class Hero extends Char {
 				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 				if (buff != null) buff.detach();
 
-				GLog.h(Messages.get(this,"game_start"));
+				if (haventgetdown && Dungeon.depth == 0){
+					haventgetdown = false;
+					GLog.h(Messages.get(this,"game_start"));
+				}
+				else if (haventgetdown)haventgetdown=false;
+
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 				Game.switchScene(InterlevelScene.class);
 			}
