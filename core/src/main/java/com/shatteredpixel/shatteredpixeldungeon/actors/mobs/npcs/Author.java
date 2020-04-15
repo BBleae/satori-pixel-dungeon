@@ -22,18 +22,30 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yog;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
+import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 public class Author extends NPC {
 
@@ -55,7 +67,7 @@ public class Author extends NPC {
 	
 	@Override
 	public void damage( int dmg, Object src ) {
-
+	    yell(Messages.get(this,"no_damage_" + Random.Int(0,3)));
 	}
 	
 	@Override
@@ -80,7 +92,7 @@ public class Author extends NPC {
 	}
 	
 	public static WndBag sell() {
-		return GameScene.selectItem( itemSelector, WndBag.Mode.FOR_SALE, Messages.get(Author.class, "sell"));
+		return GameScene.selectItem( itemSelector, WndBag.Mode.ALL, Messages.get(Author.class, "ask"));
 	}
 	
 	private static WndBag.Listener itemSelector = new WndBag.Listener() {
@@ -93,14 +105,43 @@ public class Author extends NPC {
 		}
 	};
 
+	private boolean haventasked = true;
+
 	@Override
 	public boolean interact() {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				sell();
-			}
-		});
+		if(haventasked) {
+			Game.runOnRenderThread(() -> GameScene.show( new WndMessage( Messages.get(this, "question") ) ));
+			haventasked = false;
+		}
+		else {
+			yell(Messages.get(this,"find_me"));
+			//Game.runOnRenderThread(() -> sell());
+		}
+
 		return false;
 	}
+
+    @Override
+    public void die( Object cause ) {
+        GameScene.bossSlain();
+        Dungeon.level.drop( new Amulet(), pos ).sprite.drop();
+        super.die( cause );
+
+        yell( Messages.get(this, "defeated") );
+    }
+
+    @Override
+    public void notice() {
+        super.notice();
+        if (!BossHealthBar.isAssigned()) {
+            BossHealthBar.assignBoss(this);
+            yell(Messages.get(this, "notice"));
+            for (Char ch : Actor.chars()){
+                if (ch instanceof DriedRose.GhostHero){
+                    GLog.n("\n");
+                    ((DriedRose.GhostHero) ch).sayBoss();
+                }
+            }
+        }
+    }
 }

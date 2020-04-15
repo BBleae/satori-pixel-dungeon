@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Author;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
@@ -230,12 +231,13 @@ public class HallowBossLevel extends Level {
 			Dungeon.observe();
 
 			Author boss = new Author();
-
+			boss.pos = entrance;
+			/*
 			do {
 				boss.pos = Random.Int( length() );
 			}
 			while (!passable[boss.pos] || !heroFOV[boss.pos]);
-
+			*/
 			CellEmitter.get( boss.pos ).start( SparkParticle.FACTORY, 0.1f, 3 );
 			GameScene.add( boss );
 
@@ -247,7 +249,7 @@ public class HallowBossLevel extends Level {
 	@Override
 	public Heap drop( Item item, int cell ) {
 
-		if (!keyDropped && item instanceof SkeletonKey) {
+		if (!keyDropped && item instanceof Amulet) {
 			keyDropped = true;
 			unseal();
 
