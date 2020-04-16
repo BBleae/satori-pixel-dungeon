@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.features;
 
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.watabou.utils.Random;
 
 public class MazeBalanca {
@@ -30,6 +31,25 @@ public class MazeBalanca {
             for (int j = 0; j <= 3; ++j) tmp.append(paint_buf[j]).append("\n");
         }
         return tmp.toString();
+    }
+
+    int[] paint_pArray(String strmap,int size){     //需要使用已经输出的字符串
+        int i=0;
+        int[] a = new int[size];
+        for(int x=0; x < strmap.length(); x++) {
+            char ch = strmap.charAt(x);
+            switch (ch){
+                case 'W':
+                    a[i]=Terrain.WALL;
+                    i++;
+                    break;
+                case 'e':
+                    a[i]=Terrain.EMPTY;
+                    i++;
+                    break;
+            }
+        }
+        return a;
     }
 
     private boolean FindR_check(int x, int y) {
