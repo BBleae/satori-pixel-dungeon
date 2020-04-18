@@ -57,7 +57,7 @@ public class ThreeDirectionsword extends MeleeWeapon {
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				Char n = Actor.findChar(i);
-				if( isnear8(attacker,n) && isnear4(defender,n) )
+				if( n != null && isnear8(attacker,n) && isnear4(defender,n) )
 					affected.add(n);
 			}
 		}
