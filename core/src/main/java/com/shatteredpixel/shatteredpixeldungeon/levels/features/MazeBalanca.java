@@ -33,7 +33,11 @@ public class MazeBalanca {
         return tmp.toString();
     }
 
-    int[] paint_pArray(String strmap,int size){     //需要使用已经输出的字符串
+    public int[] paint_pArray(){
+        return paint_pArray(map_in_str,(n*4+1)*(m*4+1));
+    }
+
+    public int[] paint_pArray(String strmap,int size){     //需要使用已经输出的字符串
         int i=0;
         int[] a = new int[size];
         for(int x=0; x < strmap.length(); x++) {
@@ -56,7 +60,7 @@ public class MazeBalanca {
         return x >= 0 && x <= n && y >= 0 && y <= m;
     }
 
-	private int[] FindR_mx = { -1, 1, 0, 0 }, FindR_my = { 0, 0, -1, 1 };
+	private int[] FindR_mx = { -1, 1, 0, 0 }, FindR_my = {0,0,1,-1};//{ 0, 0, -1, 1 };
 
     private boolean FindR_sr(int x, int y, int dis) {
         //printf("%d %d %d\n", x, y, dis);
@@ -80,7 +84,7 @@ public class MazeBalanca {
 
             int rad, nx, ny;
             while (!(acc[0] && acc[1] && acc[2] && acc[3])) {
-                rad = Random.Int(0,3);
+                rad = Random.Int(0,4) % 4;
                 nx = x + FindR_mx[rad];
                 ny = y + FindR_my[rad];
                 if (FindR_check(nx, ny) && !sta[nx][ny] && FindR_sr(nx, ny, dis + 1)) {
@@ -118,16 +122,21 @@ public class MazeBalanca {
         }
     }
 
-    MazeBalanca(int n,int m){
+    public MazeBalanca(int n, int m){
         this(n,m,n*m,n+m);
     }
 
-    MazeBalanca(int n,int m,int dmax,int dmin) {
+    public MazeBalanca(int width,int height,int dmax,int dmin) {
         dm = dmax; di = dmin;
+        n = width; m = height;
         n--; m--;
         FindR_sr(0, 0, 1);
         thr = dd;
-        while (thr < (n + 1) * (m + 1)) CTW_main();
+        while (thr < (n + 2) * (m + 2)) CTW_main();
         map_in_str = paint_pFull();
+    }
+
+    public int width(){
+        return 4 * n + 1;
     }
 }

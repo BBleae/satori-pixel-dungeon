@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 public class TestItem extends Item {
 
 	public static final String AC_DOWN	= "DOWN";
+	public static final String AC_TEST	= "TEST";
 	
 	public static final float TIME_TO_LIGHT = 1;
 	
@@ -62,6 +64,7 @@ public class TestItem extends Item {
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_DOWN );
+		actions.add( AC_TEST );
 		return actions;
 	}
 	
@@ -77,6 +80,11 @@ public class TestItem extends Item {
 			}
 			else GLog.n("\nYou cannot get lower than level 30");
 		}
+		if (action.equals( AC_TEST )) {
+			MazeBalanca mazeBalanca = new MazeBalanca(4,4);
+			int[] test_map = mazeBalanca.paint_pArray();
+		}
+
 	}
 
 
