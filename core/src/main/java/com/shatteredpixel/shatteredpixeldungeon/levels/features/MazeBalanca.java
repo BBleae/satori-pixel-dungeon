@@ -9,10 +9,10 @@ public class MazeBalanca {
     private boolean[][] sta = new boolean[N][N];
     private boolean[][][] pat = new boolean[N][N][2];   // down & right
     private int n, m, dd, dm, di, thr; // n row && m line && dd = defined distance
-
+    private String map_in_str = "";
 
     private String[] paint_buf =new String[4];
-    String paint_pFull() {
+    private String paint_pFull() {
         StringBuilder tmp = new StringBuilder();
         tmp.append("WWWW");
         for (int i = 1; i <= m; ++i)    tmp.append("WWWW");
@@ -119,12 +119,7 @@ public class MazeBalanca {
     }
 
     MazeBalanca(int n,int m){
-        dm = n*m;di=n+m;
-        n--;m--;
-        FindR_sr(0, 0, 1);
-        thr = dd;
-        while (thr < (n + 1) * (m + 1)) CTW_main();
-        paint_pFull();
+        this(n,m,n*m,n+m);
     }
 
     MazeBalanca(int n,int m,int dmax,int dmin) {
@@ -133,6 +128,6 @@ public class MazeBalanca {
         FindR_sr(0, 0, 1);
         thr = dd;
         while (thr < (n + 1) * (m + 1)) CTW_main();
-        paint_pFull();
+        map_in_str = paint_pFull();
     }
 }
