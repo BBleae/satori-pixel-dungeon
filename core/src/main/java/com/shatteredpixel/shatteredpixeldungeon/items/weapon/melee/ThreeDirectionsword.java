@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.watabou.utils.PathFinder;
@@ -34,15 +35,16 @@ import java.util.ArrayList;
 public class ThreeDirectionsword extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.GREATSWORD;
+		image = ItemSpriteSheet.THREEDIRWPN;
 
-		tier=1;
+		tier=5;
 	}
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage ) {
 		affected.clear();
-		find3dir(attacker, defender, 2);
+		if(!(this.enchantment instanceof Projecting)) find3dir(attacker, defender, 2);
+		else findalldir(attacker, defender, damage);
 		affected.remove(defender); //or defender would hurt twice
 		for (Char ch : affected) {
 			ch.damage(damage, this);
@@ -58,6 +60,17 @@ public class ThreeDirectionsword extends MeleeWeapon {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				Char n = Actor.findChar(i);
 				if( n != null && isnear8(attacker,n) && isnear4(defender,n) )
+					affected.add(n);
+			}
+		}
+	}
+
+	private void findalldir(Char attacker, Char defender, int dist ) {
+		PathFinder.buildDistanceMap( attacker.pos, BArray.not( Dungeon.level.solid, null ), dist );
+		for (int i = 0; i < PathFinder.distance.length; i++) {
+			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
+				Char n = Actor.findChar(i);
+				if( n != null && isnear8(attacker,n))
 					affected.add(n);
 			}
 		}

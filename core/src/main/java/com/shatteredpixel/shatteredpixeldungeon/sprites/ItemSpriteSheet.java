@@ -253,6 +253,7 @@ public class ItemSpriteSheet {
 	public static final int GREATAXE        = WEP_TIER5+3;
 	public static final int GREATSHIELD     = WEP_TIER5+4;
 	public static final int GAUNTLETS       = WEP_TIER5+5;
+	public static final int THREEDIRWPN		= WEP_TIER5+6;
 	static{
 		assignItemRect(GREATSWORD,  16, 16);
 		assignItemRect(WAR_HAMMER,  16, 16);
@@ -260,6 +261,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GREATAXE,    12, 16);
 		assignItemRect(GREATSHIELD, 12, 16);
 		assignItemRect(GAUNTLETS,   13, 15);
+		assignItemRect(THREEDIRWPN, 16, 16);
 	}
 
 	                                                                                    //8 free slots
