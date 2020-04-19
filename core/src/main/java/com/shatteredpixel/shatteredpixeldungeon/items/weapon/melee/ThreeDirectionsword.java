@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -42,14 +43,19 @@ public class ThreeDirectionsword extends MeleeWeapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage ) {
+		damage = enchantment.proc(this,attacker,defender,damage);
+
 		affected.clear();
 		if(!(this.enchantment instanceof Projecting)) find3dir(attacker, defender, 2);
 		else findalldir(attacker, defender, damage);
+
 		affected.remove(defender); //or defender would hurt twice
 		for (Char ch : affected) {
+			if(this.enchantment != null && attacker.buff(MagicImmune.class) == null)
+				damage = enchantment.proc(this,attacker,ch,damage);
 			ch.damage(damage, this);
 		}
-		return super.proc(attacker, defender, damage);
+		return damage;
 	}
 
 	private ArrayList<Char> affected = new ArrayList<>();
