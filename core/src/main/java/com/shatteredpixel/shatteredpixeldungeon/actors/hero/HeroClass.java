@@ -55,10 +55,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfHumor;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -154,7 +157,9 @@ public enum HeroClass {
 			new PotionOfLiquidFlame().collect();new PotionOfHealing().quantity(10).collect();
 			new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();
 			new ChaliceOfBlood().collect();new RingOfAccuracy().collect();new RingOfEnergy().collect();new Amulet().collect();new RingOfElements().collect();
-			new ThreeDirectionsword().collect();
+			new ScrollOfIdentify().collect();
+			new ScrollOfEnchantment().quantity(20).collect();
+			new ThreeDirectionsword().enchant(Weapon.Enchantment.randomUncommon()).collect();
 		}
 	}
 

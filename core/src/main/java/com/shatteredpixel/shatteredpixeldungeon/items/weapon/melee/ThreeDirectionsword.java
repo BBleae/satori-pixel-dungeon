@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.watabou.utils.PathFinder;
@@ -38,22 +39,30 @@ public class ThreeDirectionsword extends MeleeWeapon {
 	{
 		image = ItemSpriteSheet.THREEDIRWPN;
 
-		tier=5;
+		tier=1;
 	}
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage ) {
-		damage = enchantment.proc(this,attacker,defender,damage);
+		if(enchantment!=null) damage = enchantment.proc(this,attacker,defender,damage);
+		int dmg;
 
 		affected.clear();
 		if(!(this.enchantment instanceof Projecting)) find3dir(attacker, defender, 2);
-		else findalldir(attacker, defender, damage);
+		else findalldir(attacker, defender, 2);
 
 		affected.remove(defender); //or defender would hurt twice
 		for (Char ch : affected) {
-			if(this.enchantment != null && attacker.buff(MagicImmune.class) == null)
-				damage = enchantment.proc(this,attacker,ch,damage);
-			ch.damage(damage, this);
+			dmg = damage;
+			if(Char.hit(attacker,ch,false)){
+				if(this.enchantment != null && attacker.buff(MagicImmune.class) == null){
+					dmg = enchantment.proc(this,attacker,ch,damage);
+				}
+				ch.damage(dmg, this);
+			}
+			else {
+				ch.sprite.showStatus(CharSprite.NEUTRAL,  ch.defenseVerb());
+			}
 		}
 		return damage;
 	}
