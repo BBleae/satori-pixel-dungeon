@@ -22,10 +22,10 @@ public class MazeBalanca {
             for (int j = 0; j <= m; ++j) {
                 paint_buf[0] += "eeeW";
                 paint_buf[1] += "eee";
-                paint_buf[1] += (pat[i][j][1] ? "  " : "W");
+                paint_buf[1] += (pat[i][j][1] ? "e" : "W");
                 paint_buf[2] += "eeeW";
                 paint_buf[3] += "W";
-                paint_buf[3] += (pat[i][j][0] ? "  " : "W");
+                paint_buf[3] += (pat[i][j][0] ? "e" : "W");
                 paint_buf[3] += "WW";
             }
             for (int j = 0; j <= 3; ++j) tmp.append(paint_buf[j]).append("\n");
@@ -53,6 +53,11 @@ public class MazeBalanca {
                     break;
             }
         }
+
+        for(int j=1;j<5;j++){           //得把下面的门堵上，然而我忘了是哪一个位置_(:з」∠)_
+            a[a.length-j]=Terrain.WALL;
+        }
+
         return a;
     }
 
@@ -60,7 +65,7 @@ public class MazeBalanca {
         return x >= 0 && x <= n && y >= 0 && y <= m;
     }
 
-	private int[] FindR_mx = { -1, 1, 0, 0 }, FindR_my = {0,0,1,-1};//{ 0, 0, -1, 1 };
+	private int[] FindR_mx = { -1, 1, 0, 0 }, FindR_my = { 0, 0, -1, 1 };
 
     private boolean FindR_sr(int x, int y, int dis) {
         //printf("%d %d %d\n", x, y, dis);
@@ -102,11 +107,12 @@ public class MazeBalanca {
     }
 
 
-    private static int CTW_cot = 0;
+    private int CTW_cot = 0;
+    private boolean CTW_hori;
     private void CTW_main() {
-        boolean CTW_hori = Random.Int(0, 1) == 1;
+        CTW_hori = Random.Int(0, 2)%2 == 1;
         int CTW_ro = n + 1 - (CTW_hori ? 1:0), CTW_li = m + 1 - (CTW_hori ? 0:1);
-        int CTW_al = Random.Int(0,CTW_li-1), CTW_ar = Random.Int(0,CTW_ro-1);
+        int CTW_al = Random.Int(0,CTW_li) % CTW_li, CTW_ar = Random.Int(0,CTW_ro) % CTW_ro ;
         int CTW_bl = CTW_al + (CTW_hori ? 0:1), CTW_br = CTW_ar + (CTW_hori ? 1:0);
         if (sta[CTW_ar][CTW_al] ^ sta[CTW_br][CTW_bl]) {
             pat[CTW_ar][CTW_al][(CTW_hori ? 0:1)] = true;
@@ -132,7 +138,7 @@ public class MazeBalanca {
         n--; m--;
         FindR_sr(0, 0, 1);
         thr = dd;
-        while (thr < (n + 2) * (m + 2)) CTW_main();
+        while (thr < (n + 1) * (m + 1)) CTW_main();
         map_in_str = paint_pFull();
     }
 
