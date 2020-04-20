@@ -81,8 +81,8 @@ public class TestItem extends Item {
 			else GLog.n("\nYou cannot get lower than level 30");
 		}
 		if (action.equals( AC_TEST )) {
-			MazeBalanca mazeBalanca = new MazeBalanca(4,4);
-			int[] test_map = mazeBalanca.paint_pArray();
+			MazeBalanca mazeBalanca = new MazeBalanca(8,8);
+			int[] test_map = mazeBalanca.paint_pArray();//17*17=289 map
 		}
 
 	}

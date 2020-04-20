@@ -34,14 +34,16 @@ public class MazeBalanca {
     }
 
     public int[] paint_pArray(){
-        return paint_pArray(map_in_str,(n*4+1)*(m*4+1));
+        return paint_pArray(map_in_str,width()*height());
     }
 
-    public int[] paint_pArray(String strmap,int size){     //需要使用已经输出的字符串
+    private int[] paint_pArray(String strmap, int size){     //需要使用已经输出的字符串
         int i=0;
         int[] a = new int[size];
         for(int x=0; x < strmap.length(); x++) {
             char ch = strmap.charAt(x);
+            if(i>=size)break;
+            else
             switch (ch){
                 case 'W':
                     a[i]=Terrain.WALL;
@@ -50,6 +52,8 @@ public class MazeBalanca {
                 case 'e':
                     a[i]=Terrain.EMPTY;
                     i++;
+                    break;
+                default:
                     break;
             }
         }
@@ -143,6 +147,7 @@ public class MazeBalanca {
     }
 
     public int width(){
-        return 4 * n + 1;
+        return 4 * (n+1) + 1;
     }
+    public int height() { return 4 * (m+1) + 1; }
 }

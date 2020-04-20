@@ -24,7 +24,16 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yog;
@@ -33,10 +42,13 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.AuthorSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -50,8 +62,8 @@ import com.watabou.utils.Random;
 public class Author extends NPC {
 
 	{
-		spriteClass = ShopkeeperSprite.class;
-
+		spriteClass = AuthorSprite.class;
+		properties.add(Property.BOSS);
 		properties.add(Property.IMMOVABLE);
 	}
 	
@@ -68,6 +80,18 @@ public class Author extends NPC {
 	@Override
 	public void damage( int dmg, Object src ) {
 	    yell(Messages.get(this,"no_damage_" + Random.Int(0,3)));
+	}
+
+	public void reallytakedamage( int dmg ){ 				//to reduce Author's HP safely
+		if (!isAlive() || dmg < 0) {
+			return;
+		}
+
+		if (HP < 0) HP = 0;
+
+		if (!isAlive()) {
+			die( Hero.class );
+		}
 	}
 	
 	@Override
