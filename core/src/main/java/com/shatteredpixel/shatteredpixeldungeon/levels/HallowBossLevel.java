@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 //import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 //import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeBalancaRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeRoom;
@@ -177,8 +178,10 @@ public class HallowBossLevel extends Level {
 	}
 
 	private void generatemaze(){
-		//MazeBalanca mazeBalanca = new MazeBalanca(8,8);
-		//changeMap(mazeBalanca.pFullarray());
+		GameScene.flash(0xFFFFFF);		//8*8的maze的生成时间肯定比较长。先闪它一下。
+		MazeBalanca mazeBalanca = new MazeBalanca(8,8);
+		int[] test_map = mazeBalanca.paint_pArray();//17*17=289 map
+		changeMap(test_map);
 		/*
 		Room maze = new MazeBalancaRoom();
 		maze.set(0,0,WIDTH-1,HEIGHT-1);

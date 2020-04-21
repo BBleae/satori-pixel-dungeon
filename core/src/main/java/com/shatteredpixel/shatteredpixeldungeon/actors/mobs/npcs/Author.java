@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
+import com.shatteredpixel.shatteredpixeldungeon.levels.HallowBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.AuthorSprite;
@@ -56,6 +57,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.Game;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
@@ -139,6 +141,7 @@ public class Author extends NPC {
 		}
 		else {
 			yell(Messages.get(this,"find_me"));
+			((HallowBossLevel)Dungeon.level).process();
 			//Game.runOnRenderThread(() -> sell());
 		}
 
@@ -168,4 +171,20 @@ public class Author extends NPC {
             }
         }
     }
+
+    private final String HAVENTASKED = "haventasked";
+
+	@Override
+	public void storeInBundle( Bundle bundle ) {
+
+		super.storeInBundle( bundle );
+		bundle.put(HAVENTASKED,haventasked);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		BossHealthBar.assignBoss(this);
+		haventasked = bundle.getBoolean(HAVENTASKED);
+	}
 }
