@@ -140,8 +140,18 @@ public class Author extends NPC {
 			haventasked = false;
 		}
 		else {
-			yell(Messages.get(this,"find_me"));
-			//notice();
+			switch ( ((HallowBossLevel)Dungeon.level).levelstat ){
+				default:
+					yell("?????");
+					break;
+				case not_started:
+					yell(Messages.get(this,"find_me"));
+					break;
+				case maze1: case maze2:
+					yell(Messages.get(this,"maze_finished"));
+					break;
+			}
+
 			((HallowBossLevel)Dungeon.level).process();
 			//Game.runOnRenderThread(() -> sell());
 		}

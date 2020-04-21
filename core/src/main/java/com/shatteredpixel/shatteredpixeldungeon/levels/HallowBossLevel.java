@@ -72,10 +72,10 @@ public class HallowBossLevel extends Level {
 	private static final int WIDTH = 33;
 	private static final int HEIGHT = 33;
 
-	private enum stat{
+	public enum stat{
 		not_started,maze1,maze2,maze3,ended
 	}
-	private stat levelstat = stat.not_started;
+	public stat levelstat = stat.not_started;
 	
 	@Override
 	public String tilesTex() {
@@ -166,7 +166,9 @@ public class HallowBossLevel extends Level {
 				levelstat = stat.maze1;
 				break;
 			case maze1:
-
+				generatemaze();
+				moveplayer();
+				levelstat = stat.maze2;
 				break;
 			case maze2:
 
@@ -181,19 +183,12 @@ public class HallowBossLevel extends Level {
 	}
 
 	private void generatemaze(){
-		GameScene.flash(0xFFFFFF);		//8*8的maze的生成时间肯定比较长。先闪它一下。
+		GameScene.flash(0x660000);		//Dark Red  //8*8的maze的生成时间肯定比较长。先闪它一下。
 		MazeBalanca mazeBalanca = new MazeBalanca(8,8);
 		int[] test_map = mazeBalanca.paint_pArray();//17*17=289 map
 		changeMap(test_map);
-		/*
-		Room maze = new MazeBalancaRoom();
-		maze.set(0,0,WIDTH-1,HEIGHT-1);
-		maze.paint(this);
-		buildFlagMaps();
-		cleanWalls();
-		GameScene.resetMap();
-		*/
-		GameScene.flash(0xFFFFFF);
+		cleanMapState();
+		GameScene.flash(0x339900);		//Dark Green
 		Sample.INSTANCE.play(Assets.SND_BLAST);
 	}
 
@@ -230,13 +225,6 @@ public class HallowBossLevel extends Level {
 		buildFlagMaps();
 		cleanWalls();
 
-		exit = entrance = 0;
-		for (int i = 0; i < length(); i ++)
-			if (map[i] == Terrain.ENTRANCE)
-				entrance = i;
-			else if (map[i] == Terrain.EXIT)
-				exit = i;
-
 		BArray.setFalse(visited);
 		BArray.setFalse(mapped);
 
@@ -245,8 +233,22 @@ public class HallowBossLevel extends Level {
 		}
 		addVisuals(); //this also resets existing visuals
 
-		GameScene.resetMap();
+		GameScene.resetMap(); //???
 		Dungeon.observe();
+	}
+
+	private void cleanMapState(){
+		buildFlagMaps();
+		cleanWalls();
+
+		BArray.setFalse(visited);
+		BArray.setFalse(mapped);
+
+		for (Blob blob: blobs.values()){
+			blob.fullyClear();
+		}
+		addVisuals(); //this also resets existing visuals
+		traps.clear();
 	}
 
 	@Override
