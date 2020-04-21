@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.TestItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 //import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.MazeBalanca;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 //import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.MazeBalancaRoom;
@@ -160,6 +161,8 @@ public class HallowBossLevel extends Level {
 		switch (levelstat){
 			case not_started:
 				generatemaze();
+				moveplayer();
+				moveauthor();
 				levelstat = stat.maze1;
 				break;
 			case maze1:
@@ -194,6 +197,34 @@ public class HallowBossLevel extends Level {
 		Sample.INSTANCE.play(Assets.SND_BLAST);
 	}
 
+	private void moveplayer(){
+		//ScrollOfTeleportation.teleportToLocation(Dungeon.hero,getPos(2,2));
+		ScrollOfTeleportation.appear( Dungeon.hero, getPos(2,2) );
+		occupyCell( Dungeon.hero );
+		Dungeon.observe();
+		GameScene.updateFog();
+
+		for (Mob m : mobs){
+			//bring the first ally with you
+			if (m.alignment == Char.Alignment.ALLY && !m.properties().contains(Char.Property.IMMOVABLE)){
+				m.pos = getPos(1,1);
+				m.sprite.place(m.pos);
+				break;
+			}
+		}
+	}
+
+	private void moveauthor(){
+		for (Mob m : mobs){
+			//bring the Author to the end of the maze
+			if (m instanceof Author){
+				m.pos = getPos(30,30);
+				m.sprite.place(m.pos);
+				break;
+			}
+		}
+	}
+
 	private void changeMap(int[] map){
 		this.map = map.clone();
 		buildFlagMaps();
@@ -213,8 +244,6 @@ public class HallowBossLevel extends Level {
 			blob.fullyClear();
 		}
 		addVisuals(); //this also resets existing visuals
-		//resetTraps();
-
 
 		GameScene.resetMap();
 		Dungeon.observe();
@@ -243,6 +272,8 @@ public class HallowBossLevel extends Level {
 			*/
 			CellEmitter.get( boss.pos ).start( SparkParticle.FACTORY, 0.1f, 3 );
 			GameScene.add( boss );
+
+			boss.notice();
 
 			stairs = entrance;
 			entrance = -1;

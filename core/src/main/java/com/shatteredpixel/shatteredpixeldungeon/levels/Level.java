@@ -265,7 +265,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public int getPos(int x, int y){
-		return (y-1)*width+x;
+		return y*width+x;
 	}
 	
 	public void setSize(int w, int h){

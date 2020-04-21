@@ -141,6 +141,7 @@ public class Author extends NPC {
 		}
 		else {
 			yell(Messages.get(this,"find_me"));
+			//notice();
 			((HallowBossLevel)Dungeon.level).process();
 			//Game.runOnRenderThread(() -> sell());
 		}
