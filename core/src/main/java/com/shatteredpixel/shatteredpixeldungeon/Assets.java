@@ -132,6 +132,7 @@ public class Assets {
 	public static final String LOADING_CAVES	= "loading_caves.png";
 	public static final String LOADING_CITY	    = "loading_city.png";
 	public static final String LOADING_HALLS	= "loading_halls.png";
+	public static final String LOADING_HALLOW	= "loading_hallow.png";
 
 	public static final String WEAK_FLOOR       = "custom_tiles/weak_floor.png";
 	public static final String SEWER_BOSS       = "custom_tiles/sewer_boss.png";

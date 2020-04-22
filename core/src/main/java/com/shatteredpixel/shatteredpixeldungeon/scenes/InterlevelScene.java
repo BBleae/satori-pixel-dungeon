@@ -60,6 +60,8 @@ public class InterlevelScene extends PixelScene {
 	private static final float NORM_FADE = 0.67f; //.33 in, .67 steady, .33 out, 1.33 seconds total
 	//fast fade when ascending, or descending to a floor you've been on
 	private static final float FAST_FADE = 0.50f; //.33 in, .33 steady, .33 out, 1 second total
+	//super slow fade while entering level 30, the Author floor, which need longer to generate maze
+	private static final float SUPER_SLOW_FADE = 1.50f; //.33 in, 2.34 steady .33 out, 3 seconds total
 	
 	private static float fadeTime;
 	
@@ -115,9 +117,16 @@ public class InterlevelScene extends PixelScene {
 					} else if (loadingDepth == 6 || loadingDepth == 11
 							|| loadingDepth == 16 || loadingDepth == 22) {
 						fadeTime = SLOW_FADE;
-					}
+					} else if (loadingDepth == 30)
+						fadeTime = SUPER_SLOW_FADE;
 				}
-				scrollSpeed = 5;
+
+				if (loadingDepth == 30)
+					scrollSpeed = 100;			//这样进入30层的效果更鬼畜了。
+				else if (loadingDepth == 29 && !(Statistics.deepestFloor < loadingDepth))
+					scrollSpeed = -100;			//离开的效果也要同样鬼畜！
+				else scrollSpeed = 5;
+
 				break;
 			case FALL:
 				loadingDepth = Dungeon.depth+1;
@@ -138,6 +147,7 @@ public class InterlevelScene extends PixelScene {
 		else if (loadingDepth <= 15)    loadingAsset = Assets.LOADING_CAVES;
 		else if (loadingDepth <= 21)    loadingAsset = Assets.LOADING_CITY;
 		else if (loadingDepth <= 25)    loadingAsset = Assets.LOADING_HALLS;
+		else if (loadingDepth <= 30)    loadingAsset = Assets.LOADING_HALLOW;
 		else                            loadingAsset = Assets.SHADOW;
 		
 		//speed up transition when debugging
