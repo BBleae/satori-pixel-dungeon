@@ -150,6 +150,12 @@ public class Author extends NPC {
 				case maze1: case maze2:
 					yell(Messages.get(this,"maze_finished"));
 					break;
+				case maze3:
+					yell(Messages.get(this,"puzzle_finished"));
+					break;
+				case ended:
+					yell(Messages.get(this,"right_answer"));
+					break;
 			}
 
 			((HallowBossLevel)Dungeon.level).process();

@@ -8,7 +8,7 @@ public class MazeBalanca {
     private final int N = 2333;
     private boolean[][] sta = new boolean[N][N];
     private boolean[][][] pat = new boolean[N][N][2];   // down & right
-    private int n, m, dd, dm, di, thr; // n row && m line && dd = defined distance
+    private int n=0, m=0, dd=0, dm=0, di=0, thr=0; // n row && m line && dd = defined distance
     private String map_in_str = "";
 
     private String[] paint_buf =new String[4];
