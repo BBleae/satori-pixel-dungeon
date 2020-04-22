@@ -170,8 +170,6 @@ public class Author extends NPC {
         GameScene.bossSlain();
         Dungeon.level.drop( new Amulet(), pos ).sprite.drop();
         super.die( cause );
-
-        yell( Messages.get(this, "defeated") );
     }
 
     @Override
