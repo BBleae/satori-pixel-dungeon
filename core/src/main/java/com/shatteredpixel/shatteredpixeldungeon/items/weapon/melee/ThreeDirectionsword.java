@@ -39,7 +39,7 @@ public class ThreeDirectionsword extends MeleeWeapon {
 	{
 		image = ItemSpriteSheet.THREEDIRWPN;
 
-		tier=1;
+		tier=5;
 	}
 
 	@Override

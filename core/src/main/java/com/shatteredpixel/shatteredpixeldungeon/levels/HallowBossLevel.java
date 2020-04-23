@@ -62,8 +62,8 @@ public class HallowBossLevel extends Level {
 	private boolean enteredArena = false;
 	private boolean keyDropped = false;
 
-	private static final int WIDTH = 33;
-	private static final int HEIGHT = 33;
+	private static final int WIDTH = 4*6+1;
+	private static final int HEIGHT = 4*6+1;
 
 	private static int[] map_bk, map_maze1, map_maze2, map_maze3;
 
@@ -134,11 +134,11 @@ public class HallowBossLevel extends Level {
 		levelstat = stat.not_started;
 		map_bk = map.clone();
 
-		MazeBalanca mazeBalanca1 = new MazeBalanca(8,8);
+		MazeBalanca mazeBalanca1 = new MazeBalanca(6,6);
 		map_maze1 = mazeBalanca1.paint_pArray();//17*17=289 map
-		MazeBalanca mazeBalanca2 = new MazeBalanca(8,8);
+		MazeBalanca mazeBalanca2 = new MazeBalanca(6,6);
 		map_maze2 = mazeBalanca2.paint_pArray();
-		MazeBalanca mazeBalanca3 = new MazeBalanca(8,8);
+		MazeBalanca mazeBalanca3 = new MazeBalanca(6,6);
 		map_maze3 = mazeBalanca3.paint_pArray();
 
 		return true;
@@ -240,7 +240,7 @@ public class HallowBossLevel extends Level {
 		for (Mob m : mobs){
 			//bring the Author to the end of the maze
 			if (m instanceof Author){
-				m.pos = getPos(30,30);
+				m.pos = getPos(WIDTH-3,HEIGHT-3);
 				m.sprite.place(m.pos);
 				break;
 			}

@@ -319,15 +319,15 @@ public class InterlevelScene extends PixelScene {
 				} );
 				thread = null;
 				error = null;
-			} else if (thread != null && (int)waitingTime == 10){
-				waitingTime = 11f;
+			} else if (thread != null && (int)waitingTime == 20){
+				waitingTime = 21f;
 				String s = "";
 				for (StackTraceElement t : thread.getStackTrace()){
 					s += "\n";
 					s += t.toString();
 				}
 				ShatteredPixelDungeon.reportException(
-						new RuntimeException("waited more than 10 seconds on levelgen. " +
+						new RuntimeException("waited more than 20 seconds on levelgen. " +
 								"Seed:" + Dungeon.seed + " depth:" + Dungeon.depth + " trace:" +
 								s)
 				);
