@@ -753,6 +753,15 @@ public abstract class Level implements Bundlable {
 		GameScene.updateMap( pos );
 	}
 
+	public boolean bossisalive() {
+		for (Mob m : mobs){
+			if (m.properties().contains(Char.Property.BOSS)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Trap setTrap( Trap trap, int pos ){
 		Trap existingTrap = traps.get(pos);
 		if (existingTrap != null){

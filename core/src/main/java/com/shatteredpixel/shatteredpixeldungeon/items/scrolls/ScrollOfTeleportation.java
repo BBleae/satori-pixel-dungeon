@@ -27,7 +27,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.NewTengu;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.levels.NewPrisonBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
@@ -70,7 +72,10 @@ public class ScrollOfTeleportation extends Scroll {
 		Sample.INSTANCE.play( Assets.SND_PHONE );
 		Invisibility.dispel();
 
-		teleportPreferringUnseen( curUser,false,true );
+		/*if(Dungeon.depth == 10 && ((NewPrisonBossLevel)Dungeon.level).state()!= NewPrisonBossLevel.State.WON)
+			GLog.n( "%s: \"%s\" ", Messages.titleCase(Messages.get(NewTengu.class, "name")), Messages.get(NewTengu.class,"no_tele") );
+		else*/
+			teleportPreferringUnseen( curUser,false,true );
 		setKnown();
 
 		readAnimation();
@@ -117,10 +122,14 @@ public class ScrollOfTeleportation extends Scroll {
 		GameScene.updateFog();
 		
 	}
-	
-	public static void teleportHero( Hero  hero ) {
 
-		if (Dungeon.bossLevel()){
+	public static void teleportHero( Hero  hero ) {
+		teleportHero(hero,false);
+	}
+	
+	public static void teleportHero( Hero  hero, boolean forced ) {
+
+		if (Dungeon.bossLevel() && !forced){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 			return;
 		}
@@ -151,8 +160,8 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 
 	public static void teleportPreferringUnseen( Hero hero , boolean special , boolean forced){
-		if ((Dungeon.bossLevel() && special == false) || !(Dungeon.level instanceof RegularLevel) || forced){
-			teleportHero( hero );
+		if ((Dungeon.bossLevel() && !special) || !(Dungeon.level instanceof RegularLevel) || forced){
+			teleportHero( hero, forced);
 			return;
 		}
 

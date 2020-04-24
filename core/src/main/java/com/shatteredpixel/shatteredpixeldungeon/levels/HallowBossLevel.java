@@ -45,6 +45,8 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 import java.util.Arrays;
 
@@ -158,7 +160,11 @@ public class HallowBossLevel extends Level {
 	}
 
 	public int randomRespawnCell() {
-		return entrance;
+		int cell;
+		do {
+			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
+		} while (!passable[cell] || Actor.findChar(cell) != null);
+		return cell;
 	}
 
 	@Override

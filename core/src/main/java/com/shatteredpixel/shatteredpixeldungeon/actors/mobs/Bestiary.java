@@ -185,9 +185,15 @@ public class Bestiary {
 						Eye.class, Eye.class,
 						Scorpio.class, Scorpio.class, Scorpio.class));
 
-			case 27: case 28: case 29: case 30:
+			case 27: case 28:
 				return new ArrayList<>(Arrays.asList(
-						Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class,Scorpio.class));
+						Cup.class,Cup.class,Cup.class,Cup.class));
+
+			case 29: case 30:
+				return new ArrayList<>(Arrays.asList(
+						Scorpio.class,Scorpio.class,Scorpio.class,
+						Scorpio.class,Scorpio.class,Scorpio.class,
+						Scorpio.class,Scorpio.class,Scorpio.class));
 		}
 		
 	}

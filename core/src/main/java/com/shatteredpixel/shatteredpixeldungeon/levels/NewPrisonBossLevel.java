@@ -685,10 +685,18 @@ public class NewPrisonBossLevel extends Level {
 	public int randomRespawnCell() {
 		int pos = ENTRANCE_POS; //random cell adjacent to the entrance.
 		int cell;
-		do {
-			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
-		return cell;
+		if(bossisalive()){
+			do {
+				cell = Random.Int(0,(width()-1)*(height()-1));
+			} while (!passable[cell] || Actor.findChar(cell) != null || !heroFOV[cell]);
+			return cell;
+		}
+		else {
+			do {
+				cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			} while (!passable[cell] || Actor.findChar(cell) != null);
+			return cell;
+		}
 	}
 	
 	@Override
