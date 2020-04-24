@@ -54,6 +54,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Thorns;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -71,7 +72,10 @@ import java.util.Arrays;
 
 public class Armor extends EquipableItem {
 
-	protected static final String AC_DETACH       = "DETACH";
+	protected static final String AC_DETACH     = "DETACH";
+	protected static final String AC_TP			= "TP";
+
+	public static final int manaRequire = 6;
 	
 	public enum Augment {
 		EVASION (1.5f , -1f),
@@ -101,6 +105,9 @@ public class Armor extends EquipableItem {
 	public boolean curseInfusionBonus = false;
 	
 	private BrokenSeal seal;
+	public boolean hasSeal() {
+		return seal != null;
+	}
 	
 	public int tier;
 	
@@ -138,6 +145,8 @@ public class Armor extends EquipableItem {
 		inscribe((Glyph) bundle.get(GLYPH));
 		curseInfusionBonus = bundle.getBoolean( CURSE_INFUSION_BONUS );
 		seal = (BrokenSeal)bundle.get(SEAL);
+
+		if(seal != null)defaultAction = AC_TP;
 		
 		//pre-0.7.2 saves
 		if (bundle.contains( "unfamiliarity" )){
@@ -155,12 +164,16 @@ public class Armor extends EquipableItem {
 		availableUsesToID = USES_TO_ID/2f;
 		//armor can be kept in bones between runs, the seal cannot.
 		seal = null;
+		defaultAction = null;
 	}
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if (seal != null) actions.add(AC_DETACH);
+		if (seal != null) {
+			actions.add(AC_DETACH);
+			actions.add(AC_TP);
+		}
 		return actions;
 	}
 
@@ -181,7 +194,32 @@ public class Armor extends EquipableItem {
 			if (!seal.collect()){
 				Dungeon.level.drop(seal, hero.pos);
 			}
+
+			//清理快捷栏
 			seal = null;
+			defaultAction = null;
+
+			int slot = Dungeon.quickslot.getSlot(this);
+			if (slot != -1){
+				Dungeon.quickslot.clearSlot(slot);
+				updateQuickslot();
+				Dungeon.quickslot.setSlot( slot, this );
+				updateQuickslot();
+			}
+
+		}
+
+		else if (action.equals(AC_TP) && seal != null){
+			curUser = hero;
+			curItem = this;
+			//GameScene.selectCell(shooter);
+			if (hero.mana>=manaRequire){
+				new ScrollOfTeleportation().doRead2();
+				hero.mana-=manaRequire;
+			}
+			else{
+				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),manaRequire);
+			}
 		}
 	}
 
@@ -193,7 +231,9 @@ public class Armor extends EquipableItem {
 		if (hero.belongings.armor == null || hero.belongings.armor.doUnequip( hero, true, false )) {
 			
 			hero.belongings.armor = this;
-			
+
+			if(seal != null)defaultAction = AC_TP;
+
 			cursedKnown = true;
 			if (cursed) {
 				equipCursed( hero );
@@ -249,6 +289,8 @@ public class Armor extends EquipableItem {
 
 			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
 			if (sealBuff != null) sealBuff.setArmor(null);
+
+			defaultAction = null;
 
 			return true;
 

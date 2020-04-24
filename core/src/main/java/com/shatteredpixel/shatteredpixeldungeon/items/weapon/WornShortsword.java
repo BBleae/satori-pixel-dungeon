@@ -68,9 +68,11 @@ public class WornShortsword extends Weapon {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		//actions.add(AC_EQUIP);
+		/*
 		if (hero.heroClass == HeroClass.WARRIOR) {
 			actions.add(AC_TP);
 		}
+		*/
 		return actions;
 	}
 
@@ -78,7 +80,8 @@ public class WornShortsword extends Weapon {
 	public void execute(Hero hero, String action) {
 
 		super.execute(hero, action);
-
+		//The function of teleport has been removed
+		/*
 		if (action.equals(AC_TP)) {
 
 			curUser = hero;
@@ -92,6 +95,7 @@ public class WornShortsword extends Weapon {
 				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),manaRequire);
 			}
 		}
+		*/
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -38,7 +39,10 @@ import java.util.ArrayList;
 
 public class BrokenSeal extends Item {
 
-	public static final String AC_AFFIX = "AFFIX";
+	private static final String AC_AFFIX 	= "AFFIX";
+	private static final String AC_TP		= "TP";
+
+	private static final int manaRequire = 6;
 
 	//only to be used from the quickslot, for tutorial purposes mostly.
 	public static final String AC_INFO = "INFO_WINDOW";
@@ -50,13 +54,14 @@ public class BrokenSeal extends Item {
 		unique = true;
 		bones = false;
 
-		defaultAction = AC_INFO;
+		defaultAction = AC_TP;
 	}
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
+		actions.add(AC_TP);
 		return actions;
 	}
 
@@ -68,8 +73,21 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
-		} else if (action.equals(AC_INFO)) {
+		}
+		else if (action.equals(AC_INFO)) {
 			GameScene.show(new WndItem(null, this, true));
+		}
+		else if (action.equals(AC_TP)){
+			curUser = hero;
+			curItem = this;
+			//GameScene.selectCell(shooter);
+			if (hero.mana>=manaRequire){
+				new ScrollOfTeleportation().doRead2();
+				hero.mana-=manaRequire;
+			}
+			else{
+				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),manaRequire);
+			}
 		}
 	}
 
