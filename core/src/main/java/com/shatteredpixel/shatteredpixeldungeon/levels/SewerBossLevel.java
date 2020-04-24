@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.StandardRo
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -120,11 +121,26 @@ public class SewerBossLevel extends SewerLevel {
 
 	@Override
 	public int randomRespawnCell() {
+		/*
 		int pos;
 		do {
 			pos = pointToCell(roomEntrance.random());
 		} while (pos == entrance || !passable[pos] || Actor.findChar(pos) != null);
 		return pos;
+		 */
+		int cell;
+		if(bossisalive()){
+			do {
+				cell = Random.Int(0,(width()-1)*(height()-1));
+			} while (!passable[cell] || Actor.findChar(cell) != null || !heroFOV[cell]);
+			return cell;
+		}
+		else {
+			do {
+				cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			} while (!passable[cell] || Actor.findChar(cell) != null);
+			return cell;
+		}
 	}
 
 	
