@@ -158,7 +158,7 @@ public enum HeroClass {
 			new ScrollOfEnchantment().quantity(20).collect();
 			new ThreeDirectionsword().enchant(Weapon.Enchantment.randomUncommon()).collect();
 			new PotionOfStrength().quantity(6).collect();
-			new PotionOfInvisibility().identify().collect();
+			new PotionOfInvisibility().quantity(15).collect();
 			//new ScrollOfTransmutation().collect();
 			new TomeOfMastery().collect();
 		}

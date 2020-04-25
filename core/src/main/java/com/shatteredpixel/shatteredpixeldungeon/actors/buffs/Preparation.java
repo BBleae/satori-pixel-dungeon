@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rat;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
@@ -102,23 +103,29 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	private int turnsInvis = 0;
 	private boolean isnotyukari = false;
+	private int koishitimelast = 2;
 
 	public void setTurnsInvis(int value){
 		turnsInvis = value;
+		isnotyukari = true;
 	}
 	
 	@Override
 	public boolean act() {
 		if (target.invisible > 0){
 
-			if(isnotyukari)detach();
-			if(target instanceof Hero && ((Hero)target).subClass != HeroSubClass.ASSASSIN)		//so Koishi won't get a longer buff
-				isnotyukari = true;
-
 			turnsInvis++;
 			if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0 && target == Dungeon.hero){
 				ActionIndicator.setAction(this);
 			}
+
+			if(isnotyukari){
+				if (koishitimelast > 1) koishitimelast--;
+				else {
+					detach();
+				}
+			}
+
 			BuffIndicator.refreshHero();
 			spend(TICK);
 		} else {
@@ -179,6 +186,8 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc");
+		if(Dungeon.hero.heroClass== HeroClass.WARRIOR)
+			desc = Messages.get(this, "desck");
 		
 		AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
 		
@@ -199,14 +208,21 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		}
 		
 		if (lvl.blinkDistance > 0){
-			desc += "\n\n" + Messages.get(this, "desc_blink", lvl.blinkDistance);
+			if(Dungeon.hero.heroClass==HeroClass.WARRIOR)
+				desc += "\n\n" + Messages.get(this, "desc_blinkk", lvl.blinkDistance);
+			else
+				desc += "\n\n" + Messages.get(this, "desc_blink", lvl.blinkDistance);
 		}
-		
-		desc += "\n\n" + Messages.get(this, "desc_invis_time", turnsInvis);
+
+		if(Dungeon.hero.heroClass==HeroClass.WARRIOR)
+			desc += "\n\n" + Messages.get(this, "desc_invis_timek", turnsInvis);
+		else
+			desc += "\n\n" + Messages.get(this, "desc_invis_time", turnsInvis);
 		
 		if (lvl.ordinal() != AttackLevel.values().length-1){
 			AttackLevel next = AttackLevel.values()[lvl.ordinal()+1];
-			desc += "\n" + Messages.get(this, "desc_invis_next", next.turnsReq);
+			if (Dungeon.hero.heroClass != HeroClass.WARRIOR)
+				desc += "\n" + Messages.get(this, "desc_invis_next", next.turnsReq);
 		}
 		
 		return desc;
@@ -214,12 +230,14 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	private static final String TURNS = "turnsInvis";
 	private static final String ISNOTYOKARI = "isnotyokari";
+	private static final String KOISHITIMELAST = "kstl";
 	
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		turnsInvis = bundle.getInt(TURNS);
 		isnotyukari = bundle.getBoolean(ISNOTYOKARI);
+		koishitimelast = bundle.getInt(KOISHITIMELAST);
 		if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0){
 			ActionIndicator.setAction(this);
 		}
@@ -230,6 +248,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		super.storeInBundle(bundle);
 		bundle.put(TURNS, turnsInvis);
 		bundle.put(ISNOTYOKARI,isnotyukari);
+		bundle.put(KOISHITIMELAST,koishitimelast);
 	}
 	
 	@Override
