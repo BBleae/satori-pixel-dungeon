@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
+import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
@@ -536,7 +537,7 @@ public class Hero extends Char {
 	
 	public float attackDelay() {
 
-		if (subClass == HeroSubClass.SNIPER && belongings.weapon instanceof MeleeWeapon) {
+		if (subClass == HeroSubClass.FREERUNNER && belongings.weapon instanceof MeleeWeapon) {
 			return belongings.weapon.speedFactor(this) / 2f;
 		}
 		if (belongings.weapon != null) {
@@ -1519,10 +1520,9 @@ public class Hero extends Char {
 		
 		return stealth;
 	}
-	
+
 	@Override
 	public void die( Object cause  ) {
-		
 		curAction = null;
 
 		Ankh ankh = null;
@@ -1535,6 +1535,11 @@ public class Hero extends Char {
 					ankh = (Ankh) item;
 				}
 			}
+
+			if(cause instanceof BrokenSeal) {
+				ankh=null;			//when you don't wanna live...
+			}
+
 			if (item instanceof ThrowingKnife) {
 				knive = (ThrowingKnife) item;
 			}

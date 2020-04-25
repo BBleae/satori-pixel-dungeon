@@ -80,8 +80,8 @@ public enum HeroClass {
 
 	WARRIOR( "warrior", HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),           //koishi
 	MAGE( "mage", HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),                  //nue
-	ROGUE( "rogue", HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),               //yukari
-	HUNTRESS( "huntress", HeroSubClass.SNIPER, HeroSubClass.WARDEN ),               //youmu
+	ROGUE( "rogue", HeroSubClass.ASSASSIN, HeroSubClass.SNIPER ),               //yukari
+	HUNTRESS( "huntress", HeroSubClass.FREERUNNER, HeroSubClass.WARDEN ),               //youmu
     MAHOU_SHOUJO( "mahou_shoujo",HeroSubClass.DESTORYER,HeroSubClass.DEVIL );       //flandre
 
 	private String title;
@@ -147,10 +147,6 @@ public enum HeroClass {
 		}
 		
 		new ScrollOfIdentify().identify();
-		//new TomeOfMastery().collect();
-
-		//new ScrollOfTransmutation().collect();
-
 
 		if (DeviceCompat.isDebug()){
 			//for testing
@@ -162,6 +158,9 @@ public enum HeroClass {
 			new ScrollOfEnchantment().quantity(20).collect();
 			new ThreeDirectionsword().enchant(Weapon.Enchantment.randomUncommon()).collect();
 			new PotionOfStrength().quantity(6).collect();
+			new PotionOfInvisibility().identify().collect();
+			//new ScrollOfTransmutation().collect();
+			new TomeOfMastery().collect();
 		}
 	}
 

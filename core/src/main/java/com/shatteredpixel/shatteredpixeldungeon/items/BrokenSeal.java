@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -41,6 +42,7 @@ public class BrokenSeal extends Item {
 
 	private static final String AC_AFFIX 	= "AFFIX";
 	private static final String AC_TP		= "TP";
+	private static final String AC_DP		= "DP";
 
 	private static final int manaRequire = 6;
 
@@ -60,6 +62,9 @@ public class BrokenSeal extends Item {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
+		actions.remove(AC_DROP);
+		actions.add(AC_DP);
+		actions.remove(AC_THROW);
 		actions.add(AC_AFFIX);
 		actions.add(AC_TP);
 		return actions;
@@ -87,6 +92,14 @@ public class BrokenSeal extends Item {
 			}
 			else{
 				GLog.w( Messages.get(this, "not_enough_mana"),hero.mana,hero.getMaxmana(),manaRequire);
+			}
+		}
+		else if (action.equals(AC_DP)){
+			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
+				doDrop(hero);
+				hero.damage(9999,this);
+				Dungeon.fail( getClass() );
+				GLog.n( Messages.get(BrokenSeal.class, "ondeath") );
 			}
 		}
 	}

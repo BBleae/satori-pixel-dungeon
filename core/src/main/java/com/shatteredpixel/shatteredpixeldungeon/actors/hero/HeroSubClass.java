@@ -35,9 +35,9 @@ public enum HeroSubClass {
 	BATTLEMAGE( "battlemage" ),
 	
 	ASSASSIN( "assassin" ),
-	FREERUNNER( "freerunner" ),
-	
 	SNIPER( "sniper" ),
+
+	FREERUNNER( "freerunner" ),
 	WARDEN( "warden" ),
 
 	DEVIL( "devil" ),

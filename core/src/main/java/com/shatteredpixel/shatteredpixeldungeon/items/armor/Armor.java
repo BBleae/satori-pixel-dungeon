@@ -193,6 +193,9 @@ public class Armor extends EquipableItem {
 			hero.sprite.operate(hero.pos);
 			if (!seal.collect()){
 				Dungeon.level.drop(seal, hero.pos);
+				hero.damage(9999,BrokenSeal.class);
+				Dungeon.fail( BrokenSeal.class );
+				GLog.n( Messages.get(BrokenSeal.class, "ondeath") );
 			}
 
 			//清理快捷栏

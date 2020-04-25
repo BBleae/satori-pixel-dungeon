@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rat;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -100,6 +101,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	private int turnsInvis = 0;
+	private boolean isnotyukari = false;
 
 	public void setTurnsInvis(int value){
 		turnsInvis = value;
@@ -108,6 +110,11 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	@Override
 	public boolean act() {
 		if (target.invisible > 0){
+
+			if(isnotyukari)detach();
+			if(target instanceof Hero && ((Hero)target).subClass != HeroSubClass.ASSASSIN)		//so Koishi won't get a longer buff
+				isnotyukari = true;
+
 			turnsInvis++;
 			if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0 && target == Dungeon.hero){
 				ActionIndicator.setAction(this);
@@ -206,11 +213,13 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	private static final String TURNS = "turnsInvis";
+	private static final String ISNOTYOKARI = "isnotyokari";
 	
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		turnsInvis = bundle.getInt(TURNS);
+		isnotyukari = bundle.getBoolean(ISNOTYOKARI);
 		if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0){
 			ActionIndicator.setAction(this);
 		}
@@ -220,6 +229,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TURNS, turnsInvis);
+		bundle.put(ISNOTYOKARI,isnotyukari);
 	}
 	
 	@Override
