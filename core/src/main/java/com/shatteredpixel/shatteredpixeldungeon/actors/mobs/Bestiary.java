@@ -46,7 +46,8 @@ public class Bestiary {
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
 						Snake.class,Snake.class,
-						Unknown.class));
+						Unknown.class
+				));
 			case 2:
 				//4x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(
