@@ -80,6 +80,13 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.9", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_Ver Alpha\n_-_结束了，这一年里不会再更新了。"));
+
 		changes = new ChangeInfo("SPD v1.7.3.8", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
