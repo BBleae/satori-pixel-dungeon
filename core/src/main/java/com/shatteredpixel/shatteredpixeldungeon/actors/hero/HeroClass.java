@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MahoStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ThreeDirectionsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -151,6 +152,7 @@ public enum HeroClass {
 
 		if (DeviceCompat.isDebug()){
 			//for testing
+			new Shuriken().quantity(10).collect();
 			new ScrollOfUpgrade().quantity(10).collect();
 			new PotionOfLiquidFlame().collect();new PotionOfHealing().quantity(10).collect();
 			new TestItem().collect();new PotionOfExperience().quantity(20).collect();Ankh a = new Ankh();a.blessed=true;a.quantity(4).collect();

@@ -80,6 +80,13 @@ public class v0_7_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("SPD v1.7.3.10", false, null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+				"_-_Ver Gamma\n_-_修复了紫转职狙击手后无法使用狙击标记的bug。\n_-_Tommycui神隐了, 由我(BBleae)来接手后续的开发工作"));
+
 		changes = new ChangeInfo("SPD v1.7.3.9", false, null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);

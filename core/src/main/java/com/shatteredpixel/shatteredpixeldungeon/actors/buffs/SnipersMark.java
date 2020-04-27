@@ -25,7 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -83,31 +83,24 @@ public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 	
 	@Override
 	public Image getIcon() {
-		return new ItemSprite(ItemSpriteSheet.SPIRIT_BOW, null);
+		return new ItemSprite(ItemSpriteSheet.THROWING_KNIFE, null);
 	}
 	
 	@Override
 	public void doAction() {
-		
 		Hero hero = Dungeon.hero;
 		if (hero == null) return;
 		
-		SpiritBow bow = hero.belongings.getItem(SpiritBow.class);
-		if (bow == null) return;
-		
-		SpiritBow.SpiritArrow arrow = bow.knockArrow();
-		if (arrow == null) return;
-		
+		ThrowingKnife throwingKnife = hero.belongings.getItem(ThrowingKnife.class);
+		if (throwingKnife == null) return;
+
 		Char ch = (Char) Actor.findById(object);
 		if (ch == null) return;
 		
-		int cell = QuickSlotButton.autoAim(ch, arrow);
+		int cell = QuickSlotButton.autoAim(ch, throwingKnife);
 		if (cell == -1) return;
-		
-		bow.sniperSpecial = true;
-		
-		arrow.cast(hero, cell);
+
+		throwingKnife.cast(hero, cell);
 		detach();
-		
 	}
 }
