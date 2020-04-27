@@ -14,8 +14,8 @@ allprojects {
         appName = 'Satori\'s Pixel Dungeon'
         appPackageName = 'com.satorispixeldungeonteam.satorispixeldungeon'
 
-        appVersionCode = 382
-        appVersionName = '1.7.3.x'
+        appVersionCode = 383
+        appVersionName = '1.7.3.10'
 
         appAndroidCompileSDK = 29
         appAndroidMinSDK = 9
