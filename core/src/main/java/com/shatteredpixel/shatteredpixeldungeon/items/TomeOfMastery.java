@@ -77,11 +77,11 @@ public class TomeOfMastery extends Item {
 				way2 = HeroSubClass.WARLOCK;
 				break;
 			case ROGUE:
-				way1 = HeroSubClass.FREERUNNER;
+				way1 = HeroSubClass.SNIPER;
 				way2 = HeroSubClass.ASSASSIN;
 				break;
 			case HUNTRESS:
-				way1 = HeroSubClass.SNIPER;
+				way1 = HeroSubClass.FREERUNNER;
 				way2 = HeroSubClass.WARDEN;
 				break;
 			case MAHOU_SHOUJO:

@@ -85,7 +85,7 @@ public class v0_7_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-				"_-_Ver Alpha\n_-_结束了，这一年里不会再更新了。"));
+				"_-_Ver Beta\n_-_结束了，这一年里不会再更新了。\n_-_最后的boss战实际上做的很简单。"));
 
 		changes = new ChangeInfo("SPD v1.7.3.8", false, null);
 		changes.hardlight( Window.TITLE_COLOR );

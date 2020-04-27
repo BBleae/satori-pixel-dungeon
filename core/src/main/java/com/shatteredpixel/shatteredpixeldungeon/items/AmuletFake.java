@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.AmuletFakeScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AmuletScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Game;
@@ -91,7 +92,7 @@ public class AmuletFake extends Item {
 		try {
 			Dungeon.saveAll();
 			AmuletScene.noText = !showText;
-			Game.switchScene( AmuletScene.class );
+			Game.switchScene(AmuletFakeScene.class );
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}

@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
+import com.shatteredpixel.shatteredpixeldungeon.items.AmuletFake;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -159,6 +160,7 @@ public enum HeroClass {
 			new ThreeDirectionsword().enchant(Weapon.Enchantment.randomUncommon()).collect();
 			new PotionOfStrength().quantity(6).collect();
 			new PotionOfInvisibility().quantity(15).collect();
+			new AmuletFake().collect();
 			//new ScrollOfTransmutation().collect();
 			new TomeOfMastery().collect();
 		}
