@@ -31,3 +31,4 @@ rankings.dat
 /SPD-classes/bin/
 /desktop/bin/
 .vscode/
+.settings/org.eclipse.buildship.core.prefs
