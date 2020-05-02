@@ -5,10 +5,11 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.watabou.noosa.Game;
 
 //wrapper for LibGDX reflection
+@SuppressWarnings("rawtypes")
 public class Reflection {
 	
-	public static boolean isMemberClass( Class cls ){
-		return ClassReflection.isMemberClass(cls);
+	public static boolean isNotMemberClass(Class cls ){
+		return !ClassReflection.isMemberClass(cls);
 	}
 	
 	public static boolean isStatic( Class cls ){

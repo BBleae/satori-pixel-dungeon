@@ -218,7 +218,7 @@ public class Ghost extends NPC {
 
             Bundle node = bundle.getBundle(NODE);
 
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
+            if (node.notNull() && (spawned = node.getBoolean(SPAWNED))) {
 
                 type = node.getInt(TYPE);
                 given = node.getBoolean(GIVEN);

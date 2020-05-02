@@ -6,6 +6,7 @@ import studio.baka.satoripixeldungeon.levels.painters.Painter;
 import com.watabou.utils.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SewerPipeRoom extends StandardRoom {
 
@@ -110,7 +111,7 @@ public class SewerPipeRoom extends StandardRoom {
                         }
                     }
                 }
-                fillBetweenPoints(level, from, to, Terrain.WATER);
+                fillBetweenPoints(level, Objects.requireNonNull(from), Objects.requireNonNull(to), Terrain.WATER);
                 pointsFilled.add(to);
                 pointsToFill.remove(to);
             }

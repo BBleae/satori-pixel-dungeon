@@ -6,6 +6,7 @@ import studio.baka.satoripixeldungeon.levels.rooms.Room;
 import com.watabou.utils.Point;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 //tunnels along the room's perimeter
 public class PerimeterRoom extends ConnectionRoom {
@@ -57,7 +58,7 @@ public class PerimeterRoom extends ConnectionRoom {
                     }
                 }
             }
-            fillBetweenPoints(l, r, from, to, floor);
+            fillBetweenPoints(l, r, Objects.requireNonNull(from), to, floor);
             pointsFilled.add(to);
             pointsToFill.remove(to);
         }

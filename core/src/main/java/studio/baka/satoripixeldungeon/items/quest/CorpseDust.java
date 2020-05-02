@@ -79,7 +79,7 @@ public class CorpseDust extends Item {
 
             if (powerNeeded <= spawnPower) {
                 spawnPower -= powerNeeded;
-                int pos = 0;
+                int pos;
                 int tries = 20;
                 do {
                     pos = Random.Int(Dungeon.level.length());

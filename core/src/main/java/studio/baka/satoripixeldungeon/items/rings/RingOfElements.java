@@ -16,6 +16,7 @@ import studio.baka.satoripixeldungeon.messages.Messages;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 
+@SuppressWarnings("rawtypes")
 public class RingOfElements extends Ring {
 
     public String statsInfo() {
@@ -71,6 +72,7 @@ public class RingOfElements extends Ring {
         if (getBonus(target, Resistance.class) == 0) return 1f;
 
         for (Class c : RESISTS) {
+            //noinspection unchecked
             if (c.isAssignableFrom(effect)) {
                 return (float) Math.pow(0.80, getBonus(target, Resistance.class));
             }

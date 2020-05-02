@@ -14,6 +14,8 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class TrapsRoom extends SpecialRoom {
 
     public void paint(Level level) {
@@ -61,7 +63,7 @@ public class TrapsRoom extends SpecialRoom {
         for (Point p : getPoints()) {
             int cell = level.pointToCell(p);
             if (level.map[cell] == Terrain.TRAP) {
-                level.setTrap(Reflection.newInstance(trapClass).reveal(), cell);
+                level.setTrap(Objects.requireNonNull(Reflection.newInstance(trapClass)).reveal(), cell);
             }
         }
 

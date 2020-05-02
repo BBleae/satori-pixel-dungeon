@@ -26,6 +26,7 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Item implements Bundlable {
 
@@ -62,7 +63,7 @@ public class Item implements Bundlable {
     // whether an item can be included in heroes remains
     public boolean bones = false;
 
-    private static final Comparator<Item> itemComparator = (lhs, rhs) -> Generator.Category.order(lhs) - Generator.Category.order(rhs);
+    private static final Comparator<Item> itemComparator = Comparator.comparingInt(Generator.Category::order);
 
     public static Item virtual(Class<? extends Item> aClass) {
         try {
@@ -521,7 +522,7 @@ public class Item implements Bundlable {
                             this,
                             () -> {
                                 curUser = user;
-                                Item.this.detach(user.belongings.backpack).onThrow(cell);
+                                Objects.requireNonNull(Item.this.detach(user.belongings.backpack)).onThrow(cell);
                                 user.spendAndNext(delay);
                             });
         } else {
@@ -531,7 +532,7 @@ public class Item implements Bundlable {
                             this,
                             () -> {
                                 curUser = user;
-                                Item.this.detach(user.belongings.backpack).onThrow(cell);
+                                Objects.requireNonNull(Item.this.detach(user.belongings.backpack)).onThrow(cell);
                                 user.spendAndNext(delay);
                             });
         }

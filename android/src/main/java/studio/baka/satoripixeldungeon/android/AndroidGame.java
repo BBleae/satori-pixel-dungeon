@@ -18,9 +18,12 @@ import studio.baka.satoripixeldungeon.SatoriPixelDungeon;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 
+import java.util.Objects;
+
 public class AndroidGame extends AndroidApplication {
 	
 	public static AndroidApplication instance;
+	@SuppressLint("StaticFieldLeak")
 	protected static GLSurfaceView view;
 	
 	private AndroidPlatformSupport support;
@@ -38,7 +41,12 @@ public class AndroidGame extends AndroidApplication {
 			Game.version = "???";
 		}
 		try {
-			Game.versionCode = getPackageManager().getPackageInfo( getPackageName(), 0 ).versionCode;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+				Game.versionCode = (int) getPackageManager().getPackageInfo( getPackageName(), 0 ).getLongVersionCode();
+			} else {
+				//noinspection deprecation
+				Game.versionCode = getPackageManager().getPackageInfo( getPackageName(), 0 ).versionCode;
+			}
 		} catch (PackageManager.NameNotFoundException e) {
 			Game.versionCode = 0;
 		}
@@ -49,6 +57,7 @@ public class AndroidGame extends AndroidApplication {
 		
 		//set desired orientation (if it exists) before initializing the app.
 		if (SPDSettings.landscapeFromSettings() != null) {
+			//noinspection ConstantConditions
 			if (SPDSettings.landscapeFromSettings()){
 				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			} else {
@@ -58,13 +67,9 @@ public class AndroidGame extends AndroidApplication {
 		
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.depth = 0;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			//use rgb888 on more modern devices for better visuals
-			config.r = config.g = config.b = 8;
-		} else {
-			//and rgb565 (default) on older ones for better performance
-		}
-		
+		//use rgb888 on more modern devices for better visuals
+		config.r = config.g = config.b = 8;
+
 		config.useCompass = false;
 		config.useAccelerometer = false;
 		
@@ -75,28 +80,26 @@ public class AndroidGame extends AndroidApplication {
 		initialize(new SatoriPixelDungeon(support), config);
 		
 		view = (GLSurfaceView)graphics.getView();
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			TelephonyManager mgr =
-					(TelephonyManager) instance.getSystemService(Activity.TELEPHONY_SERVICE);
-			mgr.listen(new PhoneStateListener(){
-				
-				@Override
-				public void onCallStateChanged(int state, String incomingNumber)
-				{
-					if( state == TelephonyManager.CALL_STATE_RINGING ) {
-						Music.INSTANCE.pause();
-						
-					} else if( state == TelephonyManager.CALL_STATE_IDLE ) {
-						if (!Game.instance.isPaused()) {
-							Music.INSTANCE.resume();
-						}
+
+		TelephonyManager mgr =
+				(TelephonyManager) instance.getSystemService(Activity.TELEPHONY_SERVICE);
+		Objects.requireNonNull(mgr).listen(new PhoneStateListener(){
+
+			@Override
+			public void onCallStateChanged(int state, String incomingNumber)
+			{
+				if( state == TelephonyManager.CALL_STATE_RINGING ) {
+					Music.INSTANCE.pause();
+
+				} else if( state == TelephonyManager.CALL_STATE_IDLE ) {
+					if (!Game.instance.isPaused()) {
+						Music.INSTANCE.resume();
 					}
-					
-					super.onCallStateChanged(state, incomingNumber);
 				}
-			}, PhoneStateListener.LISTEN_CALL_STATE);
-		}
+
+				super.onCallStateChanged(state, incomingNumber);
+			}
+		}, PhoneStateListener.LISTEN_CALL_STATE);
 	}
 	
 	@Override

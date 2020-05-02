@@ -12,7 +12,7 @@ public class GooWarn extends Blob {
 
     {
         //this one needs to act after the Goo
-        actPriority = MOB_PRIO - 1;
+        actPriority = MOB_PRIORITY - 1;
     }
 
     protected int pos;

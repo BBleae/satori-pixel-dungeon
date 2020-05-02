@@ -194,7 +194,7 @@ public abstract class Builder {
             targetCenter.y = (float) (m * targetCenter.x + b);
             next.setPos(prev.right, Math.round(targetCenter.y - (next.height() - 1) / 2f));
 
-        } else if (direction == Room.LEFT) {
+        } else {
             targetCenter.x = prev.left - (next.width() - 1) / 2f;
             targetCenter.y = (float) (m * targetCenter.x + b);
             next.setPos(prev.left - (next.width() - 1), Math.round(targetCenter.y - (next.height() - 1) / 2f));

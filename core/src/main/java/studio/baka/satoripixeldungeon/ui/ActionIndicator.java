@@ -83,6 +83,7 @@ public class ActionIndicator extends Tag {
 
     public static void updateIcon() {
         if (instance != null) {
+            //noinspection SynchronizeOnNonFinalField
             synchronized (instance) {
                 if (instance.icon != null) {
                     instance.icon.killAndErase();

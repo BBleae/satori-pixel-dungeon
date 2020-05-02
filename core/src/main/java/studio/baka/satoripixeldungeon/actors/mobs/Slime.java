@@ -8,6 +8,8 @@ import studio.baka.satoripixeldungeon.sprites.SlimeSprite;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class Slime extends Mob {
 
     {
@@ -45,7 +47,7 @@ public class Slime extends Mob {
     protected Item createLoot() {
         Generator.Category c = Generator.Category.WEP_T2;
         MeleeWeapon w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-        w.random();
+        Objects.requireNonNull(w).random();
         w.level(0);
         return w;
     }

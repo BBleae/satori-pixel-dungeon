@@ -336,6 +336,7 @@ public abstract class Level implements Bundlable {
             viewDistance = Math.round(viewDistance / 2f);
 
         if (bundle.contains("mobs_to_spawn")) {
+            //noinspection unchecked
             for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
                 if (mob != null) mobsToSpawn.add(mob);
             }
@@ -455,7 +456,7 @@ public abstract class Level implements Bundlable {
         return new Actor() {
 
             {
-                actPriority = BUFF_PRIO; //as if it were a buff.
+                actPriority = BUFF_PRIORITY; //as if it were a buff.
             }
 
             @Override

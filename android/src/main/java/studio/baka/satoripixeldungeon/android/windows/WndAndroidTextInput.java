@@ -6,13 +6,11 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -25,6 +23,8 @@ import studio.baka.satoripixeldungeon.ui.RedButton;
 import studio.baka.satoripixeldungeon.ui.RenderedTextBlock;
 import studio.baka.satoripixeldungeon.ui.Window;
 import com.watabou.noosa.Game;
+
+import java.util.Objects;
 
 //This class makes use of the android EditText component to handle text input
 //FIXME this window is currently android-specific, should generalize it
@@ -104,7 +104,7 @@ public class WndAndroidTextInput extends Window {
 
             //this accounts for the game resolution differing from the display resolution in power saver mode
             final float scaledZoom;
-            scaledZoom = camera.zoom * (Game.dispWidth / (float)Game.width);
+            scaledZoom = camera.zoom * (Game.displayWidth / (float)Game.width);
 
             //sets different visual style depending on whether this is a single or multi line input.
             final float inputHeight;
@@ -159,7 +159,7 @@ public class WndAndroidTextInput extends Window {
             //The layout of the TextEdit is in display pixel space, not ingame pixel space
             // resize the window first so we can know the screen-space coordinates for the text input.
             resize( width, (int)pos );
-            final int inputTop = (int)(camera.cameraToScreen(0, txtTitle.bottom() + 2*MARGIN).y * (Game.dispWidth / (float)Game.width));
+            final int inputTop = (int)(camera.cameraToScreen(0, txtTitle.bottom() + 2*MARGIN).y * (Game.displayWidth / (float)Game.width));
 
             //The text input exists in a separate view ontop of the normal game view.
             // It visually appears to be a part of the game window but is infact a separate
@@ -188,7 +188,7 @@ public class WndAndroidTextInput extends Window {
                 ((ViewGroup) textInput.getParent()).removeView(textInput);
 
                 InputMethodManager imm = (InputMethodManager)((AndroidApplication)Gdx.app).getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(((AndroidGraphics)Gdx.app.getGraphics()).getView().getWindowToken(), 0);
+                Objects.requireNonNull(imm).hideSoftInputFromWindow(((AndroidGraphics)Gdx.app.getGraphics()).getView().getWindowToken(), 0);
 
                 //Soft keyboard sometimes triggers software buttons, so make sure to reassert immersive
                 SatoriPixelDungeon.updateSystemUI();

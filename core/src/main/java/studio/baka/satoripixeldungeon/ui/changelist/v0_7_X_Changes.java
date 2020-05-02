@@ -31,7 +31,19 @@ public class v0_7_X_Changes {
     }
 
     public static void add_v1_7_3_X_Changes(ArrayList<ChangeInfo> changeInfos) {
-        ChangeInfo changes = new ChangeInfo("SPD v1.7.3.X", true, "");
+        ChangeInfo changes = new ChangeInfo("SPD v1.7.x", true, "");
+        changes.hardlight(Window.TITLE_COLOR);
+        changeInfos.add(changes);
+
+        changes = new ChangeInfo("SPD v1.7.4", false, null);
+        changes.hardlight(Window.TITLE_COLOR);
+        changeInfos.add(changes);
+
+        changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+                "_-_Ver Gamma\n_-_重构代码, 优化性能, 修改细节\n_-_从 v1.7.4 起, 版本号将会遵循 SemVer 规范"));
+
+
+        changes = new ChangeInfo("SPD v1.7.3.X", true, "");
         changes.hardlight(Window.TITLE_COLOR);
         changeInfos.add(changes);
 

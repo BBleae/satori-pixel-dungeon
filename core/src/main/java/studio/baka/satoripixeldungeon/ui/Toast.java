@@ -5,6 +5,8 @@ import studio.baka.satoripixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
 
+import java.util.Objects;
+
 public class Toast extends Component {
 
     private static final float MARGIN_HOR = 2;
@@ -27,7 +29,7 @@ public class Toast extends Component {
         super.createChildren();
 
         bg = Chrome.get(Chrome.Type.TOAST_TR);
-        add(bg);
+        add(Objects.requireNonNull(bg));
 
         close = new SimpleButton(Icons.get(Icons.CLOSE)) {
             protected void onClick() {

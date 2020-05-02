@@ -23,7 +23,7 @@ public class Dewdrop extends Item {
 
         DewVial vial = hero.belongings.getItem(DewVial.class);
 
-        if (vial != null && !vial.isFull()) {
+        if (vial != null && vial.isNotFull()) {
 
             vial.collectDew(this);
 

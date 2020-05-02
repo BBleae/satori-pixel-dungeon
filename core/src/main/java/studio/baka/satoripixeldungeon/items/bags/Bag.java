@@ -128,6 +128,7 @@ public class Bag extends Item implements Iterable<Item> {
         return false;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public Iterator<Item> iterator() {
         return new ItemIterator();

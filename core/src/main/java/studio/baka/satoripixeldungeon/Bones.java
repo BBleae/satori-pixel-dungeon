@@ -14,6 +14,7 @@ import com.watabou.utils.Reflection;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class Bones {
 
@@ -49,7 +50,7 @@ public class Bones {
 	}
 
 	private static Item pickItem(Hero hero){
-		Item item = null;
+		Item item;
 		if (Random.Int(3) != 0) {
 			switch (Random.Int(6)) {
 				case 0:
@@ -87,7 +88,7 @@ public class Bones {
 
 			if (Random.Int(3) < items.size()) {
 				item = Random.element(items);
-				if (item.stackable){
+				if (Objects.requireNonNull(item).stackable){
 					item.quantity(Random.NormalIntRange(1, (item.quantity() + 1) / 2));
 				}
 			} else {

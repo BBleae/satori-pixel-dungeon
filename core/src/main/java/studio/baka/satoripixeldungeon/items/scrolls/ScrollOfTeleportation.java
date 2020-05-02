@@ -173,7 +173,7 @@ public class ScrollOfTeleportation extends Scroll {
         if (candidates.isEmpty()) {
             teleportHero(hero);
         } else {
-            int pos = Random.element(candidates);
+            @SuppressWarnings("ConstantConditions") int pos = Random.element(candidates);
             boolean secretDoor = false;
             int doorPos = -1;
             if (level.room(pos) instanceof SpecialRoom) {

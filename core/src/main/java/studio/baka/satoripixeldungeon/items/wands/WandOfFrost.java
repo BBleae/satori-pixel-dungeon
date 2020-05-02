@@ -88,7 +88,7 @@ public class WandOfFrost extends DamageWand {
             //need to delay this through an actor so that the freezing isn't broken by taking damage from the staff hit.
             new FlavourBuff() {
                 {
-                    actPriority = VFX_PRIO;
+                    actPriority = VFX_PRIORITY;
                 }
 
                 public boolean act() {
@@ -106,7 +106,7 @@ public class WandOfFrost extends DamageWand {
             //need to delay this through an actor so that the freezing isn't broken by taking damage from the staff hit.
             new FlavourBuff() {
                 {
-                    actPriority = VFX_PRIO;
+                    actPriority = VFX_PRIORITY;
                 }
 
                 public boolean act() {

@@ -15,16 +15,16 @@ public class CausticSlimeSprite extends MobSprite {
 		int c = 9;
 		
 		idle = new Animation( 3, true );
-		idle.frames( frames, c+0, c+1, c+1, c+0 );
+		idle.frames( frames, c, c+1, c+1, c);
 		
 		run = new Animation( 10, true );
-		run.frames( frames, c+0, c+2, c+3, c+3, c+2, c+0 );
+		run.frames( frames, c, c+2, c+3, c+3, c+2, c);
 		
 		attack = new Animation( 10, false );
 		attack.frames( frames, c+2, c+3, c+4, c+5, c+2 );
 		
 		die = new Animation( 10, false );
-		die.frames( frames, c+0, c+5, c+6, c+7 );
+		die.frames( frames, c, c+5, c+6, c+7 );
 		
 		play(idle);
 	}

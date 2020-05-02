@@ -10,6 +10,8 @@ import com.watabou.noosa.ui.Component;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 
+import java.util.Objects;
+
 public abstract class OptionSlider extends Component {
 
     private PointerArea pointerArea;
@@ -69,7 +71,7 @@ public abstract class OptionSlider extends Component {
     protected void createChildren() {
         super.createChildren();
 
-        add(BG = Chrome.get(Chrome.Type.RED_BUTTON));
+        add(Objects.requireNonNull(BG = Chrome.get(Chrome.Type.RED_BUTTON)));
         BG.alpha(0.5f);
 
         add(title = PixelScene.renderTextBlock(9));
@@ -78,7 +80,7 @@ public abstract class OptionSlider extends Component {
 
         add(sliderBG = new ColorBlock(1, 1, 0xFF222222));
         sliderNode = Chrome.get(Chrome.Type.RED_BUTTON);
-        sliderNode.size(5, 9);
+        Objects.requireNonNull(sliderNode).size(5, 9);
 
         pointerArea = new PointerArea(0, 0, 0, 0) {
             boolean pressed = false;

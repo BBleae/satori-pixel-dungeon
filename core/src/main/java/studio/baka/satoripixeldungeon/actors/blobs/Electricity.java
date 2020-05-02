@@ -20,7 +20,7 @@ public class Electricity extends Blob {
 
     {
         //acts after mobs, to give them a chance to resist paralysis
-        actPriority = MOB_PRIO - 1;
+        actPriority = MOB_PRIORITY - 1;
     }
 
     private boolean[] water;

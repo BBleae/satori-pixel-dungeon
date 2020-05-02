@@ -12,9 +12,9 @@ public class Ballistica {
 	//note that the path is the FULL path of the projectile, including tiles after collision.
 	//make sure to generate a subPath for the common case of going source to collision.
 	public ArrayList<Integer> path = new ArrayList<>();
-	public Integer sourcePos = null;
+	public Integer sourcePos;
 	public Integer collisionPos = null;
-	public Integer dist = 0;
+	public Integer dist;
 
 	//parameters to specify the colliding cell
 	public static final int STOP_TARGET = 1; //ballistica will stop at the target cell

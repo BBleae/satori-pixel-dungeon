@@ -29,6 +29,8 @@ import studio.baka.satoripixeldungeon.windows.WndBag;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class ScrollOfTransmutation extends InventoryScroll {
 
     {
@@ -86,7 +88,9 @@ public class ScrollOfTransmutation extends InventoryScroll {
         } else {
             if (item.isEquipped(Dungeon.hero)) {
                 item.cursed = false; //to allow it to be unequipped
+                assert item instanceof EquipableItem;
                 ((EquipableItem) item).doUnequip(Dungeon.hero, false);
+                assert result instanceof EquipableItem;
                 ((EquipableItem) result).doEquip(Dungeon.hero);
             } else {
                 item.detach(Dungeon.hero.belongings.backpack);
@@ -133,7 +137,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 
         do {
             n = (Weapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-        } while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
+        } while (Challenges.isItemBlocked(n) || Objects.requireNonNull(n).getClass() == w.getClass());
 
         int level = w.level();
         if (w.curseInfusionBonus) level--;

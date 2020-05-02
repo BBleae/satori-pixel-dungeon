@@ -119,7 +119,7 @@ public class Yog extends Mob {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         if (damage > HT / 10) {
             //HEALTHREGEN += 1;
@@ -137,6 +137,7 @@ public class Yog extends Mob {
 
         if (spawnPoints.size() > 0) {
             Larva larva = new Larva();
+            //noinspection ConstantConditions
             larva.pos = Random.element(spawnPoints);
             Buff.affect(larva, Adrenaline.class, 20f);
             Buff.affect(larva, MagicImmune.class, 5f);
@@ -151,7 +152,7 @@ public class Yog extends Mob {
             }
         }
 
-        return super.defenseProc(enemy, damage);
+        return super.defenseProcess(enemy, damage);
     }
 
     @Override

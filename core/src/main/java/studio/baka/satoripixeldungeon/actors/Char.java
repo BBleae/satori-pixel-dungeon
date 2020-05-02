@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
+@SuppressWarnings("rawtypes")
 public abstract class Char extends Actor {
 
     public int pos = 0;
@@ -110,12 +111,11 @@ public abstract class Char extends Actor {
 
         if (sprite.isVisible() && (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to])) {
             sprite.move(from, to);
-            return true;
         } else {
             sprite.turnTo(from, to);
             sprite.place(to);
-            return true;
         }
+        return true;
     }
 
     protected static final String POS = "pos";
@@ -190,7 +190,7 @@ public abstract class Char extends Actor {
                 dmg = damageRoll();
             }
 
-            int effectiveDamage = enemy.defenseProc(this, dmg);
+            int effectiveDamage = enemy.defenseProcess(this, dmg);
             effectiveDamage = Math.max(effectiveDamage - dr, 0);
             effectiveDamage = attackProc(enemy, effectiveDamage);
 
@@ -287,7 +287,7 @@ public abstract class Char extends Actor {
         return damage;
     }
 
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
         return damage;
     }
 
@@ -547,6 +547,7 @@ public abstract class Char extends Actor {
 
     //returns percent effectiveness after resistances
     //TODO currently resistances reduce effectiveness by a static 50%, and do not stack.
+    @SuppressWarnings("rawtypes")
     public float resist(Class effect) {
         HashSet<Class> resists = new HashSet<>(resistances);
         for (Property p : properties()) {
@@ -558,6 +559,7 @@ public abstract class Char extends Actor {
 
         float result = 1f;
         for (Class c : resists) {
+            //noinspection unchecked
             if (c.isAssignableFrom(effect)) {
                 result *= 0.5f;
             }
@@ -577,6 +579,7 @@ public abstract class Char extends Actor {
         }
 
         for (Class c : immunes) {
+            //noinspection unchecked
             if (c.isAssignableFrom(effect)) {
                 return true;
             }

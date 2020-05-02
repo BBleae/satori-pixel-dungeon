@@ -89,6 +89,7 @@ public class Honeypot extends Item {
                 }
             }
 
+            //noinspection ConstantConditions
             newPos = candidates.size() > 0 ? Random.element(candidates) : -1;
         }
 

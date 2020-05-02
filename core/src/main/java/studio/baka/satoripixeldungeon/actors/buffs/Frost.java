@@ -16,6 +16,7 @@ import studio.baka.satoripixeldungeon.utils.GLog;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Frost extends FlavourBuff {
 
@@ -47,8 +48,8 @@ public class Frost extends FlavourBuff {
                 }
 
                 if (!freezable.isEmpty()) {
-                    Item toFreeze = Random.element(freezable).detach(hero.belongings.backpack);
-                    GLog.w(Messages.get(this, "freezes", toFreeze.toString()));
+                    Item toFreeze = Objects.requireNonNull(Random.element(freezable)).detach(hero.belongings.backpack);
+                    GLog.w(Messages.get(this, "freezes", Objects.requireNonNull(toFreeze).toString()));
                     if (toFreeze instanceof Potion) {
                         ((Potion) toFreeze).shatter(hero.pos);
                     } else if (toFreeze instanceof MysteryMeat) {

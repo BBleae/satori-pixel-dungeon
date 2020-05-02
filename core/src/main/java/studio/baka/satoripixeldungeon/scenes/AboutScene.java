@@ -20,12 +20,11 @@ public class AboutScene extends PixelScene {
 
     private static final String LNK_SPD = "https://gitee.com/\nsatori-pixel-dungeon-team";
 
-    private static final String TTL_SHPX = "Shattered Pixel Dungeon";
+    private static final String TITLE_ORIGIN = "Shattered Pixel Dungeon";
 
-    private static final String TXT_SHPX = "Design, Code, & Graphics: Evan";
+    private static final String DESC_ORIGIN = "Design, Code, & Graphics: Evan";
 
-
-    private static final String LNK_SHPX = "ShatteredPixel.com";
+    private static final String LINK_ORIGIN = "ShatteredPixel.com";
 
     @Override
     public void create() {
@@ -43,60 +42,59 @@ public class AboutScene extends PixelScene {
 
         new Flare(7, 64).color(0x225511, true).show(spd, 0).angularSpeed = +20;
 
-        RenderedTextBlock shpxtitle = renderTextBlock(TTL_SPD, 8);
-        shpxtitle.hardlight(Window.SHPX_COLOR);
-        add(shpxtitle);
+        RenderedTextBlock titleOrigin = renderTextBlock(TTL_SPD, 8);
+        titleOrigin.hardlight(Window.SHPX_COLOR);
+        add(titleOrigin);
 
-        shpxtitle.setPos(
-                (colWidth - shpxtitle.width()) / 2,
+        titleOrigin.setPos(
+                (colWidth - titleOrigin.width()) / 2,
                 spd.y + spd.height + 5
         );
-        align(shpxtitle);
+        align(titleOrigin);
 
-        RenderedTextBlock shpxtext = renderTextBlock(TXT_SPD, 8);
-        shpxtext.maxWidth((int) Math.min(colWidth, 120));
-        add(shpxtext);
+        RenderedTextBlock descOrigin = renderTextBlock(TXT_SPD, 8);
+        descOrigin.maxWidth((int) Math.min(colWidth, 120));
+        add(descOrigin);
 
-        shpxtext.setPos((colWidth - shpxtext.width()) / 2, shpxtitle.bottom() + 12);
-        align(shpxtext);
+        descOrigin.setPos((colWidth - descOrigin.width()) / 2, titleOrigin.bottom() + 12);
+        align(descOrigin);
 
-        RenderedTextBlock shpxlink = renderTextBlock(LNK_SPD, 8);
-        shpxlink.maxWidth(shpxtext.maxWidth());
-        shpxlink.hardlight(Window.SHPX_COLOR);
-        add(shpxlink);
+        RenderedTextBlock linkOrigin = renderTextBlock(LNK_SPD, 8);
+        linkOrigin.maxWidth(descOrigin.maxWidth());
+        linkOrigin.hardlight(Window.SHPX_COLOR);
+        add(linkOrigin);
 
-        shpxlink.setPos((colWidth - shpxlink.width()) / 2, shpxtext.bottom() + 6);
-        align(shpxlink);
+        linkOrigin.setPos((colWidth - linkOrigin.width()) / 2, descOrigin.bottom() + 6);
+        align(linkOrigin);
 
-        PointerArea shpxhotArea = new PointerArea(shpxlink.left(), shpxlink.top(), shpxlink.width(), shpxlink.height()) {
+        PointerArea hotAreaOrigin = new PointerArea(linkOrigin.left(), linkOrigin.top(), linkOrigin.width(), linkOrigin.height()) {
             @Override
             protected void onClick(PointerEvent event) {
-                //DeviceCompat.openURI( "https://" + LNK_SHPX );
             }
         };
-        add(shpxhotArea);
+        add(hotAreaOrigin);
 
-        Image shpx = Icons.SHPX.get();
-        shpx.x = wataOffset + (colWidth - shpx.width()) / 2;
-        shpx.y = SPDSettings.landscape() ?
+        Image iconOrigin = Icons.SHPX.get();
+        iconOrigin.x = wataOffset + (colWidth - iconOrigin.width()) / 2;
+        iconOrigin.y = SPDSettings.landscape() ?
                 colTop :
-                shpxlink.top() + shpx.height + 20;
-        align(shpx);
-        add(shpx);
+                linkOrigin.top() + iconOrigin.height + 20;
+        align(iconOrigin);
+        add(iconOrigin);
 
-        new Flare(7, 64).color(0x112233, true).show(shpx, 0).angularSpeed = +20;
+        new Flare(7, 64).color(0x112233, true).show(iconOrigin, 0).angularSpeed = +20;
 
-        RenderedTextBlock wataTitle = renderTextBlock(TTL_SHPX, 8);
+        RenderedTextBlock wataTitle = renderTextBlock(TITLE_ORIGIN, 8);
         wataTitle.hardlight(Window.TITLE_COLOR);
         add(wataTitle);
 
         wataTitle.setPos(
                 wataOffset + (colWidth - wataTitle.width()) / 2,
-                shpx.y + shpx.height + 11
+                iconOrigin.y + iconOrigin.height + 11
         );
         align(wataTitle);
 
-        RenderedTextBlock wataText = renderTextBlock(TXT_SHPX, 8);
+        RenderedTextBlock wataText = renderTextBlock(DESC_ORIGIN, 8);
         wataText.maxWidth((int) Math.min(colWidth, 120));
         wataText.setHightlighting(false); //underscore in cube_code
         add(wataText);
@@ -104,7 +102,7 @@ public class AboutScene extends PixelScene {
         wataText.setPos(wataOffset + (colWidth - wataText.width()) / 2, wataTitle.bottom() + 12);
         align(wataText);
 
-        RenderedTextBlock wataLink = renderTextBlock(LNK_SHPX, 8);
+        RenderedTextBlock wataLink = renderTextBlock(LINK_ORIGIN, 8);
         wataLink.maxWidth((int) Math.min(colWidth, 120));
         wataLink.hardlight(Window.TITLE_COLOR);
         add(wataLink);

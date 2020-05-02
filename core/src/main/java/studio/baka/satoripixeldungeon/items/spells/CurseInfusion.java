@@ -23,6 +23,7 @@ public class CurseInfusion extends InventorySpell {
         mode = WndBag.Mode.CURSABLE;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onItemSelected(Item item) {
 
@@ -65,6 +66,7 @@ public class CurseInfusion extends InventorySpell {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{ScrollOfRemoveCurse.class, MetalShard.class};
             inQuantity = new int[]{1, 1};
 

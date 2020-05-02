@@ -19,7 +19,7 @@ public class Pushing extends Actor {
     private Callback callback;
 
     {
-        actPriority = VFX_PRIO;
+        actPriority = VFX_PRIORITY;
     }
 
     public Pushing(Char ch, int from, int to) {

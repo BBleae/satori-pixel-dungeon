@@ -117,6 +117,7 @@ public class King extends Mob {
     @Override
     public void damage(int dmg, Object src) {
         if (dmg >= HP) {
+            //noinspection unchecked
             for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
                 if (mob instanceof Undead && HT > 99) {
                     HT -= 50;
@@ -136,6 +137,7 @@ public class King extends Mob {
     @Override
     public void die(Object cause) {
 
+        //noinspection unchecked
         for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
             if (mob instanceof Undead && HT > 99) {
                 HT -= 50;

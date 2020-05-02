@@ -16,15 +16,15 @@
 		android:xlargeScreens="true"/>
 
 	<application
-		android:icon="@drawable/icon2"
-		android:label="Satori's pixeldungeon"
-		android:theme="@android:style/Theme.Black.NoTitleBar"
-		android:resizeableActivity="true"
-		android:allowBackup="true"
-		android:fullBackupOnly="true"
-		android:backupAgent=".AndroidBackupHandler">
+			android:icon="@drawable/icon2"
+			android:label="Satori's Pixel Dungeon"
+			android:theme="@android:style/Theme.Black.NoTitleBar"
+			android:resizeableActivity="true"
+			android:allowBackup="true"
+			android:fullBackupOnly="true"
+			android:backupAgent=".AndroidBackupHandler" android:fullBackupContent="@xml/backup_descriptor">
 		<activity
-			android:label="Satori's pixeldungeon"
+			android:label="Satori's Pixel Dungeon"
 			android:name=".AndroidLauncher">
 			<intent-filter >
 				<action android:name="android.intent.action.MAIN" />

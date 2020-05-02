@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+@SuppressWarnings("rawtypes")
 public class Bundle {
 
 	private static final String CLASS_NAME = "__className";
@@ -41,8 +42,8 @@ public class Bundle {
 		this.data = data;
 	}
 	
-	public boolean isNull() {
-		return data == null;
+	public boolean notNull() {
+		return data != null;
 	}
 	
 	public boolean contains( String key ) {
@@ -96,7 +97,7 @@ public class Bundle {
 		Class<?> cl = Reflection.forName( clName );
 		//Skip none-static inner classes as they can't be instantiated through bundle restoring
 		//Classes which make use of none-static inner classes must manage instantiation manually
-		if (cl != null && (!Reflection.isMemberClass(cl) || Reflection.isStatic(cl))) {
+		if (cl != null && (Reflection.isNotMemberClass(cl) || Reflection.isStatic(cl))) {
 			Bundlable object = (Bundlable) Reflection.newInstance(cl);
 			if (object != null) {
 				object.restoreFromBundle(this);
@@ -363,7 +364,7 @@ public class Bundle {
 			//Classes which make use of none-static inner classes must manage instantiation manually
 			if (object != null) {
 				Class cl = object.getClass();
-				if ((!Reflection.isMemberClass(cl) || Reflection.isStatic(cl))) {
+				if ((Reflection.isNotMemberClass(cl) || Reflection.isStatic(cl))) {
 					Bundle bundle = new Bundle();
 					bundle.put(CLASS_NAME, cl.getName());
 					object.storeInBundle(bundle);

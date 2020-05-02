@@ -1,6 +1,5 @@
 package studio.baka.satoripixeldungeon.android;
 
-import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.view.View;
@@ -15,10 +14,10 @@ import studio.baka.satoripixeldungeon.SPDSettings;
 import studio.baka.satoripixeldungeon.android.windows.WndAndroidTextInput;
 import studio.baka.satoripixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
-import com.watabou.utils.Callback;
 import com.watabou.utils.PlatformSupport;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class AndroidPlatformSupport extends PlatformSupport {
@@ -33,35 +32,36 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		if (AndroidGame.view.getMeasuredWidth() == 0 || AndroidGame.view.getMeasuredHeight() == 0)
 			return;
 		
-		Game.dispWidth = AndroidGame.view.getMeasuredWidth();
-		Game.dispHeight = AndroidGame.view.getMeasuredHeight();
+		Game.displayWidth = AndroidGame.view.getMeasuredWidth();
+		Game.displayHeight = AndroidGame.view.getMeasuredHeight();
 		
-		if ((Game.dispWidth > Game.dispHeight) != landscape){
-			int tmp = Game.dispWidth;
-			Game.dispWidth = Game.dispHeight;
-			Game.dispHeight = tmp;
+		if ((Game.displayWidth > Game.displayHeight) != landscape){
+			Game.displayWidth = Game.displayHeight ^ Game.displayWidth;
+			Game.displayHeight = Game.displayHeight ^ Game.displayWidth;
+			Game.displayWidth = Game.displayHeight ^ Game.displayWidth;
 		}
 		
-		float dispRatio = Game.dispWidth / (float)Game.dispHeight;
+		float displayRatio = Game.displayWidth / (float)Game.displayHeight;
 		
-		float renderWidth = dispRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
-		float renderHeight = dispRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
+		float renderWidth = displayRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
+		float renderHeight = displayRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
 		
 		//force power saver in this case as all devices must run at at least 2x scale.
-		if (Game.dispWidth < renderWidth*2 || Game.dispHeight < renderHeight*2)
+		if (Game.displayWidth < renderWidth*2 || Game.displayHeight < renderHeight*2)
 			SPDSettings.put( SPDSettings.KEY_POWER_SAVER, true );
 		
 		if (SPDSettings.powerSaver()){
 			
-			int maxZoom = (int)Math.min(Game.dispWidth/renderWidth, Game.dispHeight/renderHeight);
+			int maxZoom = (int)Math.min(Game.displayWidth /renderWidth, Game.displayHeight /renderHeight);
+
+			final int max = Math.max(2, Math.round(1f + maxZoom * 0.4f));
+			renderWidth *= max;
+			renderHeight *= max;
 			
-			renderWidth *= Math.max( 2, Math.round(1f + maxZoom*0.4f));
-			renderHeight *= Math.max( 2, Math.round(1f + maxZoom*0.4f));
-			
-			if (dispRatio > renderWidth / renderHeight){
-				renderWidth = renderHeight * dispRatio;
+			if (displayRatio > renderWidth / renderHeight){
+				renderWidth = renderHeight * displayRatio;
 			} else {
-				renderHeight = renderWidth / dispRatio;
+				renderHeight = renderWidth / displayRatio;
 			}
 			
 			final int finalW = Math.round(renderWidth);
@@ -120,7 +120,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	
 	private int pageSize;
 	private PixmapPacker packer;
-	private boolean systemfont;
+	private boolean systemFont;
 	
 	//droid sans / roboto, or a custom pixel font, for use with Latin and Cyrillic languages
 	private static FreeTypeFontGenerator basicFontGenerator;
@@ -146,18 +146,18 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	@Override
 	public void setupFontGenerators(int pageSize, boolean systemfont) {
 		//don't bother doing anything if nothing has changed
-		if (fonts != null && this.pageSize == pageSize && this.systemfont == systemfont){
+		if (fonts != null && this.pageSize == pageSize && this.systemFont == systemfont){
 			return;
 		}
 		this.pageSize = pageSize;
-		this.systemfont = systemfont;
+		this.systemFont = systemfont;
 		
 		if (fonts != null){
 			for (FreeTypeFontGenerator generator : fonts.keySet()){
-				for (BitmapFont f : fonts.get(generator).values()){
+				for (BitmapFont f : Objects.requireNonNull(fonts.get(generator)).values()){
 					f.dispose();
 				}
-				fonts.get(generator).clear();
+				Objects.requireNonNull(fonts.get(generator)).clear();
 				generator.dispose();
 			}
 			fonts.clear();
@@ -242,10 +242,10 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	@Override
 	public void resetGenerators() {
 		for (FreeTypeFontGenerator generator : fonts.keySet()){
-			for (BitmapFont f : fonts.get(generator).values()){
+			for (BitmapFont f : Objects.requireNonNull(fonts.get(generator)).values()){
 				f.dispose();
 			}
-			fonts.get(generator).clear();
+			Objects.requireNonNull(fonts.get(generator)).clear();
 			generator.dispose();
 		}
 		fonts.clear();
@@ -256,7 +256,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			packer.dispose();
 		}
 		fonts = null;
-		setupFontGenerators(pageSize, systemfont);
+		setupFontGenerators(pageSize, systemFont);
 	}
 	
 	private static final Pattern KRMatcher = Pattern.compile("\\p{InHangul_Syllables}");
@@ -283,7 +283,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			return null;
 		}
 		
-		if (!fonts.get(generator).containsKey(size)) {
+		if (!Objects.requireNonNull(fonts.get(generator)).containsKey(size)) {
 			FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 			parameters.size = size;
 			parameters.flip = true;
@@ -304,14 +304,14 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			try {
 				BitmapFont font = generator.generateFont(parameters);
 				font.getData().missingGlyph = font.getData().getGlyph('�');
-				fonts.get(generator).put(size, font);
+				Objects.requireNonNull(fonts.get(generator)).put(size, font);
 			} catch ( Exception e ){
 				Game.reportException(e);
 				return null;
 			}
 		}
 		
-		return fonts.get(generator).get(size);
+		return Objects.requireNonNull(fonts.get(generator)).get(size);
 	}
 	
 	//splits on newlines, underscores, and chinese/japaneses characters

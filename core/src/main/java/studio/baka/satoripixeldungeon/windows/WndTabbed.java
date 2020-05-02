@@ -13,6 +13,7 @@ import com.watabou.noosa.ui.Button;
 import com.watabou.utils.RectF;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WndTabbed extends Window {
 
@@ -161,7 +162,7 @@ public class WndTabbed extends Window {
 			bg = Chrome.get( selected ?
 				Chrome.Type.TAB_SELECTED :
 				Chrome.Type.TAB_UNSELECTED );
-			addToBack( bg );
+			addToBack(Objects.requireNonNull(bg));
 			
 			layout();
 		}

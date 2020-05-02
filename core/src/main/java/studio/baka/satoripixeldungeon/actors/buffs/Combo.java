@@ -210,7 +210,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
                     break;
             }
 
-            dmg = enemy.defenseProc(target, dmg);
+            dmg = enemy.defenseProcess(target, dmg);
             dmg -= enemy.drRoll();
             dmg = target.attackProc(enemy, dmg);
             enemy.damage(dmg, this);
@@ -242,9 +242,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
                     break;
                 case SLAM:
                     BrokenSeal.WarriorShield shield = Buff.affect(target, BrokenSeal.WarriorShield.class);
-                    if (shield != null) {
-                        shield.supercharge(dmg / 2);
-                    }
+                    shield.supercharge(dmg / 2);
                     break;
                 default:
                     //nothing

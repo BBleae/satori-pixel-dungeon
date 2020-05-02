@@ -230,6 +230,7 @@ public class Notes {
         ArrayList<T> filtered = new ArrayList<>();
         for (Record rec : records) {
             if (recordType.isInstance(rec)) {
+                //noinspection unchecked
                 filtered.add((T) rec);
             }
         }

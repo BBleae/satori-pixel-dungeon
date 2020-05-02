@@ -10,6 +10,8 @@ import studio.baka.satoripixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
+import java.util.Objects;
+
 public class WardSprite extends MobSprite {
 
     private final Animation[] tierIdles = new Animation[7];
@@ -45,7 +47,7 @@ public class WardSprite extends MobSprite {
         flash();
         emitter().burst(MagicMissile.WardParticle.UP, 2);
         if (Actor.findChar(pos) != null) {
-            parent.add(new Beam.DeathRay(center(), Actor.findChar(pos).sprite.center()));
+            parent.add(new Beam.DeathRay(center(), Objects.requireNonNull(Actor.findChar(pos)).sprite.center()));
         } else {
             parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
         }

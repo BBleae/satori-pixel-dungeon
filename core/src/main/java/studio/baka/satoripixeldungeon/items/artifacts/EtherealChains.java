@@ -22,6 +22,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EtherealChains extends Artifact {
 
@@ -91,7 +92,7 @@ public class EtherealChains extends Artifact {
                 final Ballistica chain = new Ballistica(curUser.pos, target, Ballistica.STOP_TARGET);
 
                 if (Actor.findChar(chain.collisionPos) != null) {
-                    chainEnemy(chain, curUser, Actor.findChar(chain.collisionPos));
+                    chainEnemy(chain, curUser, Objects.requireNonNull(Actor.findChar(chain.collisionPos)));
                 } else {
                     chainLocation(chain, curUser);
                 }

@@ -275,6 +275,7 @@ public class CursedWand {
                         sheep.pos = ch.pos;
                         ch.destroy();
                         ch.sprite.killAndErase();
+                        //noinspection SuspiciousMethodCalls
                         Dungeon.level.mobs.remove(ch);
                         TargetHealthIndicator.instance.target(null);
                         GameScene.add(sheep);
@@ -434,7 +435,7 @@ public class CursedWand {
             //random transmogrification
             case 3:
                 //skips this effect if there is no item to transmogrify
-                if (origin == null || !Dungeon.hero.belongings.contains(origin)) {
+                if (origin == null || Dungeon.hero.belongings.notContains(origin)) {
                     GLog.w("3 failed");
                     cursedZap(origin, user, bolt, afterZap);
                     return;

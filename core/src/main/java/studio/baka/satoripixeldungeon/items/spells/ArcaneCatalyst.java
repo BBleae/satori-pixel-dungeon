@@ -12,6 +12,7 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ArcaneCatalyst extends Spell {
 
@@ -42,7 +43,7 @@ public class ArcaneCatalyst extends Spell {
         updateQuickslot();
 
         Scroll s = Reflection.newInstance(Random.chances(scrollChances));
-        s.anonymize();
+        Objects.requireNonNull(s).anonymize();
         curItem = s;
         s.doRead();
     }

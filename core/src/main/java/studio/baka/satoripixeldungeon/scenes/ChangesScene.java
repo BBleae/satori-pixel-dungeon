@@ -11,6 +11,7 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChangesScene extends PixelScene {
 
@@ -38,7 +39,7 @@ public class ChangesScene extends PixelScene {
 
         NinePatch panel = Chrome.get(Chrome.Type.TOAST);
 
-        int pw = 135 + panel.marginLeft() + panel.marginRight() - 2;
+        int pw = 135 + Objects.requireNonNull(panel).marginLeft() + panel.marginRight() - 2;
         int ph = h - 35;
 
         panel.size(pw, ph);

@@ -104,12 +104,12 @@ public class Thief extends Mob {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
         if (state == FLEEING) {
             Dungeon.level.drop(new Gold(), pos).sprite.drop();
         }
 
-        return super.defenseProc(enemy, damage);
+        return super.defenseProcess(enemy, damage);
     }
 
     protected boolean steal(Hero hero) {

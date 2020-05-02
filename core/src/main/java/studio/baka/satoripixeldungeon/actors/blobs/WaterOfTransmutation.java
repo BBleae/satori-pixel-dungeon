@@ -24,6 +24,8 @@ import studio.baka.satoripixeldungeon.plants.Plant;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class WaterOfTransmutation extends WellWater {
 
     @Override
@@ -99,7 +101,7 @@ public class WaterOfTransmutation extends WellWater {
 
         do {
             n = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-        } while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
+        } while (Challenges.isItemBlocked(n) || Objects.requireNonNull(n).getClass() == w.getClass());
 
         int level = w.level();
         if (w.curseInfusionBonus) level--;

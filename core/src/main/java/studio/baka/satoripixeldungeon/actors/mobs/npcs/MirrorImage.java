@@ -28,7 +28,7 @@ public class MirrorImage extends NPC {
         state = HUNTING;
 
         //before other mobs
-        actPriority = MOB_PRIO + 1;
+        actPriority = MOB_PRIORITY + 1;
     }
 
     private Hero hero;

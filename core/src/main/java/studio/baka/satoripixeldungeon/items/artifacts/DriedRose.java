@@ -45,6 +45,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DriedRose extends Artifact {
 
@@ -119,6 +120,7 @@ public class DriedRose extends Artifact {
                     if (spawnPoints.size() > 0) {
                         ghost = new GhostHero(this);
                         ghostID = ghost.id();
+                        //noinspection ConstantConditions
                         ghost.pos = Random.element(spawnPoints);
 
                         GameScene.add(ghost, 1f);
@@ -363,6 +365,7 @@ public class DriedRose extends Artifact {
                 }
 
                 if (spawnPoints.size() > 0) {
+                    //noinspection ConstantConditions
                     Wraith.spawnAt(Random.element(spawnPoints));
                     Sample.INSTANCE.play(Assets.SND_CURSED);
                 }
@@ -385,7 +388,7 @@ public class DriedRose extends Artifact {
 
             if (!Dungeon.level.heroFOV[cell]
                     || Actor.findChar(cell) == null
-                    || (Actor.findChar(cell) != Dungeon.hero && Actor.findChar(cell).alignment != Char.Alignment.ENEMY)) {
+                    || (Actor.findChar(cell) != Dungeon.hero && Objects.requireNonNull(Actor.findChar(cell)).alignment != Char.Alignment.ENEMY)) {
                 ghost.yell(Messages.get(ghost, "directed_position_" + Random.IntRange(1, 5)));
                 ghost.aggro(null);
                 ghost.state = ghost.WANDERING;
@@ -406,7 +409,7 @@ public class DriedRose extends Artifact {
                 ghost.defendingPos = -1;
                 ghost.movingToDefendPos = false;
 
-            } else if (Actor.findChar(cell).alignment == Char.Alignment.ENEMY) {
+            } else if (Objects.requireNonNull(Actor.findChar(cell)).alignment == Char.Alignment.ENEMY) {
                 ghost.yell(Messages.get(ghost, "directed_attack_" + Random.IntRange(1, 5)));
                 ghost.aggro(Actor.findChar(cell));
                 ghost.setTarget(cell);
@@ -473,7 +476,7 @@ public class DriedRose extends Artifact {
             state = HUNTING;
 
             //before other mobs
-            actPriority = MOB_PRIO + 1;
+            actPriority = MOB_PRIORITY + 1;
 
             properties.add(Property.UNDEAD);
         }
@@ -535,6 +538,7 @@ public class DriedRose extends Artifact {
             int targetPos = defendingPos != -1 ? defendingPos : Dungeon.hero.pos;
 
             //will never attack something far from their target
+            //noinspection SuspiciousMethodCalls
             if (enemy != null
                     && Dungeon.level.mobs.contains(enemy)
                     && (Dungeon.level.distance(enemy.pos, targetPos) <= 8)) {
@@ -593,11 +597,11 @@ public class DriedRose extends Artifact {
         }
 
         @Override
-        public int defenseProc(Char enemy, int damage) {
+        public int defenseProcess(Char enemy, int damage) {
             if (rose != null && rose.armor != null) {
                 return rose.armor.proc(enemy, this, damage);
             } else {
-                return super.defenseProc(enemy, damage);
+                return super.defenseProcess(enemy, damage);
             }
         }
 
@@ -665,7 +669,7 @@ public class DriedRose extends Artifact {
         }
 
         @Override
-        public boolean isImmune(Class effect) {
+        public boolean isImmune(@SuppressWarnings("rawtypes") Class effect) {
             if (effect == Burning.class
                     && rose != null
                     && rose.armor != null
@@ -893,34 +897,31 @@ public class DriedRose extends Artifact {
                         }
                         rose.weapon = null;
                     } else {
-                        GameScene.selectItem(new WndBag.Listener() {
-                            @Override
-                            public void onSelect(Item item) {
-                                if (!(item instanceof MeleeWeapon)) {
-                                    //do nothing, should only happen when window is cancelled
-                                } else if (item.unique) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_unique"));
-                                    hide();
-                                } else if (!item.isIdentified()) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_unidentified"));
-                                    hide();
-                                } else if (item.cursed) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
-                                    hide();
-                                } else if (((MeleeWeapon) item).STRReq() > rose.ghostStrength()) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_strength"));
-                                    hide();
+                        GameScene.selectItem(item -> {
+                            if (!(item instanceof MeleeWeapon)) {
+                                //do nothing, should only happen when window is cancelled
+                            } else if (item.unique) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_unique"));
+                                hide();
+                            } else if (!item.isIdentified()) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_unidentified"));
+                                hide();
+                            } else if (item.cursed) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
+                                hide();
+                            } else if (((MeleeWeapon) item).STRReq() > rose.ghostStrength()) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_strength"));
+                                hide();
+                            } else {
+                                if (item.isEquipped(Dungeon.hero)) {
+                                    ((MeleeWeapon) item).doUnequip(Dungeon.hero, false, false);
                                 } else {
-                                    if (item.isEquipped(Dungeon.hero)) {
-                                        ((MeleeWeapon) item).doUnequip(Dungeon.hero, false, false);
-                                    } else {
-                                        item.detach(Dungeon.hero.belongings.backpack);
-                                    }
-                                    rose.weapon = (MeleeWeapon) item;
-                                    item(rose.weapon);
+                                    item.detach(Dungeon.hero.belongings.backpack);
                                 }
-
+                                rose.weapon = (MeleeWeapon) item;
+                                item(rose.weapon);
                             }
+
                         }, WndBag.Mode.WEAPON, Messages.get(WndGhostHero.class, "weapon_prompt"));
                     }
                 }
@@ -944,34 +945,31 @@ public class DriedRose extends Artifact {
                         }
                         rose.armor = null;
                     } else {
-                        GameScene.selectItem(new WndBag.Listener() {
-                            @Override
-                            public void onSelect(Item item) {
-                                if (!(item instanceof Armor)) {
-                                    //do nothing, should only happen when window is cancelled
-                                } else if (item.unique || ((Armor) item).checkSeal() != null) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_unique"));
-                                    hide();
-                                } else if (!item.isIdentified()) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_unidentified"));
-                                    hide();
-                                } else if (item.cursed) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
-                                    hide();
-                                } else if (((Armor) item).STRReq() > rose.ghostStrength()) {
-                                    GLog.w(Messages.get(WndGhostHero.class, "cant_strength"));
-                                    hide();
+                        GameScene.selectItem(item -> {
+                            if (!(item instanceof Armor)) {
+                                //do nothing, should only happen when window is cancelled
+                            } else if (item.unique || ((Armor) item).checkSeal() != null) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_unique"));
+                                hide();
+                            } else if (!item.isIdentified()) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_unidentified"));
+                                hide();
+                            } else if (item.cursed) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
+                                hide();
+                            } else if (((Armor) item).STRReq() > rose.ghostStrength()) {
+                                GLog.w(Messages.get(WndGhostHero.class, "cant_strength"));
+                                hide();
+                            } else {
+                                if (item.isEquipped(Dungeon.hero)) {
+                                    ((Armor) item).doUnequip(Dungeon.hero, false, false);
                                 } else {
-                                    if (item.isEquipped(Dungeon.hero)) {
-                                        ((Armor) item).doUnequip(Dungeon.hero, false, false);
-                                    } else {
-                                        item.detach(Dungeon.hero.belongings.backpack);
-                                    }
-                                    rose.armor = (Armor) item;
-                                    item(rose.armor);
+                                    item.detach(Dungeon.hero.belongings.backpack);
                                 }
-
+                                rose.armor = (Armor) item;
+                                item(rose.armor);
                             }
+
                         }, WndBag.Mode.ARMOR, Messages.get(WndGhostHero.class, "armor_prompt"));
                     }
                 }

@@ -240,7 +240,7 @@ abstract public class Weapon extends KindOfWeapon {
     public Weapon enchant() {
 
         Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
-        Enchantment ench = Enchantment.random(oldEnchantment);
+        @SuppressWarnings("unchecked") Enchantment ench = Enchantment.random(oldEnchantment);
 
         return enchant(ench);
     }

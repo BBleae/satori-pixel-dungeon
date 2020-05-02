@@ -10,6 +10,8 @@ import studio.baka.satoripixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class Corrosion extends Armor.Glyph {
 
     private static final ItemSprite.Glowing BLACK = new ItemSprite.Glowing(0x000000);
@@ -22,7 +24,7 @@ public class Corrosion extends Armor.Glyph {
             for (int i : PathFinder.NEIGHBOURS9) {
                 Splash.at(pos + i, 0x000000, 5);
                 if (Actor.findChar(pos + i) != null)
-                    Buff.affect(Actor.findChar(pos + i), Ooze.class).set(20f);
+                    Buff.affect(Objects.requireNonNull(Actor.findChar(pos + i)), Ooze.class).set(20f);
             }
         }
 

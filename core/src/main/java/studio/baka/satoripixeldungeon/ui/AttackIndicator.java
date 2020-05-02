@@ -10,6 +10,7 @@ import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AttackIndicator extends Tag {
 
@@ -115,7 +116,7 @@ public class AttackIndicator extends Tag {
 
         sprite = Reflection.newInstance(lastTarget.spriteClass);
         active = true;
-        sprite.linkVisuals(lastTarget);
+        Objects.requireNonNull(sprite).linkVisuals(lastTarget);
         sprite.idle();
         sprite.paused = true;
         add(sprite);

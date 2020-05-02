@@ -1,8 +1,12 @@
 # Satori's Pixel Dungeon
 
-A Pixel Dungeon Edition of Touhou characters. 
+一个东方Project题材的像素地牢游戏. 
 
-Based on the source code of Shattered Pixel Dungeon, by Evan.
+本软件基于 [Satori Pixel Dungeon](https://github.com/00-Evan/shattered-pixel-dungeon) 开发.
 
-**THE WARNING FROM EVAN**
-If you intend to make your version of the game available on Google Play **PLEASE CONTACT ME AT THE FOLLOWING EMAIL ADDRESS:** Evan@ShatteredPixel.com . There are various aspects of Google's Developer Policies that go beyond the scope of a simple 'how to compile' guide. If you do not take necessary precautions before attempting to publish on Google Play, your version of the game will almost certainly be taken down for impersonating Shattered Pixel Dungeon or Pixel Dungeon.
+## 制作人员
+
+- Tomnycui
+- BBleae
+- 万里
+- Missing Power

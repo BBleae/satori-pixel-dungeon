@@ -7,6 +7,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class Splash {
 
     public static void at(int cell, final int color, int n) {
@@ -20,7 +22,7 @@ public class Splash {
         }
 
         Emitter emitter = GameScene.emitter();
-        emitter.pos(p);
+        Objects.requireNonNull(emitter).pos(p);
 
         FACTORY.color = color;
         FACTORY.dir = -3.1415926f / 2;
@@ -35,7 +37,7 @@ public class Splash {
         }
 
         Emitter emitter = GameScene.emitter();
-        emitter.pos(p);
+        Objects.requireNonNull(emitter).pos(p);
 
         FACTORY.color = color;
         FACTORY.dir = dir;

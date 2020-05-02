@@ -11,6 +11,8 @@ import com.watabou.noosa.Tilemap;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class WeakFloorRoom extends SpecialRoom {
 
     public void paint(Level level) {
@@ -45,7 +47,7 @@ public class WeakFloorRoom extends SpecialRoom {
             well = new Point(Random.Int(2) == 0 ? left + 1 : right - 1, top + 2);
         }
 
-        Painter.set(level, well, Terrain.CHASM);
+        Painter.set(level, Objects.requireNonNull(well), Terrain.CHASM);
         CustomTilemap vis = new HiddenWell();
         vis.pos(well.x, well.y);
         level.customTiles.add(vis);

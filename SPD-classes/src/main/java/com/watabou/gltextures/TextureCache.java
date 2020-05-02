@@ -34,7 +34,7 @@ public class TextureCache {
 	
 	public synchronized static SmartTexture createGradient( int... colors ) {
 		
-		final String key = "" + colors;
+		@SuppressWarnings("ImplicitArrayToString") final String key = "" + colors;
 		
 		if (all.containsKey( key )) {
 			

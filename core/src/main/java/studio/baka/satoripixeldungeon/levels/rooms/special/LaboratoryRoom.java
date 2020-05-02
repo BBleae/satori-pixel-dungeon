@@ -18,6 +18,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class LaboratoryRoom extends SpecialRoom {
 
@@ -38,7 +39,7 @@ public class LaboratoryRoom extends SpecialRoom {
         } else if (entrance.y == bottom) {
             pot = new Point(Random.Int(2) == 0 ? left + 1 : right - 1, top + 1);
         }
-        Painter.set(level, pot, Terrain.ALCHEMY);
+        Painter.set(level, Objects.requireNonNull(pot), Terrain.ALCHEMY);
 
         int chapter = 1 + Dungeon.depth / 5;
         Blob.seed(pot.x + level.width() * pot.y, 1 + chapter * 10 + Random.NormalIntRange(0, 10), Alchemy.class, level);

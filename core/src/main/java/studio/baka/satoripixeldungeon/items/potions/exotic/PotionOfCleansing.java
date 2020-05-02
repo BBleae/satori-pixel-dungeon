@@ -10,6 +10,8 @@ import studio.baka.satoripixeldungeon.actors.buffs.Hunger;
 import studio.baka.satoripixeldungeon.actors.hero.Hero;
 import com.watabou.noosa.audio.Sample;
 
+import java.util.Objects;
+
 public class PotionOfCleansing extends ExoticPotion {
 
     {
@@ -35,7 +37,7 @@ public class PotionOfCleansing extends ExoticPotion {
             }
 
             if (Actor.findChar(cell) != null) {
-                cleanse(Actor.findChar(cell));
+                cleanse(Objects.requireNonNull(Actor.findChar(cell)));
             }
         }
     }

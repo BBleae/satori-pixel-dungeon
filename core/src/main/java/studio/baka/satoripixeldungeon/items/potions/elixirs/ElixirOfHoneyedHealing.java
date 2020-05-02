@@ -55,6 +55,7 @@ public class ElixirOfHoneyedHealing extends Elixir {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{PotionOfHealing.class, Honeypot.ShatteredPot.class};
             inQuantity = new int[]{1, 1};
 

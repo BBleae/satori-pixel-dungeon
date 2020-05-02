@@ -383,6 +383,7 @@ public class NewPrisonBossLevel extends Level {
                     }
 
                     if (!candidates.isEmpty()) {
+                        //noinspection ConstantConditions
                         tenguPos = Random.element(candidates);
                         //if there are no adjacent cells, wait and do nothing
                     } else {
@@ -641,8 +642,6 @@ public class NewPrisonBossLevel extends Level {
                 Level.set(cell, Terrain.SECRET_TRAP);
                 setTrap(new TenguDartTrap().hide(), cell);
                 CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
-            } else {
-
             }
         }
 
@@ -766,7 +765,7 @@ public class NewPrisonBossLevel extends Level {
             Actor.addDelayed(new Actor() {
 
                 {
-                    actPriority = HERO_PRIO - 1;
+                    actPriority = HERO_PRIORITY - 1;
                 }
 
                 @Override

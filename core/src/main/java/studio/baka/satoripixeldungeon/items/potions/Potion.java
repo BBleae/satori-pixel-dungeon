@@ -35,6 +35,7 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Potion extends Item {
 
@@ -466,6 +467,7 @@ public class Potion extends Item {
             ArrayList<Class<? extends Plant.Seed>> seeds = new ArrayList<>();
             for (Item i : ingredients) {
                 if (!seeds.contains(i.getClass())) {
+                    //noinspection unchecked
                     seeds.add((Class<? extends Plant.Seed>) i.getClass());
                 }
             }
@@ -478,7 +480,7 @@ public class Potion extends Item {
                 result = Generator.random(Generator.Category.POTION);
 
             } else {
-                result = Reflection.newInstance(types.get(Random.element(ingredients).getClass()));
+                result = Reflection.newInstance(types.get(Objects.requireNonNull(Random.element(ingredients)).getClass()));
 
             }
 

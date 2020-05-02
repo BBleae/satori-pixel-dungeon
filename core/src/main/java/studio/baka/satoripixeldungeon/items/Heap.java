@@ -255,12 +255,8 @@ public class Heap implements Bundlable {
             return;
         }
 
-        if (type != Type.HEAP) {
-
-        } else {
-
+        if (type == Type.HEAP) {
             for (Item item : items.toArray(new Item[0])) {
-
                 if (item instanceof Potion) {
                     items.remove(item);
                     ((Potion) item).shatter(pos);
@@ -277,7 +273,6 @@ public class Heap implements Bundlable {
                 } else if (!(item.level() > 0 || item.unique
                         || (item instanceof Armor && ((Armor) item).checkSeal() != null)))
                     items.remove(item);
-
             }
 
             if (isEmpty()) {
@@ -289,7 +284,6 @@ public class Heap implements Bundlable {
     }
 
     public void freeze() {
-
         if (type == Type.MIMIC) {
             Mimic m = Mimic.spawnAt(pos, items);
             if (m != null) {

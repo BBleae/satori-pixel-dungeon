@@ -163,6 +163,7 @@ public class ItemStatusHandler<T extends Item> {
     }
 
     public void know(T item) {
+        //noinspection unchecked
         known.add((Class<? extends T>) item.getClass());
     }
 

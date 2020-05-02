@@ -59,7 +59,7 @@ public class Swarm extends Mob {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         if (HP >= damage + 2) {
             ArrayList<Integer> candidates = new ArrayList<>();
@@ -76,6 +76,7 @@ public class Swarm extends Mob {
 
                 Swarm clone = split();
                 clone.HP = (HP - damage) / 2;
+                //noinspection ConstantConditions
                 clone.pos = Random.element(candidates);
                 clone.state = clone.HUNTING;
 
@@ -88,7 +89,7 @@ public class Swarm extends Mob {
             }
         }
 
-        return super.defenseProc(enemy, damage);
+        return super.defenseProcess(enemy, damage);
     }
 
     @Override

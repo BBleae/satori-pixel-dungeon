@@ -9,7 +9,9 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
+@SuppressWarnings("unchecked")
 public abstract class SpecialRoom extends Room {
 
     @Override
@@ -129,7 +131,7 @@ public abstract class SpecialRoom extends Room {
                 floorSpecials.remove(WeakFloorRoom.class);
             }
 
-            Room r = null;
+            Room r;
             int index = floorSpecials.size();
             for (int i = 0; i < 4; i++) {
                 int newidx = Random.Int(floorSpecials.size());
@@ -142,7 +144,7 @@ public abstract class SpecialRoom extends Room {
                 pitNeededDepth = Dungeon.depth + 1;
             }
 
-            useType(r.getClass());
+            useType(Objects.requireNonNull(r).getClass());
             return (SpecialRoom) r;
 
         }

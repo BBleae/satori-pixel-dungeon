@@ -22,6 +22,7 @@ import com.watabou.utils.Bundle;
 import java.util.ArrayList;
 import java.util.Collections;
 
+@SuppressWarnings("rawtypes")
 public class SandalsOfNature extends Artifact {
 
     {

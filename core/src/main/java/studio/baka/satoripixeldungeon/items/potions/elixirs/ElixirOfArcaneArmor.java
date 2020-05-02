@@ -27,6 +27,7 @@ public class ElixirOfArcaneArmor extends Elixir {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{PotionOfEarthenArmor.class, GooBlob.class};
             inQuantity = new int[]{1, 1};
 

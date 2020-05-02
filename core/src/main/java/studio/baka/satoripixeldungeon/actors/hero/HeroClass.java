@@ -121,6 +121,7 @@ public enum HeroClass {
             new RingOfElements().collect();
             new ScrollOfIdentify().collect();
             new ScrollOfEnchantment().quantity(20).collect();
+            //noinspection unchecked
             new ThreeDirectionsword().enchant(Weapon.Enchantment.randomUncommon()).collect();
             new PotionOfStrength().quantity(6).collect();
             new PotionOfInvisibility().quantity(15).collect();
@@ -317,22 +318,22 @@ public enum HeroClass {
         }
     }
 
-    public boolean isUnlocked() {
+    public boolean isLocked() {
         //always unlock on debug builds
-        if (DeviceCompat.isDebug()) return true;
+        if (DeviceCompat.isDebug()) return false;
 
         switch (this) {
             case WARRIOR:
             default:
-                return true;
+                return false;
             case MAGE:
-                return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
+                return !Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
             case ROGUE:
-                return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
+                return !Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
             case HUNTRESS:
-                return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
+                return !Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
             case MAHOU_SHOUJO:
-                return Badges.isUnlocked(Badges.Badge.UNLOCK_MAHOU_SHOUJO);
+                return !Badges.isUnlocked(Badges.Badge.UNLOCK_MAHOU_SHOUJO);
         }
     }
 

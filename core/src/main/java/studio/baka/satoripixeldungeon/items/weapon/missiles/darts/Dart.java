@@ -181,7 +181,7 @@ public class Dart extends MissileWeapon {
                         curUser.busy();
                         curUser.sprite.operate(curUser.pos);
 
-                    } else if ((index == 1 && options.length == 3) || (index == 0 && options.length == 2)) {
+                    } else if (index == 1 && options.length == 3 || index == 0) {
                         item.detach(curUser.belongings.backpack);
 
                         if (curItem.quantity() <= singleSeedDarts) {

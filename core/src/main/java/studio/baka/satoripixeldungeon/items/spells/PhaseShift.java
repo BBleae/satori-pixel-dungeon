@@ -63,6 +63,7 @@ public class PhaseShift extends TargetedSpell {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{ScrollOfTeleportation.class, ArcaneCatalyst.class};
             inQuantity = new int[]{1, 1};
 

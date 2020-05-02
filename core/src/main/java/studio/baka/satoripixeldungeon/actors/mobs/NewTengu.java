@@ -114,7 +114,7 @@ public class NewTengu extends Mob {
             Actor.add(new Actor() {
 
                 {
-                    actPriority = VFX_PRIO;
+                    actPriority = VFX_PRIORITY;
                 }
 
                 @Override
@@ -556,7 +556,7 @@ public class NewTengu extends Mob {
 
         public static class BombBlob extends Blob {
             {
-                actPriority = BUFF_PRIO - 1;
+                actPriority = BUFF_PRIORITY - 1;
                 alwaysVisible = true;
             }
 
@@ -755,7 +755,7 @@ public class NewTengu extends Mob {
         public static class FireBlob extends Blob {
 
             {
-                actPriority = BUFF_PRIO - 1;
+                actPriority = BUFF_PRIORITY - 1;
                 alwaysVisible = true;
             }
 
@@ -932,7 +932,7 @@ public class NewTengu extends Mob {
         public static class ShockerBlob extends Blob {
 
             {
-                actPriority = BUFF_PRIO - 1;
+                actPriority = BUFF_PRIORITY - 1;
                 alwaysVisible = true;
             }
 

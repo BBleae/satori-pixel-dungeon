@@ -43,7 +43,7 @@ public class VaultRoom extends SpecialRoom {
 
     private Item prize(Level level) {
         Generator.Category cat = prizeClasses.remove(0);
-        Item prize = null;
+        Item prize;
         do {
             prize = Generator.random(cat);
         } while (prize == null || Challenges.isItemBlocked(prize));

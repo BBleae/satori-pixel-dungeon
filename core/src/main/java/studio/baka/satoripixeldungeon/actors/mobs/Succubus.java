@@ -101,6 +101,7 @@ public class Succubus extends Mob {
                 }
             }
             if (candidates.size() > 0)
+                //noinspection ConstantConditions
                 cell = Random.element(candidates);
             else {
                 delay = BLINK_DELAY;

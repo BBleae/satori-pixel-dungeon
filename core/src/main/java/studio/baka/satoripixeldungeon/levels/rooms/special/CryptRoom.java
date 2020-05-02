@@ -64,6 +64,7 @@ public class CryptRoom extends SpecialRoom {
             prize.upgrade();
             //curse the armor, unless it has a glyph
             if (!prize.hasGoodGlyph()) {
+                //noinspection unchecked
                 prize.inscribe(Armor.Glyph.randomCurse());
             }
         }

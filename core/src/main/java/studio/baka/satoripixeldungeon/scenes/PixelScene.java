@@ -56,7 +56,7 @@ public class PixelScene extends Scene {
         }
 
         maxDefaultZoom = (int) Math.min(Game.width / minWidth, Game.height / minHeight);
-        maxScreenZoom = (int) Math.min(Game.dispWidth / minWidth, Game.dispHeight / minHeight);
+        maxScreenZoom = (int) Math.min(Game.displayWidth / minWidth, Game.displayHeight / minHeight);
         defaultZoom = SPDSettings.scale();
 
         if (defaultZoom < Math.ceil(Game.density * 2) || defaultZoom > maxDefaultZoom) {
@@ -114,6 +114,7 @@ public class PixelScene extends Scene {
         savedClass = getClass();
         for (Gizmo g : members.toArray(new Gizmo[0])) {
             if (g instanceof Window) {
+                //noinspection unchecked
                 savedWindows.add((Class<? extends Window>) g.getClass());
             }
         }

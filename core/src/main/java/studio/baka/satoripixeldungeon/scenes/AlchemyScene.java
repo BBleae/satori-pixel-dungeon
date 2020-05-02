@@ -24,6 +24,8 @@ import com.watabou.noosa.ui.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class AlchemyScene extends PixelScene {
 
@@ -67,11 +69,9 @@ public class AlchemyScene extends PixelScene {
 
         Image im = new Image(TextureCache.createGradient(0x66000000, 0x88000000, 0xAA000000, 0xCC000000, 0xFF000000));
         im.angle = 90;
-        im.x = Camera.main.width;
         im.scale.x = Camera.main.height / 5f;
-        im.scale.y = Camera.main.width;
+        im.scale.y = im.x = Camera.main.width;
         add(im);
-
 
         RenderedTextBlock title = PixelScene.renderTextBlock(Messages.get(this, "title"), 9);
         title.hardlight(Window.TITLE_COLOR);
@@ -293,7 +293,8 @@ public class AlchemyScene extends PixelScene {
         ArrayList<T> filtered = new ArrayList<>();
         for (ItemButton input : inputs) {
             Item item = input.item;
-            if (Item.class.isInstance(item)) {
+            if (item != null) {
+                //noinspection unchecked
                 filtered.add((T) item);
             }
         }
@@ -405,7 +406,7 @@ public class AlchemyScene extends PixelScene {
                 }
                 inputs[curslot].item(detached);
                 curslot++;
-                needed -= detached.quantity();
+                needed -= Objects.requireNonNull(detached).quantity();
                 if (detached == found.get(0)) {
                     found.remove(0);
                 }
@@ -418,9 +419,7 @@ public class AlchemyScene extends PixelScene {
     public void destroy() {
         synchronized (inputs) {
             clearSlots();
-            for (int i = 0; i < inputs.length; i++) {
-                inputs[i] = null;
-            }
+            Arrays.fill(inputs, null);
         }
 
         try {
@@ -461,7 +460,7 @@ public class AlchemyScene extends PixelScene {
             super.createChildren();
 
             bg = Chrome.get(Chrome.Type.RED_BUTTON);
-            add(bg);
+            add(Objects.requireNonNull(bg));
 
             slot = new ItemSlot() {
                 @Override

@@ -11,6 +11,7 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class AlchemicalCatalyst extends Potion {
 
@@ -38,14 +39,14 @@ public class AlchemicalCatalyst extends Potion {
     @Override
     public void apply(Hero hero) {
         Potion p = Reflection.newInstance(Random.chances(potionChances));
-        p.anonymize();
+        Objects.requireNonNull(p).anonymize();
         p.apply(hero);
     }
 
     @Override
     public void shatter(int cell) {
         Potion p = Reflection.newInstance(Random.chances(potionChances));
-        p.anonymize();
+        Objects.requireNonNull(p).anonymize();
         curItem = p;
         p.shatter(cell);
     }

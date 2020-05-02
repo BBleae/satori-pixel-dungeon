@@ -54,6 +54,7 @@ public abstract class RegularLevel extends Level {
                 r.neigbours.clear();
                 r.connected.clear();
             }
+            //noinspection unchecked
             rooms = builder.build((ArrayList<Room>) initRooms.clone());
         } while (rooms == null);
 
@@ -188,7 +189,7 @@ public abstract class RegularLevel extends Level {
     @Override
     public int randomRespawnCell() {
         int count = 0;
-        int cell = -1;
+        int cell;
 
         while (true) {
 
@@ -217,7 +218,7 @@ public abstract class RegularLevel extends Level {
     public int randomDestination() {
 
         int count = 0;
-        int cell = -1;
+        int cell;
 
         while (true) {
 
@@ -245,7 +246,7 @@ public abstract class RegularLevel extends Level {
         int nItems = 3 + Random.chances(new float[]{6, 3, 1});
 
         for (int i = 0; i < nItems; i++) {
-            Heap.Type type = null;
+            Heap.Type type;
             switch (Random.Int(20)) {
                 case 0:
                     type = Heap.Type.SKELETON;
@@ -354,7 +355,7 @@ public abstract class RegularLevel extends Level {
     protected Room randomRoom() {
         Random.shuffle(rooms);
         for (Room r : rooms) {
-            if (StandardRoom.class.isInstance(r)) {
+            if (r instanceof StandardRoom) {
                 return r;
             }
         }

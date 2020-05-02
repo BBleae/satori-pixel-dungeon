@@ -11,6 +11,7 @@ import studio.baka.satoripixeldungeon.levels.traps.Trap;
 import com.watabou.utils.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class RegularPainter extends Painter {
 
@@ -38,6 +39,7 @@ public abstract class RegularPainter extends Painter {
 
     public RegularPainter setTraps(int num, Class<?>[] classes, float[] chances) {
         nTraps = num;
+        //noinspection unchecked
         trapClasses = (Class<? extends Trap>[]) classes;
         trapChances = chances;
         return this;
@@ -209,7 +211,6 @@ public abstract class RegularPainter extends Painter {
             }
 
             w.top += 1;
-            w.bottom -= 0;
 
             w.right++;
 
@@ -230,7 +231,6 @@ public abstract class RegularPainter extends Painter {
             }
 
             w.left += 1;
-            w.right -= 0;
 
             w.bottom++;
 
@@ -331,7 +331,8 @@ public abstract class RegularPainter extends Painter {
             Integer trapPos = Random.element(validCells);
             validCells.remove(trapPos); //removes the integer object, not at the index
 
-            Trap trap = Reflection.newInstance(trapClasses[Random.chances(trapChances)]).hide();
+            Trap trap = Objects.requireNonNull(Reflection.newInstance(trapClasses[Random.chances(trapChances)])).hide();
+            //noinspection ConstantConditions
             l.setTrap(trap, trapPos);
             //some traps will not be hidden
             l.map[trapPos] = trap.visible ? Terrain.TRAP : Terrain.SECRET_TRAP;

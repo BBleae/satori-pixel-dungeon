@@ -34,7 +34,7 @@ public class WndChooseCurseLevel extends Window {
 			@Override
 			protected void onClick() {
 				hide();
-				staff.curselevel = 1;
+				staff.curseLevel = 1;
 				GLog.w(Messages.get(WndChooseCurseLevel.class,"complete",1));
 				staff.cursed = true;
 			}
@@ -46,7 +46,7 @@ public class WndChooseCurseLevel extends Window {
 			@Override
 			protected void onClick() {
 				hide();
-				staff.curselevel = 2;
+				staff.curseLevel = 2;
 				GLog.w(Messages.get(WndChooseCurseLevel.class,"complete",2));
 				staff.cursed = true;
 				staff.cursedKnown = true;
@@ -59,7 +59,7 @@ public class WndChooseCurseLevel extends Window {
 			@Override
 			protected void onClick() {
 				hide();
-				staff.curselevel = 3;
+				staff.curseLevel = 3;
 				GLog.w(Messages.get(WndChooseCurseLevel.class,"complete",3));
 				staff.cursed = true;
 				staff.cursedKnown = true;
@@ -72,7 +72,7 @@ public class WndChooseCurseLevel extends Window {
 			@Override
 			protected void onClick() {
 				hide();
-				staff.curselevel = 4;
+				staff.curseLevel = 4;
 				GLog.w(Messages.get(WndChooseCurseLevel.class,"complete",4));
 				staff.cursed = true;
 				staff.cursedKnown = true;
@@ -85,7 +85,7 @@ public class WndChooseCurseLevel extends Window {
 			@Override
 			protected void onClick() {
 				hide();
-				staff.curselevel = 0;
+				staff.curseLevel = 0;
 				GLog.w(Messages.get(WndChooseCurseLevel.class,"clean"));
 				staff.cursed = false;
 				staff.cursedKnown = true;

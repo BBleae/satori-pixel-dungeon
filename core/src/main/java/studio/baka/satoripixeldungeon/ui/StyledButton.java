@@ -8,6 +8,8 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 
+import java.util.Objects;
+
 //simple button which support a background chrome, text, and an icon.
 public class StyledButton extends Button {
 
@@ -23,7 +25,7 @@ public class StyledButton extends Button {
         super();
 
         bg = Chrome.get(type);
-        addToBack(bg);
+        addToBack(Objects.requireNonNull(bg));
 
         text = PixelScene.renderTextBlock(size);
         text.text(label);

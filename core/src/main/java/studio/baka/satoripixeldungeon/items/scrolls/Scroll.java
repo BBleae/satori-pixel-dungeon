@@ -22,6 +22,7 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 
 public abstract class Scroll extends Item {
 
@@ -322,7 +323,7 @@ public abstract class Scroll extends Item {
 
             s.quantity(s.quantity() - 1);
 
-            return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+            return Objects.requireNonNull(Reflection.newInstance(stones.get(s.getClass()))).quantity(amnts.get(s.getClass()));
         }
 
         @Override
@@ -330,7 +331,7 @@ public abstract class Scroll extends Item {
             if (!testIngredients(ingredients)) return null;
 
             Scroll s = (Scroll) ingredients.get(0);
-            return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+            return Objects.requireNonNull(Reflection.newInstance(stones.get(s.getClass()))).quantity(amnts.get(s.getClass()));
         }
     }
 }

@@ -10,6 +10,8 @@ import studio.baka.satoripixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
 
+import java.util.Objects;
+
 public class EyeSprite extends MobSprite {
 
     private int zapPos;
@@ -85,7 +87,7 @@ public class EyeSprite extends MobSprite {
         if (anim == zap) {
             idle();
             if (Actor.findChar(zapPos) != null) {
-                parent.add(new Beam.DeathRay(center(), Actor.findChar(zapPos).sprite.center()));
+                parent.add(new Beam.DeathRay(center(), Objects.requireNonNull(Actor.findChar(zapPos)).sprite.center()));
             } else {
                 parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(zapPos)));
             }

@@ -94,7 +94,7 @@ public class OldTengu extends Mob {
             Actor.add(new Actor() {
 
                 {
-                    actPriority = VFX_PRIO;
+                    actPriority = VFX_PRIORITY;
                 }
 
                 @Override

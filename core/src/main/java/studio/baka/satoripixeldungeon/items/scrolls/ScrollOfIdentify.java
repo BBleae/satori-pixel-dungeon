@@ -11,6 +11,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ScrollOfIdentify extends InventoryScroll {
 
@@ -32,7 +33,7 @@ public class ScrollOfIdentify extends InventoryScroll {
         }
 
         if (unIDed.size() > 1) {
-            Random.element(unIDed).identify();
+            Objects.requireNonNull(Random.element(unIDed)).identify();
             Sample.INSTANCE.play(Assets.SND_TELEPORT);
         }
 

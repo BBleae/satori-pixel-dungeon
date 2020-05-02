@@ -22,6 +22,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Plant implements Bundlable {
 
@@ -121,7 +122,7 @@ public abstract class Plant implements Bundlable {
 
                 hero.spend(TIME_TO_PLANT);
                 hero.busy();
-                ((Seed) detach(hero.belongings.backpack)).onThrow(hero.pos);
+                ((Seed) Objects.requireNonNull(detach(hero.belongings.backpack))).onThrow(hero.pos);
 
                 hero.sprite.operate(hero.pos);
 
@@ -133,7 +134,7 @@ public abstract class Plant implements Bundlable {
                 Sample.INSTANCE.play(Assets.SND_PLANT);
             }
             Plant plant = Reflection.newInstance(plantClass);
-            plant.pos = pos;
+            Objects.requireNonNull(plant).pos = pos;
             return plant;
         }
 

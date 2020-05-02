@@ -29,7 +29,7 @@ abstract public class ClassArmor extends Armor {
 
     public static ClassArmor upgrade(Hero owner, Armor armor) {
 
-        ClassArmor classArmor = null;
+        ClassArmor classArmor;
 
         switch (owner.heroClass) {
             case WARRIOR:

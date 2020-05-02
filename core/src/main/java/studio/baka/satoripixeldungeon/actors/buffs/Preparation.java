@@ -29,7 +29,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 
     {
         //always acts after other buffs, so invisibility effects can process first
-        actPriority = BUFF_PRIO - 1;
+        actPriority = BUFF_PRIORITY - 1;
     }
 
     public enum AttackLevel {
@@ -169,14 +169,13 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 
         AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
 
+        final int v = (int) (lvl.baseDmgBonus * 100 + lvl.missingHPBonus * 100);
         if (lvl.canInstakill(new Rat())) {
             desc += "\n\n" + Messages.get(this, "desc_dmg_instakill",
-                    (int) (lvl.baseDmgBonus * 100),
-                    (int) (lvl.baseDmgBonus * 100 + lvl.missingHPBonus * 100));
+                    (int) (lvl.baseDmgBonus * 100), v);
         } else if (lvl.missingHPBonus > 0) {
             desc += "\n\n" + Messages.get(this, "desc_dmg_scale",
-                    (int) (lvl.baseDmgBonus * 100),
-                    (int) (lvl.baseDmgBonus * 100 + lvl.missingHPBonus * 100));
+                    (int) (lvl.baseDmgBonus * 100), v);
         } else {
             desc += "\n\n" + Messages.get(this, "desc_dmg", (int) (lvl.baseDmgBonus * 100));
         }

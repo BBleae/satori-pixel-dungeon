@@ -32,12 +32,13 @@ import com.watabou.utils.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 
 public abstract class Mob extends Char {
 
     {
         name = Messages.get(this, "name");
-        actPriority = MOB_PRIO;
+        actPriority = MOB_PRIORITY;
 
         alignment = Alignment.ENEMY;
     }
@@ -341,18 +342,17 @@ public abstract class Mob extends Char {
                             path.add(target);
                         }
 
-                    } else if (!path.isEmpty()) {
+                    } else {
                         //if the new target is simply 1 earlier in the path shorten the path
-                        if (path.getLast() == target) {
+                        if (path.getLast() != target) {
+                            if (Dungeon.level.adjacent(target, path.getLast())) {
+                                path.add(target);
 
-                            //if the new target is closer/same, need to modify end of path
-                        } else if (Dungeon.level.adjacent(target, path.getLast())) {
-                            path.add(target);
-
-                            //if the new target is further away, need to extend the path
-                        } else {
-                            path.add(last);
-                            path.add(target);
+                                //if the new target is further away, need to extend the path
+                            } else {
+                                path.add(last);
+                                path.add(target);
+                            }
                         }
                     }
 
@@ -476,17 +476,17 @@ public abstract class Mob extends Char {
     protected boolean hitWithRanged = false;
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         if (enemy instanceof Hero && ((Hero) enemy).belongings.weapon instanceof MissileWeapon) {
             hitWithRanged = true;
         }
 
         if ((!enemySeen || enemy.invisible > 0)
-                && enemy == Dungeon.hero && Dungeon.hero.canSurpriseAttack()) {
+                && enemy == Dungeon.hero && Objects.requireNonNull(Dungeon.hero).canSurpriseAttack()) {
             Statistics.sneakAttacks++;
             Badges.validateRogueUnlock();
-            if (enemy.buff(Preparation.class) != null) {
+            if (Objects.requireNonNull(enemy).buff(Preparation.class) != null) {
                 Wound.hit(this);
             } else {
                 Surprise.hit(this);
@@ -495,9 +495,9 @@ public abstract class Mob extends Char {
 
         //if attacked by something else than current target, and that thing is closer, switch targets
         if (this.enemy == null
-                || (enemy != this.enemy && (Dungeon.level.distance(pos, enemy.pos) < Dungeon.level.distance(pos, this.enemy.pos)))) {
+                || (enemy != this.enemy && (Dungeon.level.distance(pos, Objects.requireNonNull(enemy).pos) < Dungeon.level.distance(pos, this.enemy.pos)))) {
             aggro(enemy);
-            target = enemy.pos;
+            target = Objects.requireNonNull(enemy).pos;
         }
 
         if (buff(SoulMark.class) != null) {

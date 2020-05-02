@@ -149,7 +149,7 @@ public class Imp extends NPC {
 
             Bundle node = bundle.getBundle(NODE);
 
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
+            if (node.notNull() && (spawned = node.getBoolean(SPAWNED))) {
                 alternative = node.getBoolean(ALTERNATIVE);
 
                 given = node.getBoolean(GIVEN);

@@ -51,7 +51,7 @@ public class SPDSettings extends GameSettings {
 	//FIXME in certain multi-window cases this can disagree with the actual screen size
 	//there should be an option to check for landscape the setting, and actual screen size
 	public static boolean landscape() {
-		return getBoolean(KEY_LANDSCAPE, Game.dispWidth > Game.dispHeight);
+		return getBoolean(KEY_LANDSCAPE, Game.displayWidth > Game.displayHeight);
 	}
 	
 	public static Boolean landscapeFromSettings(){

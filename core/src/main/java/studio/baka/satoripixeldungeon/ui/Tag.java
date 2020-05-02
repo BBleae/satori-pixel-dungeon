@@ -5,6 +5,8 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Button;
 
+import java.util.Objects;
+
 public class Tag extends Button {
 
     private final float r;
@@ -28,7 +30,7 @@ public class Tag extends Button {
         super.createChildren();
 
         bg = Chrome.get(Chrome.Type.TAG);
-        bg.hardlight(r, g, b);
+        Objects.requireNonNull(bg).hardlight(r, g, b);
         add(bg);
     }
 

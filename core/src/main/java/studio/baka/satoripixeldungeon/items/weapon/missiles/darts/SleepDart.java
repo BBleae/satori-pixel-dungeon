@@ -18,7 +18,7 @@ public class SleepDart extends TippedDart {
         //need to delay this so damage from the dart doesn't break the sleep
         new FlavourBuff() {
             {
-                actPriority = VFX_PRIO;
+                actPriority = VFX_PRIORITY;
             }
 
             public boolean act() {

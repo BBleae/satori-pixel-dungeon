@@ -174,7 +174,7 @@ public class WndStartGame extends Window {
 		public void update() {
 			super.update();
 			if (cl != GamesInProgress.selectedClass){
-				if (!cl.isUnlocked()){
+				if (cl.isLocked()){
 					hero.brightness(0.3f);
 				} else {
 					hero.brightness(0.6f);
@@ -188,7 +188,7 @@ public class WndStartGame extends Window {
 		protected void onClick() {
 			super.onClick();
 			
-			if( !cl.isUnlocked() ){
+			if(cl.isLocked()){
 				SatoriPixelDungeon.scene().add(
 						new WndMessage(cl.unlockMsg()));
 			} else {

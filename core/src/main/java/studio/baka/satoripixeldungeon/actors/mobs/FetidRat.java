@@ -47,11 +47,11 @@ public class FetidRat extends Rat {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         GameScene.add(Blob.seed(pos, 20, StenchGas.class));
 
-        return super.defenseProc(enemy, damage);
+        return super.defenseProcess(enemy, damage);
     }
 
     @Override

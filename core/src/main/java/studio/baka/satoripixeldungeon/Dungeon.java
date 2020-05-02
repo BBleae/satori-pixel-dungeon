@@ -605,7 +605,7 @@ public class Dungeon {
 			}
 			
 			Bundle quests = bundle.getBundle( QUESTS );
-			if (!quests.isNull()) {
+			if (quests.notNull()) {
 				Ghost.Quest.restoreFromBundle( quests );
 				Wandmaker.Quest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
@@ -622,7 +622,7 @@ public class Dungeon {
 		}
 		
 		Bundle badges = bundle.getBundle(BADGES);
-		if (!badges.isNull()) {
+		if (badges.notNull()) {
 			Badges.loadLocal( badges );
 		} else {
 			Badges.reset();
@@ -719,7 +719,7 @@ public class Dungeon {
 		Statistics.preview( info, bundle );
 	}
 	
-	public static void fail( Class cause ) {
+	public static void fail(@SuppressWarnings("rawtypes") Class cause ) {
 		if (hero.belongings.getItem( Ankh.class ) == null || (hero.heroClass == HeroClass.WARRIOR && hero.belongings.getItem( BrokenSeal.class ) == null )) {
 			Rankings.INSTANCE.submit( false, cause );
 		}

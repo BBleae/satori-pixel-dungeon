@@ -81,7 +81,7 @@ public class v0_3_X_Changes {
                         "Dev commentary will be added here in the future."));
 
         changes.addButton(new ChangeButton(Icons.get(Icons.LANGS), "Translations!",
-                "Shattered Pixel Dungeon now supports multiple languages, thanks to a new community translation project!\n\n" +
+                "Satori Pixel Dungeon now supports multiple languages, thanks to a new community translation project!\n\n" +
                         "The Following languages are supported at release:\n" +
                         "_-_ English\n" +
                         "_-_ Russian\n" +

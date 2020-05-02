@@ -116,24 +116,20 @@ public class WallBlockingTilemap extends Tilemap {
                         || !fogHidden(cell + mapWidth)) {
 
                     //right side
-                    if (((cell + 1) % mapWidth == 0) ||
-                            (!wall(cell + 1) && !fogHidden(cell + 1 - mapWidth)) ||
-                            (!wall(cell + 1) && !fogHidden(cell + 1)) ||
-                            (!wall(cell + 1 + mapWidth) && !fogHidden(cell + 1 + mapWidth))
+                    if (((cell + 1) % mapWidth != 0) &&
+                            (wall(cell + 1) || fogHidden(cell + 1 - mapWidth)) &&
+                            (wall(cell + 1) || fogHidden(cell + 1)) &&
+                            (wall(cell + 1 + mapWidth) || fogHidden(cell + 1 + mapWidth))
                     ) {
-                        //do nothing
-                    } else {
                         curr += 1;
                     }
 
                     //left side
-                    if ((cell % mapWidth == 0) ||
-                            (!wall(cell - 1) && !fogHidden(cell - 1 - mapWidth)) ||
-                            (!wall(cell - 1) && !fogHidden(cell - 1)) ||
-                            (!wall(cell - 1 + mapWidth) && !fogHidden(cell - 1 + mapWidth))
+                    if ((cell % mapWidth != 0) &&
+                            (wall(cell - 1) || fogHidden(cell - 1 - mapWidth)) &&
+                            (wall(cell - 1) || fogHidden(cell - 1)) &&
+                            (wall(cell - 1 + mapWidth) || fogHidden(cell - 1 + mapWidth))
                     ) {
-                        //do nothing
-                    } else {
                         curr += 2;
                     }
 

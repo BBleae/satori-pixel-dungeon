@@ -15,10 +15,10 @@ allprojects {
         appPackageName = 'studio.baka.satorispixeldungeon'
 
         appVersionCode = 383
-        appVersionName = '1.7.3.10'
+        appVersionName = '1.7.4'
 
         appAndroidCompileSDK = 29
-        appAndroidMinSDK = 19
+        appAndroidMinSDK = 24
         appAndroidTargetSDK = 29
 
         gdxVersion = '1.9.10'

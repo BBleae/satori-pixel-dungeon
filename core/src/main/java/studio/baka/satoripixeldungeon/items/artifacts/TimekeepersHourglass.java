@@ -57,8 +57,7 @@ public class TimekeepersHourglass extends Artifact {
 
             if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
             else if (activeBuff != null) {
-                if (activeBuff instanceof timeStasis) { //do nothing
-                } else {
+                if (!(activeBuff instanceof timeStasis)) {
                     activeBuff.detach();
                     GLog.i(Messages.get(this, "deactivate"));
                 }
@@ -231,7 +230,7 @@ public class TimekeepersHourglass extends Artifact {
 
                 //shouldn't punish the player for going into stasis frequently
                 Hunger hunger = Buff.affect(target, Hunger.class);
-                if (hunger != null && !hunger.isStarving())
+                if (!hunger.isStarving())
                     hunger.satisfy(5 * usedCharge);
 
                 charge -= usedCharge;
@@ -273,6 +272,7 @@ public class TimekeepersHourglass extends Artifact {
         float turnsToCost = 0f;
 
         ArrayList<Integer> presses = new ArrayList<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         private final ArrayList<Integer> damages = new ArrayList<>(); // damages delay to give
 
         public void processTime(float time) {

@@ -42,7 +42,7 @@ public class WornDartTrap extends Trap {
 
                     {
                         //it's a visual effect, gets priority no matter what
-                        actPriority = VFX_PRIO;
+                        actPriority = VFX_PRIORITY;
                     }
 
                     @Override

@@ -27,6 +27,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MagesStaff extends MeleeWeapon {
 
@@ -38,7 +39,7 @@ public class MagesStaff extends MeleeWeapon {
 
     private static final float STAFF_SCALE_FACTOR = 0.75f;
 
-    public int curselevel = 0;
+    public int curseLevel = 0;
 
     {
         image = ItemSpriteSheet.MAGES_STAFF;
@@ -109,7 +110,7 @@ public class MagesStaff extends MeleeWeapon {
 
                 if (cursed || hasCurseEnchant()) {
                     wand.cursed = true;
-                    wand.curselevel = this.curselevel;
+                    wand.curselevel = this.curseLevel;
                 } else {
                     wand.cursed = false;
                     wand.curselevel = 0;
@@ -124,7 +125,7 @@ public class MagesStaff extends MeleeWeapon {
                     hero.spend(1f);
                     hero.busy();
                     hero.sprite.operate(hero.pos);
-                    GameScene.show(new WndChooseCurseLevel(this, curselevel));
+                    GameScene.show(new WndChooseCurseLevel(this, curseLevel));
                 }
                 break;
         }
@@ -169,8 +170,7 @@ public class MagesStaff extends MeleeWeapon {
         if (wand != null) wand.stopCharging();
     }
 
-    public Item imbueWand(Wand wand, Char owner) {
-
+    public void imbueWand(Wand wand, Char owner) {
         this.wand = null;
 
         //syncs the level of the two items.
@@ -198,8 +198,6 @@ public class MagesStaff extends MeleeWeapon {
         }
 
         Badges.validateItemLevelAquired(this);
-
-        return this;
     }
 
     public void gainCharge(float amt) {
@@ -251,12 +249,8 @@ public class MagesStaff extends MeleeWeapon {
     public String info() {
         String info = super.info();
 
-        if (wand == null) {
-            //FIXME this is removed because of journal stuff, and is generally unused.
-            //perhaps reword to fit in journal better
-            //info += "\n\n" + Messages.get(this, "no_wand");
-        } else {
-            info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name")) + (curselevel == 0 ? "" : String.format(" L%1$d", curselevel) + " " + wand.statsDesc());
+        if (wand != null) {
+            info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name")) + (curseLevel == 0 ? "" : String.format(Locale.ENGLISH," L%1$d", curseLevel) + " " + wand.statsDesc());
         }
 
         return info;
@@ -279,7 +273,7 @@ public class MagesStaff extends MeleeWeapon {
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put(WAND, wand);
-        bundle.put(CURSELEVEL, curselevel);
+        bundle.put(CURSELEVEL, curseLevel);
     }
 
     @Override
@@ -290,7 +284,7 @@ public class MagesStaff extends MeleeWeapon {
             wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
             name = Messages.get(wand, "staff_name");
         }
-        curselevel = bundle.getInt(CURSELEVEL);
+        curseLevel = bundle.getInt(CURSELEVEL);
     }
 
     @Override

@@ -35,6 +35,7 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 public class QuickRecipe extends Component {
 
@@ -215,7 +216,7 @@ public class QuickRecipe extends Component {
                 Recipe r = new Scroll.ScrollToStone();
                 for (Class<?> cls : Generator.Category.SCROLL.classes) {
                     Scroll scroll = (Scroll) Reflection.newInstance(cls);
-                    if (!scroll.isKnown()) scroll.anonymize();
+                    if (!Objects.requireNonNull(scroll).isKnown()) scroll.anonymize();
                     ArrayList<Item> in = new ArrayList<>(Collections.singletonList(scroll));
                     result.add(new QuickRecipe(r, in, r.sampleOutput(in)));
                 }

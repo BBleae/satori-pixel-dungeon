@@ -76,7 +76,7 @@ public class Shopkeeper extends NPC {
 
     @Override
     public boolean interact() {
-        Game.runOnRenderThread(() -> sell());
+        Game.runOnRenderThread(Shopkeeper::sell);
         return false;
     }
 }

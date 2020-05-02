@@ -52,24 +52,22 @@ public abstract class WellWater extends Blob {
 
             if (newItem != null) {
 
-                if (newItem == oldItem) {
+                if (newItem != oldItem) {
+                    if (oldItem.quantity() > 1) {
 
-                } else if (oldItem.quantity() > 1) {
+                        oldItem.quantity(oldItem.quantity() - 1);
+                        heap.drop(newItem);
 
-                    oldItem.quantity(oldItem.quantity() - 1);
-                    heap.drop(newItem);
-
-                } else {
-                    heap.replace(oldItem, newItem);
+                    } else {
+                        heap.replace(oldItem, newItem);
+                    }
                 }
 
                 heap.sprite.link();
                 cur[pos] = 0;
 
                 return true;
-
             } else {
-
                 int newPlace;
                 do {
                     newPlace = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
@@ -77,13 +75,9 @@ public abstract class WellWater extends Blob {
                 Dungeon.level.drop(heap.pickUp(), newPlace).sprite.drop(pos);
 
                 return false;
-
             }
-
         } else {
-
             return false;
-
         }
     }
 

@@ -455,7 +455,7 @@ public class GameScene extends PixelScene {
         }
     }
 
-    private static final Thread actorThread = new Thread(() -> Actor.process());
+    private static final Thread actorThread = new Thread(Actor::process);
 
     //sometimes UI changes can be prompted by the actor thread.
     // We queue any removed element destruction, rather than destroying them in the actor thread.

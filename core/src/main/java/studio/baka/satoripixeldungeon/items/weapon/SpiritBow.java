@@ -228,11 +228,7 @@ public class SpiritBow extends Weapon {
             if (PathFinder.distance[i] < Integer.MAX_VALUE) {
                 Char ch = Actor.findChar(i);
                 if (ch != null) {
-                    if (ch.alignment == Dungeon.hero.alignment) {
-                        //same as a healing potion
-                        //Buff.affect( ch, Healing.class ).setHeal((int)(0.2f*ch.HT + 14), 0.25f, 0);
-                        //PotionOfHealing.cure(ch);
-                    } else {
+                    if (ch.alignment != Dungeon.hero.alignment) {
                         Buff.affect(ch, Roots.class, 5f);
                     }
                 } else if (Dungeon.level.map[i] == Terrain.EMPTY ||

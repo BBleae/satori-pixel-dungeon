@@ -8,13 +8,14 @@ import com.watabou.utils.Reflection;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Buff extends Actor {
 
     public Char target;
 
     {
-        actPriority = BUFF_PRIO; //low priority, towards the end of a turn
+        actPriority = BUFF_PRIORITY; //low priority, towards the end of a turn
     }
 
     //determines how the buff is announced when it is shown.
@@ -25,14 +26,18 @@ public class Buff extends Actor {
     //whether or not the buff announces its name
     public boolean announced = false;
 
+    @SuppressWarnings("rawtypes")
     protected HashSet<Class> resistances = new HashSet<>();
 
+    @SuppressWarnings("rawtypes")
     public HashSet<Class> resistances() {
         return new HashSet<>(resistances);
     }
 
+    @SuppressWarnings("rawtypes")
     protected HashSet<Class> immunities = new HashSet<>();
 
+    @SuppressWarnings("rawtypes")
     public HashSet<Class> immunities() {
         return new HashSet<>(immunities);
     }
@@ -62,7 +67,7 @@ public class Buff extends Actor {
 
     @Override
     public boolean act() {
-        diactivate();
+        deactivate();
         return true;
     }
 
@@ -94,7 +99,7 @@ public class Buff extends Actor {
     //creates a fresh instance of the buff and attaches that, this allows duplication.
     public static <T extends Buff> T append(Char target, Class<T> buffClass) {
         T buff = Reflection.newInstance(buffClass);
-        buff.attachTo(target);
+        Objects.requireNonNull(buff).attachTo(target);
         return buff;
     }
 

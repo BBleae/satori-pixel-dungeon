@@ -5,6 +5,7 @@ import com.watabou.glwrap.Shader;
 import com.watabou.utils.Reflection;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Script extends Program {
 
@@ -31,7 +32,7 @@ public class Script extends Program {
 			
 			curScript = script;
 			curScriptClass = c;
-			curScript.use();
+			Objects.requireNonNull(curScript).use();
 
 		}
 		

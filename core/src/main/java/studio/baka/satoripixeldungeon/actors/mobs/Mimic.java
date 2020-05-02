@@ -106,7 +106,7 @@ public class Mimic extends Mob {
                 }
             }
             if (candidates.size() > 0) {
-                int newPos = Random.element(candidates);
+                @SuppressWarnings("ConstantConditions") int newPos = Random.element(candidates);
                 Actor.addDelayed(new Pushing(ch, ch.pos, newPos), -1);
 
                 ch.pos = newPos;

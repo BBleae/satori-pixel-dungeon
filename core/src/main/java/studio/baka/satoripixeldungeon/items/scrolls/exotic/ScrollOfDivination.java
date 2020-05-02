@@ -21,6 +21,7 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class ScrollOfDivination extends ExoticScroll {
 
@@ -68,7 +69,7 @@ public class ScrollOfDivination extends ExoticScroll {
                     }
                     probs[0]--;
                     Potion p = Reflection.newInstance(Random.element(potions));
-                    p.setKnown();
+                    Objects.requireNonNull(p).setKnown();
                     IDed.add(p);
                     potions.remove(p.getClass());
                     break;
@@ -79,7 +80,7 @@ public class ScrollOfDivination extends ExoticScroll {
                     }
                     probs[1]--;
                     Scroll s = Reflection.newInstance(Random.element(scrolls));
-                    s.setKnown();
+                    Objects.requireNonNull(s).setKnown();
                     IDed.add(s);
                     scrolls.remove(s.getClass());
                     break;
@@ -90,7 +91,7 @@ public class ScrollOfDivination extends ExoticScroll {
                     }
                     probs[2]--;
                     Ring r = Reflection.newInstance(Random.element(rings));
-                    r.setKnown();
+                    Objects.requireNonNull(r).setKnown();
                     IDed.add(r);
                     rings.remove(r.getClass());
                     break;

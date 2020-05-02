@@ -39,6 +39,7 @@ public class PinCushion extends Buff {
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
+        //noinspection unchecked
         items = new ArrayList<>((Collection<MissileWeapon>) ((Collection<?>) bundle.getCollection(ITEMS)));
         super.restoreFromBundle(bundle);
     }

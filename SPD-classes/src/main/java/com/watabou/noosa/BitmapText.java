@@ -9,6 +9,7 @@ import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
 
 import java.nio.FloatBuffer;
+import java.util.Objects;
 
 public class BitmapText extends Visual {
 
@@ -98,10 +99,7 @@ public class BitmapText extends Visual {
 		for (int i=0; i < length; i++) {
 			RectF rect = font.get( text.charAt( i ) );
 
-			if (rect == null) {
-				rect=null;
-			}
-			float w = font.width( rect );
+			float w = font.width(Objects.requireNonNull(rect));
 			float h = font.height( rect );
 
 			vertices[0] 	= width;
@@ -267,9 +265,7 @@ public class BitmapText extends Visual {
 			for (int i=0; i < length; i++) {
 				
 				char ch = chars.charAt( i );
-				if (ch == ' ') {
-                } else {
-
+				if (ch != ' ') {
 					boolean found;
 
 					do{
@@ -287,7 +283,7 @@ public class BitmapText extends Visual {
 						if (!found) separator++;
 					} while (!found);
 					int start = separator;
-					
+
 					do {
 						if (++separator >= width) {
 							line += height;
@@ -303,7 +299,7 @@ public class BitmapText extends Visual {
 							}
 						}
 					} while (!found);
-					
+
 					add( ch, new RectF( (float)start / width, (float)line / bitmap.getHeight(), (float)separator / width, (float)line / bitmap.getHeight() + vHeight) );
 					separator++;
 				}

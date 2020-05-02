@@ -12,6 +12,8 @@ import studio.baka.satoripixeldungeon.levels.painters.Painter;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class PitRoom extends SpecialRoom {
 
     public void paint(Level level) {
@@ -32,7 +34,7 @@ public class PitRoom extends SpecialRoom {
         } else if (entrance.y == bottom) {
             well = new Point(Random.Int(2) == 0 ? left + 1 : right - 1, top + 1);
         }
-        Painter.set(level, well, Terrain.EMPTY_WELL);
+        Painter.set(level, Objects.requireNonNull(well), Terrain.EMPTY_WELL);
 
         int remains = level.pointToCell(random());
         while (level.map[remains] == Terrain.EMPTY_WELL) {

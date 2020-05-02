@@ -43,7 +43,7 @@ public class WaterOfHealth extends WellWater {
 
     @Override
     protected Item affectItem(Item item, int pos) {
-        if (item instanceof DewVial && !((DewVial) item).isFull()) {
+        if (item instanceof DewVial && ((DewVial) item).isNotFull()) {
             ((DewVial) item).fill();
             return item;
         }

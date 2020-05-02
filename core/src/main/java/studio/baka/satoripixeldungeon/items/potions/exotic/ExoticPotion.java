@@ -9,6 +9,7 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ExoticPotion extends Potion {
 
@@ -82,7 +83,7 @@ public class ExoticPotion extends Potion {
     @Override
     //20 gold more than its none-exotic equivalent
     public int price() {
-        return (Reflection.newInstance(exoToReg.get(getClass())).price() + 20) * quantity;
+        return (Objects.requireNonNull(Reflection.newInstance(exoToReg.get(getClass()))).price() + 20) * quantity;
     }
 
     public static class PotionToExotic extends Recipe {

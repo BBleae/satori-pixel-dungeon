@@ -21,6 +21,7 @@ public class MahoArmor extends ClassArmor {
         image = ItemSpriteSheet.ARMOR_MAHO;
     }
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final HashMap<Callback, Mob> targets = new HashMap<>();
 
     @Override
@@ -34,7 +35,7 @@ public class MahoArmor extends ClassArmor {
                 if (Dungeon.level.distance(curUser.pos, mob.pos) <= 12
                         && Dungeon.level.heroFOV[mob.pos]
                         && mob.alignment != Char.Alignment.ALLY) {
-                    Buff.affect(mob, Bleeding.class).set(curUser.lvl / 5);
+                    Buff.affect(mob, Bleeding.class).set((float) curUser.lvl / 5);
                     mob.damage(curUser.lvl, this);
                     healcount++;
                 }

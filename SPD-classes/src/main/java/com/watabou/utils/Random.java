@@ -101,6 +101,7 @@ public class Random {
 		float[] probs = new float[size];
 		float sum = 0;
 		for (int i=0; i < size; i++) {
+			//noinspection SuspiciousMethodCalls
 			probs[i] = chances.get( values[i] );
 			sum += probs[i];
 		}

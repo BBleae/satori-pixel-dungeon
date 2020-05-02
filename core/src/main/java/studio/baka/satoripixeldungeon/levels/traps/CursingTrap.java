@@ -98,6 +98,7 @@ public class CursingTrap extends Trap {
         GLog.n(Messages.get(CursingTrap.class, "curse"));
     }
 
+    @SuppressWarnings("unchecked")
     private static void curse(Item item) {
         item.cursed = item.cursedKnown = true;
 

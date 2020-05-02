@@ -24,16 +24,16 @@ public class RatKingSprite extends MobSprite {
 		TextureFilm frames = new TextureFilm( texture, 16, 17 );
 		
 		idle = new Animation( 2, true );
-		idle.frames( frames, c+0, c+0, c+0, c+1 );
+		idle.frames( frames, c, c, c, c+1 );
 		
 		run = new Animation( 10, true );
 		run.frames( frames, c+2, c+3, c+4, c+5, c+6 );
 		
 		attack = new Animation( 15, false );
-		attack.frames( frames, c+0 );
+		attack.frames( frames, c);
 		
 		die = new Animation( 10, false );
-		die.frames( frames, c+0 );
+		die.frames( frames, c);
 		
 		play( idle );
 	}

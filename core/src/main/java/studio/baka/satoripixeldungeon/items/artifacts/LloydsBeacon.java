@@ -28,6 +28,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class LloydsBeacon extends Artifact {
 
@@ -87,7 +88,7 @@ public class LloydsBeacon extends Artifact {
 
         super.execute(hero, action);
 
-        if (action == AC_SET || action == AC_RETURN) {
+        if (Objects.equals(action, AC_SET) || Objects.equals(action, AC_RETURN)) {
 
             if (Dungeon.bossLevel()) {
                 hero.spend(LloydsBeacon.TIME_TO_USE);
@@ -104,7 +105,7 @@ public class LloydsBeacon extends Artifact {
             }
         }
 
-        if (action == AC_ZAP) {
+        if (Objects.equals(action, AC_ZAP)) {
 
             curUser = hero;
             int chargesToUse = Dungeon.depth > 20 ? 2 : 1;
@@ -121,7 +122,7 @@ public class LloydsBeacon extends Artifact {
                 GameScene.selectCell(zapper);
             }
 
-        } else if (action == AC_SET) {
+        } else if (Objects.equals(action, AC_SET)) {
 
             returnDepth = Dungeon.depth;
             returnPos = hero.pos;
@@ -134,7 +135,7 @@ public class LloydsBeacon extends Artifact {
 
             GLog.i(Messages.get(this, "return"));
 
-        } else if (action == AC_RETURN) {
+        } else if (Objects.equals(action, AC_RETURN)) {
 
             if (returnDepth == Dungeon.depth) {
                 ScrollOfTeleportation.appear(hero, returnPos);

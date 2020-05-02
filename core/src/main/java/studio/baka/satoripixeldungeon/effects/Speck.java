@@ -219,7 +219,6 @@ public class Speck extends Image {
                 scale.set(Random.Float(1, 2));
                 speed.set(0, 64);
                 lifespan = 0.2f;
-                y -= speed.y * lifespan;
                 break;
 
             case NOTE:
@@ -352,62 +351,63 @@ public class Speck extends Image {
 
         } else {
 
-            float p = 1 - left / lifespan;    // 0 -> 1
-
+            final float p = 1 - left / lifespan;    // 0 -> 1
+            final float v1 = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
+            final double v2 = Math.sqrt(p < 0.5f ? p : 1 - p);
             switch (type) {
 
                 case STAR:
                 case FORGE:
                     scale.set(1 - p);
-                    am = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
+                    this.am = v1;
                     break;
 
                 case KIT:
                 case MASTERY:
 
                 case NOTE:
-                    am = 1 - p * p;
+                    this.am = 1 - p * p;
                     break;
 
                 case EVOKE:
 
                 case HEALING:
-                    am = p < 0.5f ? 1 : 2 - p * 2;
+                    this.am = p < 0.5f ? 1 : 2 - p * 2;
                     break;
 
                 case RED_LIGHT:
                 case LIGHT:
-                    am = scale.set(p < 0.2f ? p * 5f : (1 - p) * 1.25f).x;
+                    this.am = scale.set(v1).x;
                     break;
 
                 case DISCOVER:
-                    am = 1 - p;
+                    this.am = 1 - p;
                     scale.set((p < 0.5f ? p : 1 - p) * 2);
                     break;
 
                 case QUESTION:
-                    scale.set((float) (Math.sqrt(p < 0.5f ? p : 1 - p) * 3));
+                    scale.set((float) (v2 * 3));
                     break;
 
                 case UP:
-                    scale.set((float) (Math.sqrt(p < 0.5f ? p : 1 - p) * 2));
+                    scale.set((float) (v2 * 2));
                     break;
 
                 case CALM:
                 case SCREAM:
-                    am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2f);
+                    this.am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2f);
                     scale.set(p * 7);
                     break;
 
                 case BONE:
                 case RATTLE:
-                    am = p < 0.9f ? 1 : (1 - p) * 10;
+                    this.am = p < 0.9f ? 1 : (1 - p) * 10;
                     break;
 
                 case ROCK:
 
                 case BUBBLE:
-                    am = p < 0.2f ? p * 5 : 1;
+                    this.am = p < 0.2f ? p * 5 : 1;
                     break;
 
                 case WOOL:
@@ -415,14 +415,14 @@ public class Speck extends Image {
                     break;
 
                 case CHANGE:
-                    am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2);
+                    this.am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2);
                     scale.y = (1 + p) * 0.5f;
                     scale.x = scale.y * (float) Math.cos(left * 15);
                     break;
 
                 case HEART:
                     scale.set(1 - p);
-                    am = 1 - p * p;
+                    this.am = 1 - p * p;
                     break;
 
                 case STEAM:
@@ -433,7 +433,7 @@ public class Speck extends Image {
                 case BLIZZARD:
                 case INFERNO:
                 case DUST:
-                    am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 0.5f);
+                    this.am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 0.5f);
                     scale.set(1 + p);
                     break;
 
@@ -441,19 +441,19 @@ public class Speck extends Image {
                     hardlight(ColorMath.interpolate(0xAAAAAA, 0xFF8800, p));
                 case STENCH:
                 case SMOKE:
-                    am = (float) Math.sqrt((p < 0.5f ? p : 1 - p));
+                    this.am = (float) v2;
                     scale.set(1 + p);
                     break;
 
                 case JET:
-                    am = (p < 0.5f ? p : 1 - p) * 2;
+                    this.am = (p < 0.5f ? p : 1 - p) * 2;
                     scale.set(p * 1.5f);
                     break;
 
                 case COIN:
                     scale.x = (float) Math.cos(left * 5);
                     rm = gm = bm = (Math.abs(scale.x) + 1) * 0.5f;
-                    am = p < 0.9f ? 1 : (1 - p) * 10;
+                    this.am = p < 0.9f ? 1 : (1 - p) * 10;
                     break;
             }
         }

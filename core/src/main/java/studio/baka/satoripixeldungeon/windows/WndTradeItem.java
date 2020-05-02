@@ -17,6 +17,8 @@ import studio.baka.satoripixeldungeon.ui.RedButton;
 import studio.baka.satoripixeldungeon.ui.RenderedTextBlock;
 import studio.baka.satoripixeldungeon.ui.Window;
 
+import java.util.Objects;
+
 public class WndTradeItem extends Window {
 	
 	private static final float GAP		= 2;
@@ -224,7 +226,7 @@ public class WndTradeItem extends Window {
 			
 			item = item.detach( hero.belongings.backpack );
 			
-			new Gold( item.price() ).doPickUp( hero );
+			new Gold( Objects.requireNonNull(item).price() ).doPickUp( hero );
 			
 			//selling items in the sell interface doesn't spend time
 			hero.spend(-hero.cooldown());

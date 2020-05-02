@@ -23,6 +23,7 @@ import com.watabou.utils.Random;
 import java.util.HashMap;
 
 //TODO need to consider other balance adjustments here. Might want to put more emphasis into debuffs rather than less
+@SuppressWarnings("unchecked")
 public class WandOfCorruption extends Wand {
 
     {

@@ -72,7 +72,7 @@ import static studio.baka.satoripixeldungeon.Badges.validateMaho_shoujoUnlock;
 public class Hero extends Char {
 
     {
-        actPriority = HERO_PRIO;
+        actPriority = HERO_PRIORITY;
 
         alignment = Alignment.ALLY;
     }
@@ -723,22 +723,19 @@ public class Hero extends Char {
                 if (item.doPickUp(this)) {
                     heap.pickUp();
 
-                    if (item instanceof Dewdrop
-                            || item instanceof TimekeepersHourglass.sandBag
-                            || item instanceof DriedRose.Petal
-                            || item instanceof Key) {
-                        //Do Nothing
-                    } else {
-
-                        boolean important =
-                                (item instanceof ScrollOfUpgrade && ((Scroll) item).isKnown()) ||
-                                        (item instanceof PotionOfStrength && ((Potion) item).isKnown());
-                        if (important) {
-                            GLog.p(Messages.get(this, "you_now_have", item.name()));
-                        } else {
-                            GLog.i(Messages.get(this, "you_now_have", item.name()));
-                        }
-                    }
+                    if (!(item instanceof Dewdrop)
+                            && !(item instanceof TimekeepersHourglass.sandBag)
+                            && !(item instanceof DriedRose.Petal)
+                            && !(item instanceof Key)) {
+                                boolean important =
+                                        (item instanceof ScrollOfUpgrade && ((Scroll) item).isKnown()) ||
+                                                (item instanceof PotionOfStrength && ((Potion) item).isKnown());
+                                if (important) {
+                                    GLog.p(Messages.get(this, "you_now_have", item.name()));
+                                } else {
+                                    GLog.i(Messages.get(this, "you_now_have", item.name()));
+                                }
+                            }
 
                     curAction = null;
                 } else {
@@ -752,7 +749,6 @@ public class Hero extends Char {
             return false;
 
         } else if (getCloser(dst)) {
-
             return true;
 
         } else {
@@ -764,13 +760,10 @@ public class Hero extends Char {
     private boolean actOpenChest(HeroAction.OpenChest action) {
         int dst = action.dst;
         if (Dungeon.level.adjacent(pos, dst) || pos == dst) {
-
             Heap heap = Dungeon.level.heaps.get(dst);
             if (heap != null && (heap.type != Type.HEAP && heap.type != Type.FOR_SALE)) {
-
                 if ((heap.type == Type.LOCKED_CHEST && Notes.keyCount(new GoldenKey(Dungeon.depth)) < 1)
                         || (heap.type == Type.CRYSTAL_CHEST && Notes.keyCount(new CrystalKey(Dungeon.depth)) < 1)) {
-
                     GLog.w(Messages.get(this, "locked_chest"));
                     ready();
                     return false;
@@ -993,7 +986,7 @@ public class Hero extends Char {
                     Actor.add(new Actor() {
 
                         {
-                            actPriority = VFX_PRIO;
+                            actPriority = VFX_PRIORITY;
                         }
 
                         @Override
@@ -1024,7 +1017,7 @@ public class Hero extends Char {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         if (belongings.armor != null) {
             damage = belongings.armor.proc(enemy, this, damage);
@@ -1314,7 +1307,7 @@ public class Hero extends Char {
         return true;
     }
 
-    public void earnExp(int exp, Class source) {
+    public void earnExp(int exp, @SuppressWarnings("rawtypes") Class source) {
 
         this.exp += exp;
         float percent = exp / (float) maxExp();
@@ -1634,7 +1627,7 @@ public class Hero extends Char {
             int door = Dungeon.level.map[doorCell];
 
             if (Dungeon.level.distance(pos, doorCell) <= 1) {
-                boolean hasKey = true;
+                boolean hasKey;
                 if (door == Terrain.LOCKED_DOOR) {
                     hasKey = Notes.remove(new IronKey(Dungeon.depth));
                     if (hasKey) Level.set(doorCell, Terrain.DOOR);

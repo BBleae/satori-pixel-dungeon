@@ -139,8 +139,7 @@ public class WndLangs extends Window {
 					int i;
 					if (reviewers.length > 0){
 						creds.append(Messages.titleCase(Messages.get(WndLangs.class, "reviewers"))).append("\n");
-						creds2.append("");
-						for ( i = 0; i < reviewers.length; i++){
+                        for ( i = 0; i < reviewers.length; i++){
 							if (wide && i % 2 == 1){
 								creds2.append("-").append(reviewers[i]).append("\n");
 							} else {

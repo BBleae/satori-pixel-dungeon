@@ -96,6 +96,7 @@ public class Bomb extends Item {
             for (int i : PathFinder.NEIGHBOURS8)
                 if (Dungeon.level.passable[cell + i])
                     candidates.add(cell + i);
+            //noinspection ConstantConditions
             int newCell = candidates.isEmpty() ? cell : Random.element(candidates);
             Dungeon.level.drop(this, newCell).sprite.drop(cell);
         } else
@@ -235,7 +236,7 @@ public class Bomb extends Item {
     public static class Fuse extends Actor {
 
         {
-            actPriority = BLOB_PRIO + 1; //after hero, before other actors
+            actPriority = BLOB_PRIORITY + 1; //after hero, before other actors
         }
 
         private Bomb bomb;
@@ -274,7 +275,7 @@ public class Bomb extends Item {
                         bomb.explode(heap.pos);
                     }
 
-                    diactivate();
+                    deactivate();
                     Actor.remove(this);
                     return true;
                 }

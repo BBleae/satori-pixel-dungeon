@@ -114,7 +114,6 @@ public class WndItem extends Window {
 			
 			//layout current row. Currently forces a max of 3 buttons but can work with more
 			if (buttons.isEmpty() || widthLeftThisRow <= 0 || curRow.size() >= 3){
-				
 				//re-use this variable for laying out the buttons
 				widthLeftThisRow = width - (curRow.size()-1);
 				for (RedButton b : curRow){
@@ -123,7 +122,6 @@ public class WndItem extends Window {
 				
 				//while we still have space in this row, find the shortest button(s) and extend them
 				while (widthLeftThisRow > 0){
-					
 					ArrayList<RedButton> shortest = new ArrayList<>();
 					RedButton secondShortest = null;
 					
@@ -174,11 +172,8 @@ public class WndItem extends Window {
 				y += BUTTON_HEIGHT+1;
 				widthLeftThisRow = width;
 				curRow.clear();
-				
 			}
-			
 		}
-		
 		return y - 1;
 	}
 	
@@ -189,14 +184,4 @@ public class WndItem extends Window {
 			INSTANCE = null;
 		}
 	}
-	
-	private static final Comparator<RedButton> widthComparator = (lhs, rhs) -> {
-        if (lhs.width() < rhs.width()){
-            return -1;
-        } else if (lhs.width() == rhs.width()){
-            return 0;
-        } else {
-            return 1;
-        }
-    };
 }

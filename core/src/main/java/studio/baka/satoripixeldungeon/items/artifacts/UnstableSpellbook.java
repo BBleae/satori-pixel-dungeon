@@ -23,7 +23,9 @@ import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
+@SuppressWarnings("rawtypes")
 public class UnstableSpellbook extends Artifact {
 
     {
@@ -114,7 +116,7 @@ public class UnstableSpellbook extends Artifact {
                             if (index == 1) {
                                 Scroll scroll = Reflection.newInstance(ExoticScroll.regToExo.get(fScroll.getClass()));
                                 charge--;
-                                scroll.doRead();
+                                Objects.requireNonNull(scroll).doRead();
                             } else {
                                 fScroll.doRead();
                             }

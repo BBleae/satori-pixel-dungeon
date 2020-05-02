@@ -26,7 +26,7 @@ public class FlockTrap extends Trap {
         Actor.add(new Actor() {
 
             {
-                actPriority = BUFF_PRIO;
+                actPriority = BUFF_PRIORITY;
             }
 
             protected boolean act() {

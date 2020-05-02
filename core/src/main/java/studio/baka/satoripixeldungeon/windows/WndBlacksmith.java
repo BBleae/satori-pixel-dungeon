@@ -16,6 +16,8 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
 
+import java.util.Objects;
+
 public class WndBlacksmith extends Window {
 
 	private static final int BTN_SIZE	= 36;
@@ -110,7 +112,7 @@ public class WndBlacksmith extends Window {
 			super.createChildren();
 			
 			bg = Chrome.get( Chrome.Type.RED_BUTTON);
-			add( bg );
+			add(Objects.requireNonNull(bg));
 			
 			slot = new ItemSlot() {
 				@Override

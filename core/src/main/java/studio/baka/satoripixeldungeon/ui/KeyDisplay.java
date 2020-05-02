@@ -134,7 +134,6 @@ public class KeyDisplay extends Visual {
 
             if (i == 0 && keys[0] > 0) {
                 //black key
-                keyIdx = 0;
 
             } else {
                 for (int j = 1; j < keys.length; j++) {

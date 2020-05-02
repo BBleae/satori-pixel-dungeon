@@ -18,24 +18,24 @@ public class InputHandler extends InputAdapter {
 	
 	@Override
 	public synchronized boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		screenX /= (Game.dispWidth / (float)Game.width);
-		screenY /= (Game.dispHeight / (float)Game.height);
+		screenX /= (Game.displayWidth / (float)Game.width);
+		screenY /= (Game.displayHeight / (float)Game.height);
 		PointerEvent.addPointerEvent(new PointerEvent(screenX, screenY, pointer, true));
 		return true;
 	}
 	
 	@Override
 	public synchronized boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		screenX /= (Game.dispWidth / (float)Game.width);
-		screenY /= (Game.dispHeight / (float)Game.height);
+		screenX /= (Game.displayWidth / (float)Game.width);
+		screenY /= (Game.displayHeight / (float)Game.height);
 		PointerEvent.addPointerEvent(new PointerEvent(screenX, screenY, pointer, false));
 		return true;
 	}
 	
 	@Override
 	public synchronized boolean touchDragged(int screenX, int screenY, int pointer) {
-		screenX /= (Game.dispWidth / (float)Game.width);
-		screenY /= (Game.dispHeight / (float)Game.height);
+		screenX /= (Game.displayWidth / (float)Game.width);
+		screenY /= (Game.displayHeight / (float)Game.height);
 		PointerEvent.addPointerEvent(new PointerEvent(screenX, screenY, pointer, true));
 		return true;
 	}
@@ -45,8 +45,8 @@ public class InputHandler extends InputAdapter {
 	
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		screenX /= (Game.dispWidth / (float)Game.width);
-		screenY /= (Game.dispHeight / (float)Game.height);
+		screenX /= (Game.displayWidth / (float)Game.width);
+		screenY /= (Game.displayHeight / (float)Game.height);
 		pointerHoverPos.x = screenX;
 		pointerHoverPos.y = screenY;
 		return true;

@@ -23,6 +23,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Burning extends Buff implements Hero.Doom {
 
@@ -84,8 +85,8 @@ public class Burning extends Buff implements Hero.Doom {
                     }
 
                     if (!burnable.isEmpty()) {
-                        Item toBurn = Random.element(burnable).detach(hero.belongings.backpack);
-                        GLog.w(Messages.get(this, "burnsup", Messages.capitalize(toBurn.toString())));
+                        Item toBurn = Objects.requireNonNull(Random.element(burnable)).detach(hero.belongings.backpack);
+                        GLog.w(Messages.get(this, "burnsup", Messages.capitalize(Objects.requireNonNull(toBurn).toString())));
                         if (toBurn instanceof MysteryMeat) {
                             ChargrilledMeat steak = new ChargrilledMeat();
                             if (!steak.collect(hero.belongings.backpack)) {

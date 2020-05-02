@@ -126,8 +126,8 @@ public class DewVial extends Item {
         return volume >= 20;
     }
 
-    public boolean isFull() {
-        return volume >= MAX_VOLUME;
+    public boolean isNotFull() {
+        return volume < MAX_VOLUME;
     }
 
     public void collectDew(Dewdrop dew) {

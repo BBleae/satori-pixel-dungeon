@@ -27,10 +27,11 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MahoStaff extends MeleeWeapon {
 
-    private Wand wand = new WandOfDisintegration();
+    private Wand wand;
 
     public static final String AC_IMBUE = "IMBUE";
     public static final String AC_ZAP = "ZAP";
@@ -54,7 +55,6 @@ public class MahoStaff extends MeleeWeapon {
         wand = new WandOfDisintegration();
         wand.identify();
         wand.cursed = false;
-        this.wand = wand;
         updateWand(false);
         wand.curCharges = wand.maxCharges;
         name = Messages.get(wand, "staff_name");
@@ -83,7 +83,7 @@ public class MahoStaff extends MeleeWeapon {
         if (wand != null && wand.curCharges > 0) {
             actions.add(AC_ZAP);
         }
-        if (wand.curCharges < wand.maxCharges && hero.heroClass == HeroClass.MAHOU_SHOUJO) {
+        if (Objects.requireNonNull(wand).curCharges < wand.maxCharges && hero.heroClass == HeroClass.MAHOU_SHOUJO) {
             actions.add(AC_CHARGE);
         }
         return actions;
@@ -243,8 +243,7 @@ public class MahoStaff extends MeleeWeapon {
     @Override
     public String status() {
         wand.levelKnown = true;
-        if (wand == null) return super.status();
-        else return wand.status();
+        return wand.status();
     }
 
     @Override
@@ -256,11 +255,7 @@ public class MahoStaff extends MeleeWeapon {
     public String info() {
         String info = super.info();
 
-        if (wand == null) {
-            //FIXME this is removed because of journal stuff, and is generally unused.
-            //perhaps reword to fit in journal better
-            //info += "\n\n" + Messages.get(this, "no_wand");
-        } else {
+        if (wand != null) {
             info += "\n\n" + Messages.get(this, "has_wand") + " " + wand.statsDesc();
         }
 

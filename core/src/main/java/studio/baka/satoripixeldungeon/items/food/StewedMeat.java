@@ -18,6 +18,7 @@ public class StewedMeat extends Food {
 
     public static class oneMeat extends Recipe.SimpleRecipe {
         {
+            //noinspection unchecked
             inputs = new Class[]{MysteryMeat.class};
             inQuantity = new int[]{1};
 
@@ -30,6 +31,7 @@ public class StewedMeat extends Food {
 
     public static class twoMeat extends Recipe.SimpleRecipe {
         {
+            //noinspection unchecked
             inputs = new Class[]{MysteryMeat.class};
             inQuantity = new int[]{2};
 
@@ -45,6 +47,7 @@ public class StewedMeat extends Food {
 
     public static class threeMeat extends Recipe.SimpleRecipe {
         {
+            //noinspection unchecked
             inputs = new Class[]{MysteryMeat.class};
             inQuantity = new int[]{3};
 

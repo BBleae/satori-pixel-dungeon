@@ -59,15 +59,11 @@ public abstract class SecretRoom extends SpecialRoom {
         int floorsLeft = 5 - floor;
 
         float secrets;
-        if (floorsLeft == 0) {
-            secrets = regionSecretsThisRun[region];
+        secrets = regionSecretsThisRun[region] / (float) floorsLeft;
+        if (Random.Float() < secrets % 1f) {
+            secrets = (float) Math.ceil(secrets);
         } else {
-            secrets = regionSecretsThisRun[region] / (float) floorsLeft;
-            if (Random.Float() < secrets % 1f) {
-                secrets = (float) Math.ceil(secrets);
-            } else {
-                secrets = (float) Math.floor(secrets);
-            }
+            secrets = (float) Math.floor(secrets);
         }
 
         regionSecretsThisRun[region] -= (int) secrets;
@@ -76,7 +72,7 @@ public abstract class SecretRoom extends SpecialRoom {
 
     public static SecretRoom createRoom() {
 
-        SecretRoom r = null;
+        SecretRoom r;
         int index = runSecrets.size();
         for (int i = 0; i < 4; i++) {
             int newidx = Random.Int(runSecrets.size());
@@ -96,6 +92,7 @@ public abstract class SecretRoom extends SpecialRoom {
     public static void restoreRoomsFromBundle(Bundle bundle) {
         runSecrets.clear();
         if (bundle.contains(ROOMS)) {
+            //noinspection unchecked
             for (Class<? extends SecretRoom> type : bundle.getClassArray(ROOMS)) {
                 if (type != null) runSecrets.add(type);
             }

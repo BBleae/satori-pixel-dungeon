@@ -182,7 +182,7 @@ public class WndRanking extends WndTabbed {
 			
 			pos = statSlot( this, Messages.get(this, "food"), Integer.toString( Statistics.foodEaten ), pos );
 			pos = statSlot( this, Messages.get(this, "alchemy"), Integer.toString( Statistics.potionsCooked ), pos );
-			pos = statSlot( this, Messages.get(this, "ankhs"), Integer.toString( Statistics.ankhsUsed ), pos );
+			statSlot( this, Messages.get(this, "ankhs"), Integer.toString( Statistics.ankhsUsed ), pos );
 		}
 		
 		private float statSlot( Group parent, String label, String value, float pos ) {
@@ -294,7 +294,8 @@ public class WndRanking extends WndTabbed {
 		
 		@Override
 		protected void createChildren() {
-			
+
+			//noinspection SuspiciousNameCombination
 			bg = new ColorBlock( HEIGHT, HEIGHT, 0x9953564D );
 			add( bg );
 			
@@ -311,7 +312,8 @@ public class WndRanking extends WndTabbed {
 		protected void layout() {
 			bg.x = x;
 			bg.y = y;
-			
+
+			//noinspection SuspiciousNameCombination
 			slot.setRect( x, y, HEIGHT, HEIGHT );
 			PixelScene.align(slot);
 			
@@ -356,6 +358,7 @@ public class WndRanking extends WndTabbed {
 
 		@Override
 		protected void createChildren() {
+			//noinspection SuspiciousNameCombination
 			bg = new ColorBlock( HEIGHT, HEIGHT, 0x9953564D );
 			add( bg );
 

@@ -86,7 +86,7 @@ public class WndDocument extends Window {
 	
 	private static class docPage extends ListItem {
 		
-		private boolean found = false;
+		private boolean found;
 		
 		private final Document doc;
 		private final String page;

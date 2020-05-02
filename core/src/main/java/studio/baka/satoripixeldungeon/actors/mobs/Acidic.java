@@ -16,7 +16,7 @@ public class Acidic extends Scorpio {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
+    public int defenseProcess(Char enemy, int damage) {
 
         int dmg = Random.IntRange(0, damage);
         if (dmg > 0) {
@@ -27,7 +27,7 @@ public class Acidic extends Scorpio {
             }
         }
 
-        return super.defenseProc(enemy, damage);
+        return super.defenseProcess(enemy, damage);
     }
 
 }

@@ -5,7 +5,6 @@ import studio.baka.satoripixeldungeon.Dungeon;
 import studio.baka.satoripixeldungeon.items.weapon.missiles.darts.ParalyticDart;
 import com.watabou.noosa.MovieClip;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
 public class GnollTricksterSprite extends MobSprite {
 

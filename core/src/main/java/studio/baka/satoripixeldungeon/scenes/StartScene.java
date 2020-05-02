@@ -73,7 +73,6 @@ public class StartScene extends PixelScene {
             SaveSlotButton newGame = new SaveSlotButton();
             newGame.set(GamesInProgress.firstEmpty());
             newGame.setRect((w - SLOT_WIDTH) / 2f, yPos, SLOT_WIDTH, SLOT_HEIGHT);
-            yPos += SLOT_HEIGHT + slotGap;
             align(newGame);
             add(newGame);
         }
@@ -109,7 +108,7 @@ public class StartScene extends PixelScene {
             super.createChildren();
 
             bg = Chrome.get(Chrome.Type.GEM);
-            add(bg);
+            add(Objects.requireNonNull(bg));
 
             name = PixelScene.renderTextBlock(9);
             add(name);

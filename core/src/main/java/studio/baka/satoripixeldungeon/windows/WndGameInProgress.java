@@ -21,6 +21,7 @@ import com.watabou.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WndGameInProgress extends Window {
 	
@@ -35,8 +36,8 @@ public class WndGameInProgress extends Window {
 		
 		final GamesInProgress.Info info = GamesInProgress.check(slot);
 		
-		String className = null;
-		if (info.subClass != HeroSubClass.NONE){
+		String className;
+		if (Objects.requireNonNull(info).subClass != HeroSubClass.NONE){
 			className = info.subClass.title();
 		} else {
 			className = info.heroClass.title();

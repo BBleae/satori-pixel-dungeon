@@ -37,7 +37,7 @@ public class PrismaticImage extends NPC {
         WANDERING = new Wandering();
 
         //before other mobs
-        actPriority = MOB_PRIO + 1;
+        actPriority = MOB_PRIORITY + 1;
     }
 
     private Hero hero;
@@ -154,8 +154,8 @@ public class PrismaticImage extends NPC {
     }
 
     @Override
-    public int defenseProc(Char enemy, int damage) {
-        damage = super.defenseProc(enemy, damage);
+    public int defenseProcess(Char enemy, int damage) {
+        damage = super.defenseProcess(enemy, damage);
         if (hero.belongings.armor != null) {
             return hero.belongings.armor.proc(enemy, this, damage);
         } else {
@@ -206,7 +206,7 @@ public class PrismaticImage extends NPC {
     }
 
     @Override
-    public boolean isImmune(Class effect) {
+    public boolean isImmune(@SuppressWarnings("rawtypes") Class effect) {
         if (effect == Burning.class
                 && hero != null
                 && hero.belongings.armor != null
@@ -235,7 +235,7 @@ public class PrismaticImage extends NPC {
                 Sample.INSTANCE.play(Assets.SND_TELEPORT);
                 return true;
             } else {
-                return super.act(enemyInFOV, justAlerted);
+                return super.act(true, justAlerted);
             }
         }
 

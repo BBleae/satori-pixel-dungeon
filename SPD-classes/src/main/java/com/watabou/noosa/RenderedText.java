@@ -145,7 +145,7 @@ public class RenderedText extends Image {
 			
 			for (int i = 0; i < count; i += 20){
 				
-				vertices[0] 	= spriteVertices[i+0];
+				vertices[0] 	= spriteVertices[i];
 				vertices[1] 	= spriteVertices[i+1];
 				
 				vertices[2]		= spriteVertices[i+3];

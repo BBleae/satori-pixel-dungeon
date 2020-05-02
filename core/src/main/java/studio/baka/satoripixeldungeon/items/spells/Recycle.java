@@ -19,6 +19,8 @@ import studio.baka.satoripixeldungeon.utils.GLog;
 import studio.baka.satoripixeldungeon.windows.WndBag;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class Recycle extends InventorySpell {
 
     {
@@ -45,7 +47,7 @@ public class Recycle extends InventorySpell {
             } else {
                 result = Generator.random(Generator.Category.STONE);
             }
-        } while (result.getClass() == item.getClass() || Challenges.isItemBlocked(result));
+        } while (Objects.requireNonNull(result).getClass() == item.getClass() || Challenges.isItemBlocked(result));
 
         item.detach(curUser.belongings.backpack);
         GLog.p(Messages.get(this, "recycled", result.name()));
@@ -71,6 +73,7 @@ public class Recycle extends InventorySpell {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{ScrollOfTransmutation.class, ArcaneCatalyst.class};
             inQuantity = new int[]{1, 1};
 

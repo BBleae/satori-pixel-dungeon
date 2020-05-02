@@ -364,6 +364,7 @@ public class Armor extends EquipableItem {
     public Item upgrade(boolean inscribe) {
 
         if (inscribe && (glyph == null || glyph.curse())) {
+            //noinspection unchecked
             inscribe(Glyph.random());
         } else if (!inscribe && level() >= 4 && Random.Float(10) < Math.pow(2, level() - 4)) {
             inscribe(null);

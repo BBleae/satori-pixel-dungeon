@@ -22,6 +22,7 @@ import studio.baka.satoripixeldungeon.items.weapon.missiles.darts.Dart;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Recipe {
 
@@ -51,7 +52,7 @@ public abstract class Recipe {
             ArrayList<Item> result = new ArrayList<>();
             for (int i = 0; i < inputs.length; i++) {
                 Item ingredient = Reflection.newInstance(inputs[i]);
-                ingredient.quantity(inQuantity[i]);
+                Objects.requireNonNull(ingredient).quantity(inQuantity[i]);
                 result.add(ingredient);
             }
             return result;
@@ -113,7 +114,7 @@ public abstract class Recipe {
         public final Item sampleOutput(ArrayList<Item> ingredients) {
             try {
                 Item result = Reflection.newInstance(output);
-                result.quantity(outQuantity);
+                Objects.requireNonNull(result).quantity(outQuantity);
                 return result;
             } catch (Exception e) {
                 SatoriPixelDungeon.reportException(e);
@@ -127,6 +128,7 @@ public abstract class Recipe {
     // Static members
     //*******
 
+    @SuppressWarnings("StaticInitializerReferencesSubClass")
     private static final Recipe[] oneIngredientRecipes = new Recipe[]{
             new AlchemistsToolkit.upgradeKit(),
             new Scroll.ScrollToStone(),
@@ -134,6 +136,7 @@ public abstract class Recipe {
             new DewVial.fill()
     };
 
+    @SuppressWarnings("StaticInitializerReferencesSubClass")
     private static final Recipe[] twoIngredientRecipes = new Recipe[]{
             new Blandfruit.CookFruit(),
             new Bomb.EnhanceBomb(),
@@ -164,6 +167,7 @@ public abstract class Recipe {
             new StewedMeat.twoMeat()
     };
 
+    @SuppressWarnings("StaticInitializerReferencesSubClass")
     private static final Recipe[] threeIngredientRecipes = new Recipe[]{
             new Potion.SeedToPotion(),
             new ExoticPotion.PotionToExotic(),

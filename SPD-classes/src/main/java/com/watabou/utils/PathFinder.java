@@ -134,7 +134,8 @@ public class PathFinder {
 		return mins;
 	}
 	
-	private static boolean buildDistanceMap( int from, int to, boolean[] passable ) {
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
+	private static boolean buildDistanceMap(int from, int to, boolean[] passable ) {
 		
 		if (from == to) {
 			return false;

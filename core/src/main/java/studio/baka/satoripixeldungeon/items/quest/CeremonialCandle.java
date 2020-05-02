@@ -87,6 +87,7 @@ public class CeremonialCandle extends Item {
                         }
                     }
                     if (candidates.size() > 0) {
+                        //noinspection ConstantConditions
                         elemental.pos = Random.element(candidates);
                     } else {
                         elemental.pos = ritualPos;

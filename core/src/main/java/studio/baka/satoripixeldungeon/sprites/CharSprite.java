@@ -24,6 +24,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip.Listener {
 
     // Color constants for floating text
@@ -264,19 +266,19 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 
     public Emitter emitter() {
         Emitter emitter = GameScene.emitter();
-        emitter.pos(this);
+        Objects.requireNonNull(emitter).pos(this);
         return emitter;
     }
 
     public Emitter centerEmitter() {
         Emitter emitter = GameScene.emitter();
-        emitter.pos(center());
+        Objects.requireNonNull(emitter).pos(center());
         return emitter;
     }
 
     public Emitter bottomEmitter() {
         Emitter emitter = GameScene.emitter();
-        emitter.pos(x, y + height, width, 0);
+        Objects.requireNonNull(emitter).pos(x, y + height, width, 0);
         return emitter;
     }
 
@@ -473,9 +475,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
     }
 
     public synchronized void showSleep() {
-        if (emo instanceof EmoIcon.Sleep) {
-
-        } else {
+        if (!(emo instanceof EmoIcon.Sleep)) {
             if (emo != null) {
                 emo.killAndErase();
             }
@@ -493,9 +493,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
     }
 
     public synchronized void showAlert() {
-        if (emo instanceof EmoIcon.Alert) {
-
-        } else {
+        if (!(emo instanceof EmoIcon.Alert)) {
             if (emo != null) {
                 emo.killAndErase();
             }
@@ -512,9 +510,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
     }
 
     public synchronized void showLost() {
-        if (emo instanceof EmoIcon.Lost) {
-
-        } else {
+        if (!(emo instanceof EmoIcon.Lost)) {
             if (emo != null) {
                 emo.killAndErase();
             }

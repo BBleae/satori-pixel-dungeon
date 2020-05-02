@@ -185,7 +185,7 @@ public class Blacksmith extends NPC {
             first = first.split(1);
         }
         first.level(first.level() + 1); //prevents on-upgrade effects like enchant/glyph removal
-        if (first instanceof MissileWeapon && !Dungeon.hero.belongings.contains(first)) {
+        if (first instanceof MissileWeapon && Dungeon.hero.belongings.notContains(first)) {
             if (!first.collect()) {
                 Dungeon.level.drop(first, Dungeon.hero.pos);
             }
@@ -272,7 +272,7 @@ public class Blacksmith extends NPC {
 
             Bundle node = bundle.getBundle(NODE);
 
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
+            if (node.notNull() && (spawned = node.getBoolean(SPAWNED))) {
                 alternative = node.getBoolean(ALTERNATIVE);
                 given = node.getBoolean(GIVEN);
                 completed = node.getBoolean(COMPLETED);

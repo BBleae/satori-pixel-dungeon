@@ -109,7 +109,7 @@ public class Chasm {
     public static class Falling extends Buff {
 
         {
-            actPriority = VFX_PRIO;
+            actPriority = VFX_PRIORITY;
         }
 
         @Override

@@ -167,6 +167,7 @@ public class SatoriPixelDungeon extends Game {
 	public static void seamlessResetScene(SceneChangeCallback callback) {
 		if (scene() instanceof PixelScene){
 			((PixelScene) scene()).saveWindows();
+			//noinspection unchecked
 			switchNoFade((Class<? extends PixelScene>) sceneClass, callback );
 		} else {
 			resetScene();

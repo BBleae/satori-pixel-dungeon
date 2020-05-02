@@ -85,10 +85,9 @@ public class WndStory extends Window {
 		String text = Messages.get(WndStory.class, CHAPTERS.get( id ));
 		if (text != null) {
 			WndStory wnd = new WndStory( text );
-			if ((wnd.delay = 0.6f) > 0) {
-				wnd.shadow.visible = wnd.chrome.visible = wnd.tf.visible = false;
-			}
-			
+			wnd.delay = 0.6f;
+			wnd.shadow.visible = wnd.chrome.visible = wnd.tf.visible = false;
+
 			Game.scene().add( wnd );
 			
 			Dungeon.chapters.add( id );

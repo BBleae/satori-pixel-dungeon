@@ -285,7 +285,7 @@ public class WandOfLivingEarth extends DamageWand {
             WANDERING = new Wandering();
 
             //before other mobs
-            actPriority = MOB_PRIO + 1;
+            actPriority = MOB_PRIORITY + 1;
 
             HP = HT = 0;
         }
@@ -366,7 +366,7 @@ public class WandOfLivingEarth extends DamageWand {
                     sprite.die();
                     return true;
                 } else {
-                    return super.act(enemyInFOV, justAlerted);
+                    return super.act(true, justAlerted);
                 }
             }
 

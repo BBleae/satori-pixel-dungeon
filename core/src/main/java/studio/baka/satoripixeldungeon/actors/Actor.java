@@ -22,12 +22,12 @@ public abstract class Actor implements Bundlable {
 
     //default priority values for general actor categories
     //note that some specific actors pick more specific values
-    //e.g. a buff acting after all normal buffs might have priority BUFF_PRIO + 1
-    protected static final int VFX_PRIO = 100;   //visual effects take priority
-    protected static final int HERO_PRIO = 0;     //positive is before hero, negative after
-    protected static final int BLOB_PRIO = -10;   //blobs act after hero, before mobs
-    protected static final int MOB_PRIO = -20;   //mobs act between buffs and blobd
-    protected static final int BUFF_PRIO = -30;   //buffs act last in a turn
+    //e.g. a buff acting after all normal buffs might have priority BUFF_PRIORITY + 1
+    protected static final int VFX_PRIORITY = 100;   //visual effects take priority
+    protected static final int HERO_PRIORITY = 0;     //positive is before hero, negative after
+    protected static final int BLOB_PRIORITY = -10;   //blobs act after hero, before mobs
+    protected static final int MOB_PRIORITY = -20;   //mobs act between buffs and blobs
+    protected static final int BUFF_PRIORITY = -30;   //buffs act last in a turn
     private static final int DEFAULT = -100;  //if no priority is given, act after all else
 
     //used to determine what order actors act in if their time is equal. Higher values act earlier.
@@ -63,7 +63,7 @@ public abstract class Actor implements Bundlable {
         return time - now;
     }
 
-    protected void diactivate() {
+    protected void deactivate() {
         time = Float.MAX_VALUE;
     }
 
@@ -162,14 +162,14 @@ public abstract class Actor implements Bundlable {
         current = null;
     }
 
-    private static final String NEXTID = "nextid";
+    private static final String NEXT_ID = "nextId";
 
     public static void storeNextID(Bundle bundle) {
-        bundle.put(NEXTID, nextID);
+        bundle.put(NEXT_ID, nextID);
     }
 
     public static void restoreNextID(Bundle bundle) {
-        nextID = bundle.getInt(NEXTID);
+        nextID = bundle.getInt(NEXT_ID);
     }
 
     public static void resetNextID() {
@@ -218,6 +218,7 @@ public abstract class Actor implements Bundlable {
                     // If it's character's turn to act, but its sprite
                     // is moving, wait till the movement is over
                     try {
+                        //noinspection SynchronizeOnNonFinalField
                         synchronized (((Char) acting).sprite) {
                             if (((Char) acting).sprite.isMoving) {
                                 ((Char) acting).sprite.wait();
@@ -304,6 +305,7 @@ public abstract class Actor implements Bundlable {
 
         if (actor != null) {
             all.remove(actor);
+            //noinspection SuspiciousMethodCalls
             chars.remove(actor);
             actor.onRemove();
 

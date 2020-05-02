@@ -16,6 +16,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 
+import java.util.Objects;
+
 public class ReclaimTrap extends TargetedSpell {
 
     {
@@ -44,7 +46,7 @@ public class ReclaimTrap extends TargetedSpell {
             Trap t = Reflection.newInstance(storedTrap);
             storedTrap = null;
 
-            t.pos = bolt.collisionPos;
+            Objects.requireNonNull(t).pos = bolt.collisionPos;
             t.activate();
 
         }
@@ -86,7 +88,7 @@ public class ReclaimTrap extends TargetedSpell {
     @Override
     public ItemSprite.Glowing glowing() {
         if (storedTrap != null) {
-            return COLORS[Reflection.newInstance(storedTrap).color];
+            return COLORS[Objects.requireNonNull(Reflection.newInstance(storedTrap)).color];
         }
         return null;
     }
@@ -108,12 +110,14 @@ public class ReclaimTrap extends TargetedSpell {
     @Override
     public void restoreFromBundle(Bundle bundle) {
         super.restoreFromBundle(bundle);
+        //noinspection unchecked
         storedTrap = bundle.getClass(STORED_TRAP);
     }
 
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{ScrollOfMagicMapping.class, MetalShard.class};
             inQuantity = new int[]{1, 1};
 

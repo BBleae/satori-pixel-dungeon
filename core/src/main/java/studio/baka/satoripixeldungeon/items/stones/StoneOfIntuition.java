@@ -23,6 +23,7 @@ import com.watabou.noosa.Image;
 
 import java.util.HashSet;
 
+@SuppressWarnings("rawtypes")
 public class StoneOfIntuition extends InventoryStone {
 
 

@@ -184,6 +184,7 @@ public class RingOfWealth extends Ring {
             if (Random.Int(3) != 0) {
                 Weapon weapon = Generator.randomWeapon((Dungeon.depth / 5) + 1);
                 weapon.upgrade(1);
+                //noinspection unchecked
                 weapon.enchant(Weapon.Enchantment.random());
                 weapon.cursed = false;
                 weapon.cursedKnown = true;
@@ -191,6 +192,7 @@ public class RingOfWealth extends Ring {
             } else {
                 Armor armor = Generator.randomArmor((Dungeon.depth / 5) + 1);
                 armor.upgrade();
+                //noinspection unchecked
                 armor.inscribe(Armor.Glyph.random());
                 armor.cursed = false;
                 armor.cursedKnown = true;

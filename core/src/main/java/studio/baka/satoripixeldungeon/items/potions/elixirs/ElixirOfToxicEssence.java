@@ -35,6 +35,7 @@ public class ElixirOfToxicEssence extends Elixir {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{PotionOfToxicGas.class, AlchemicalCatalyst.class};
             inQuantity = new int[]{1, 1};
 

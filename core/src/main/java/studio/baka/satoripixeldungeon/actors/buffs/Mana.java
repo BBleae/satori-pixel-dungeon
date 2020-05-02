@@ -51,7 +51,7 @@ public class Mana extends Buff implements Hero.Doom {
                 spend(REGEN_TIME / 2);
             }
         } else {
-            diactivate();
+            deactivate();
         }
 
         return true;

@@ -86,7 +86,6 @@ public class SecretChestChasmRoom extends SecretRoom {
         Painter.set(level, p, Terrain.EMPTY_SP);
         if (chests > 0) {
             level.drop(new GoldenKey(Dungeon.depth), level.pointToCell(p));
-            chests--;
         }
 
         level.addItemToSpawn(new PotionOfLevitation());

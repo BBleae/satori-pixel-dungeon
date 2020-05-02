@@ -49,6 +49,7 @@ public class MagicalPorter extends InventorySpell {
     public static class Recipe extends studio.baka.satoripixeldungeon.items.Recipe.SimpleRecipe {
 
         {
+            //noinspection unchecked
             inputs = new Class[]{MerchantsBeacon.class, ArcaneCatalyst.class};
             inQuantity = new int[]{1, 1};
 

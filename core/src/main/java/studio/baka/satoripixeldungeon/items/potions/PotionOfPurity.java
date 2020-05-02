@@ -16,6 +16,7 @@ import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("rawtypes")
 public class PotionOfPurity extends Potion {
 
     private static final int DISTANCE = 3;

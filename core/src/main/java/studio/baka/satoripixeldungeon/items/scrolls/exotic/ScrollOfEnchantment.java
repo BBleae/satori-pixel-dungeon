@@ -13,6 +13,7 @@ import studio.baka.satoripixeldungeon.windows.WndBag;
 import studio.baka.satoripixeldungeon.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 
+@SuppressWarnings("unchecked")
 public class ScrollOfEnchantment extends ExoticScroll {
 
     {

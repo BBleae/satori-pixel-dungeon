@@ -21,6 +21,7 @@ import com.watabou.utils.DeviceCompat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 public class InterlevelScene extends PixelScene {
 
@@ -75,7 +76,7 @@ public class InterlevelScene extends PixelScene {
                 scrollSpeed = 0;
                 break;
             case CONTINUE:
-                loadingDepth = GamesInProgress.check(GamesInProgress.curSlot).depth;
+                loadingDepth = Objects.requireNonNull(GamesInProgress.check(GamesInProgress.curSlot)).depth;
                 scrollSpeed = 5;
                 break;
             case DESCEND:
@@ -159,9 +160,8 @@ public class InterlevelScene extends PixelScene {
             }
         };
         im.angle = 90;
-        im.x = Camera.main.width;
         im.scale.x = Camera.main.height / 5f;
-        im.scale.y = Camera.main.width;
+        im.scale.y = im.x = Camera.main.width;
         add(im);
 
         String text = Messages.get(Mode.class, mode.name());

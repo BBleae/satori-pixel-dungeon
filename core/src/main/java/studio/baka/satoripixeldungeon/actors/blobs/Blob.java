@@ -11,7 +11,7 @@ import com.watabou.utils.Reflection;
 public class Blob extends Actor {
 
     {
-        actPriority = BLOB_PRIO;
+        actPriority = BLOB_PRIORITY;
     }
 
     public int volume = 0;

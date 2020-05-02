@@ -20,6 +20,7 @@ public class AntiMagic extends Armor.Glyph {
 
     private static final ItemSprite.Glowing TEAL = new ItemSprite.Glowing(0x88EEFF);
 
+    @SuppressWarnings("rawtypes")
     public static final HashSet<Class> RESISTS = new HashSet<>();
 
     static {

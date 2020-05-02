@@ -11,7 +11,7 @@ public class DungeonTileSheet {
 
     private static final int WIDTH = 16;
 
-    private static int xy(int x, int y) {
+    private static int xy(@SuppressWarnings("SameParameterValue") int x, int y) {
         x -= 1;
         y -= 1;
         return x + WIDTH * y;
@@ -21,10 +21,7 @@ public class DungeonTileSheet {
     public static final int NULL_TILE = -1;
 
 
-    /**********************************************************************
-     * Floor Tiles
-     **********************************************************************/
-
+    /* Floor Tiles */
     private static final int GROUND = xy(1, 1);   //32 slots
     public static final int FLOOR = GROUND;
     public static final int FLOOR_DECO = GROUND + 1;
@@ -139,7 +136,7 @@ public class DungeonTileSheet {
      **********************************************************************/
 
     private static final int FLAT_WALLS = xy(1, 5);   //16 slots
-    public static final int FLAT_WALL = FLAT_WALLS + 0;
+    public static final int FLAT_WALL = FLAT_WALLS;
     public static final int FLAT_WALL_DECO = FLAT_WALLS + 1;
     public static final int FLAT_BOOKSHELF = FLAT_WALLS + 2;
 
@@ -148,14 +145,14 @@ public class DungeonTileSheet {
     public static final int FLAT_BOOKSHELF_ALT = FLAT_WALLS + 6;
 
     private static final int FLAT_DOORS = xy(1, 6);   //16 slots
-    public static final int FLAT_DOOR = FLAT_DOORS + 0;
+    public static final int FLAT_DOOR = FLAT_DOORS;
     public static final int FLAT_DOOR_OPEN = FLAT_DOORS + 1;
     public static final int FLAT_DOOR_LOCKED = FLAT_DOORS + 2;
     public static final int UNLOCKED_EXIT = FLAT_DOORS + 3;
     public static final int LOCKED_EXIT = FLAT_DOORS + 4;
 
     public static final int FLAT_OTHER = xy(1, 7);   //16 slots
-    public static final int FLAT_SIGN = FLAT_OTHER + 0;
+    public static final int FLAT_SIGN = FLAT_OTHER;
     public static final int FLAT_STATUE = FLAT_OTHER + 1;
     public static final int FLAT_STATUE_SP = FLAT_OTHER + 2;
     public static final int FLAT_ALCHEMY_POT = FLAT_OTHER + 3;
@@ -173,7 +170,7 @@ public class DungeonTileSheet {
 
     private static final int RAISED_WALLS = xy(1, 8);   //32 slots
     //+1 for open to the right, +2 for open to the left
-    public static final int RAISED_WALL = RAISED_WALLS + 0;
+    public static final int RAISED_WALL = RAISED_WALLS;
     public static final int RAISED_WALL_DECO = RAISED_WALLS + 4;
     //wall that appears behind a top/bottom doorway
     public static final int RAISED_WALL_DOOR = RAISED_WALLS + 8;
@@ -217,7 +214,7 @@ public class DungeonTileSheet {
     }
 
     private static final int RAISED_DOORS = xy(1, 10);  //16 slots
-    public static final int RAISED_DOOR = RAISED_DOORS + 0;
+    public static final int RAISED_DOOR = RAISED_DOORS;
     public static final int RAISED_DOOR_OPEN = RAISED_DOORS + 1;
     public static final int RAISED_DOOR_LOCKED = RAISED_DOORS + 2;
     //floor tile that appears on a top/bottom doorway
@@ -244,7 +241,7 @@ public class DungeonTileSheet {
     }
 
     private static final int RAISED_OTHER = xy(1, 11);  //16 slots
-    public static final int RAISED_SIGN = RAISED_OTHER + 0;
+    public static final int RAISED_SIGN = RAISED_OTHER;
     public static final int RAISED_STATUE = RAISED_OTHER + 1;
     public static final int RAISED_STATUE_SP = RAISED_OTHER + 2;
     public static final int RAISED_ALCHEMY_POT = RAISED_OTHER + 3;
@@ -262,7 +259,7 @@ public class DungeonTileSheet {
 
     //+1 for open right, +2 for open right-below, +4 for open left-below, +8 for open left.
     public static final int WALLS_INTERNAL = xy(1, 12);  //32 slots
-    private static final int WALL_INTERNAL = WALLS_INTERNAL + 0;
+    private static final int WALL_INTERNAL = WALLS_INTERNAL;
     private static final int WALL_INTERNAL_WOODEN = WALLS_INTERNAL + 16;
 
     public static int stitchInternalWallTile(int tile, int right, int rightBelow, int below, int leftBelow, int left) {
@@ -280,7 +277,7 @@ public class DungeonTileSheet {
 
     //+1 for open to the down-right, +2 for open to the down-left
     private static final int WALLS_OVERHANG = xy(1, 14);  //32 slots
-    public static final int WALL_OVERHANG = WALLS_OVERHANG + 0;
+    public static final int WALL_OVERHANG = WALLS_OVERHANG;
     public static final int DOOR_SIDEWAYS_OVERHANG = WALLS_OVERHANG + 4;
     public static final int DOOR_SIDEWAYS_OVERHANG_OPEN = WALLS_OVERHANG + 8;
     public static final int DOOR_SIDEWAYS_OVERHANG_LOCKED = WALLS_OVERHANG + 12;

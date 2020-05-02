@@ -13,6 +13,8 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class MagicMissile extends Emitter {
 
     private static final float SPEED = 200f;
@@ -153,7 +155,7 @@ public class MagicMissile extends Emitter {
     public static MagicMissile boltFromChar(Group group, int type, Visual sprite, int to, Callback callback) {
         MagicMissile missile = ((MagicMissile) group.recycle(MagicMissile.class));
         if (Actor.findChar(to) != null) {
-            missile.reset(type, sprite.center(), Actor.findChar(to).sprite.destinationCenter(), callback);
+            missile.reset(type, sprite.center(), Objects.requireNonNull(Actor.findChar(to)).sprite.destinationCenter(), callback);
         } else {
             missile.reset(type, sprite, to, callback);
         }

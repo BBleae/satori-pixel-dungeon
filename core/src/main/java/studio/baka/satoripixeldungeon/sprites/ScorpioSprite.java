@@ -4,7 +4,6 @@ import studio.baka.satoripixeldungeon.Assets;
 import studio.baka.satoripixeldungeon.Dungeon;
 import studio.baka.satoripixeldungeon.items.Item;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
 public class ScorpioSprite extends MobSprite {
 	

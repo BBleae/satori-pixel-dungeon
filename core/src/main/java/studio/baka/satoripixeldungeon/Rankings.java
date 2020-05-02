@@ -19,10 +19,10 @@ import com.watabou.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.UUID;
 
+@SuppressWarnings("rawtypes")
 public enum Rankings {
 	
 	INSTANCE;
@@ -98,7 +98,7 @@ public enum Rankings {
 		Belongings belongings = Dungeon.hero.belongings;
 
 		//save the hero and belongings
-		ArrayList<Item> allItems = (ArrayList<Item>) belongings.backpack.items.clone();
+		@SuppressWarnings("unchecked") ArrayList<Item> allItems = (ArrayList<Item>) belongings.backpack.items.clone();
 		//remove items that won't show up in the rankings screen
 		for (Item item : belongings.backpack.items.toArray( new Item[0])) {
 			if (item instanceof Bag){

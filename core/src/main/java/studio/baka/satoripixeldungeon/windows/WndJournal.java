@@ -27,8 +27,6 @@ import com.watabou.noosa.ui.Component;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 public class WndJournal extends WndTabbed {
@@ -240,7 +238,7 @@ public class WndJournal extends WndTabbed {
 		
 		private static class GuideItem extends ListItem {
 			
-			private boolean found = false;
+			private boolean found;
 			private final String page;
 			
 			public GuideItem( String page ){

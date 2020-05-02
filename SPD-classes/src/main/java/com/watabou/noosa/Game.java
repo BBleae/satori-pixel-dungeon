@@ -24,8 +24,8 @@ public class Game implements ApplicationListener {
 	public static Game instance;
 
 	//actual size of the display
-	public static int dispWidth;
-	public static int dispHeight;
+	public static int displayWidth;
+	public static int displayHeight;
 	
 	// Size of the EGL surface view
 	public static int width;
@@ -73,8 +73,8 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 		density = Gdx.graphics.getDensity();
-		dispHeight = Gdx.graphics.getDisplayMode().height;
-		dispWidth = Gdx.graphics.getDisplayMode().width;
+		displayHeight = Gdx.graphics.getDisplayMode().height;
+		displayWidth = Gdx.graphics.getDisplayMode().width;
 		
 		Blending.useDefault();
 		
@@ -101,8 +101,8 @@ public class Game implements ApplicationListener {
 			
 			//TODO might be better to put this in platform support
 			if (Gdx.app.getType() != Application.ApplicationType.Android){
-				Game.dispWidth = Game.width;
-				Game.dispHeight = Game.height;
+				Game.displayWidth = Game.width;
+				Game.displayHeight = Game.height;
 			}
 			
 			resetScene();
@@ -234,7 +234,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void runOnRenderThread(Callback c){
-		Gdx.app.postRunnable(() -> c.call());
+		Gdx.app.postRunnable(c::call);
 	}
 	
 	public static void vibrate( int milliseconds ) {

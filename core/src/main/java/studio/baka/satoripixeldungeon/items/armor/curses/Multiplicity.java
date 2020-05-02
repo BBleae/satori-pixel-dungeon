@@ -40,7 +40,7 @@ public class Multiplicity extends Armor.Glyph {
 
             if (spawnPoints.size() > 0) {
 
-                Mob m = null;
+                Mob m;
                 if (Random.Int(2) == 0 && defender instanceof Hero) {
                     m = new MirrorImage();
                     ((MirrorImage) m).duplicate((Hero) defender);
@@ -76,6 +76,7 @@ public class Multiplicity extends Armor.Glyph {
 
                 if (m != null) {
                     GameScene.add(m);
+                    //noinspection ConstantConditions
                     ScrollOfTeleportation.appear(m, Random.element(spawnPoints));
                 }
 

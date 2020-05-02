@@ -14,6 +14,8 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class AmuletScene extends PixelScene {
 
     private static final int WIDTH = 120;
@@ -71,7 +73,7 @@ public class AmuletScene extends PixelScene {
             btnStay.setPos(btnExit.left(), btnExit.bottom() + SMALL_GAP);
 
         } else {
-            height = amulet.height + LARGE_GAP + text.height() + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
+            height = amulet.height + LARGE_GAP + Objects.requireNonNull(text).height() + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
 
             amulet.x = (Camera.main.width - amulet.width) / 2;
             amulet.y = (Camera.main.height - height) / 2;

@@ -24,6 +24,7 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class Generator {
 
@@ -329,7 +330,7 @@ public class Generator {
             cat = Random.chances(categoryProbs);
         }
         categoryProbs.put(cat, categoryProbs.get(cat) - 1);
-        return random(cat);
+        return random(Objects.requireNonNull(cat));
     }
 
     public static Item random(Category cat) {
@@ -345,12 +346,12 @@ public class Generator {
                 //if we're out of artifacts, return a ring instead.
                 return item != null ? item : random(Category.RING);
             default:
-                return ((Item) Reflection.newInstance(cat.classes[Random.chances(cat.probs)])).random();
+                return ((Item) Objects.requireNonNull(Reflection.newInstance(cat.classes[Random.chances(cat.probs)]))).random();
         }
     }
 
     public static Item random(Class<? extends Item> cl) {
-        return Reflection.newInstance(cl).random();
+        return Objects.requireNonNull(Reflection.newInstance(cl)).random();
     }
 
     public static Armor randomArmor() {
@@ -362,7 +363,7 @@ public class Generator {
         floorSet = (int) GameMath.gate(0, floorSet, floorSetTierProbs.length - 1);
 
         Armor a = (Armor) Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
-        a.random();
+        Objects.requireNonNull(a).random();
         return a;
     }
 
@@ -384,7 +385,7 @@ public class Generator {
 
         Category c = wepTiers[Random.chances(floorSetTierProbs[floorSet])];
         MeleeWeapon w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-        w.random();
+        Objects.requireNonNull(w).random();
         return w;
     }
 
@@ -406,7 +407,7 @@ public class Generator {
 
         Category c = misTiers[Random.chances(floorSetTierProbs[floorSet])];
         MissileWeapon w = (MissileWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-        w.random();
+        Objects.requireNonNull(w).random();
         return w;
     }
 
@@ -421,11 +422,12 @@ public class Generator {
             return null;
         }
 
-        Class<? extends Artifact> art = (Class<? extends Artifact>) cat.classes[i];
+        @SuppressWarnings("unchecked") Class<? extends Artifact> art = (Class<? extends Artifact>) cat.classes[i];
 
         if (removeArtifact(art)) {
             Artifact artifact = Reflection.newInstance(art);
-            artifact.random();
+            assert artifact != null;
+            Objects.requireNonNull(artifact).random();
             return artifact;
         } else {
             return null;
@@ -484,6 +486,7 @@ public class Generator {
 
         initArtifacts();
 
+        //noinspection unchecked
         for (Class<? extends Artifact> artifact : bundle.getClassArray(SPAWNED_ARTIFACTS)) {
             removeArtifact(artifact);
         }

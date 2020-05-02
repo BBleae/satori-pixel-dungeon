@@ -110,15 +110,15 @@ public class Belongings implements Iterable<Item> {
         return null;
     }
 
-    public boolean contains(Item contains) {
+    public boolean notContains(Item contains) {
 
         for (Item item : this) {
             if (contains == item) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public Item getSimilar(Item similar) {
@@ -241,6 +241,7 @@ public class Belongings implements Iterable<Item> {
         return count;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public Iterator<Item> iterator() {
         return new ItemIterator();

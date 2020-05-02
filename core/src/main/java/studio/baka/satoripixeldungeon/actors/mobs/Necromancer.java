@@ -23,6 +23,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import java.util.Objects;
+
 public class Necromancer extends Mob {
 
     {
@@ -186,7 +188,7 @@ public class Necromancer extends Mob {
                     //push enemy, or wait a turn if there is no valid pushing position
                     if (pushPos != pos) {
                         Char ch = Actor.findChar(summoningPos);
-                        Actor.addDelayed(new Pushing(ch, ch.pos, pushPos), -1);
+                        Actor.addDelayed(new Pushing(Objects.requireNonNull(ch), ch.pos, pushPos), -1);
 
                         ch.pos = pushPos;
                         Dungeon.level.occupyCell(ch);
