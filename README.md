@@ -6,7 +6,7 @@
 
 ## 制作人员
 
-- Tomnycui
-- BBleae
+- [Tomnycui](https://github.com/Tomnycui)
+- [BBleae](https://github.com/BBleae)
 - 万里
 - Missing Power
