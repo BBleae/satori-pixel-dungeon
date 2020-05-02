@@ -1,24 +1,3 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.watabou.utils;
 
 import java.util.Arrays;
@@ -86,11 +65,11 @@ public class PathFinder {
 		do {
 			int minD = distance[s];
 			int mins = s;
-			
-			for (int i=0; i < dir.length; i++) {
-				
-				int n = s + dir[i];
-				
+
+			for (int value : dir) {
+
+				int n = s + value;
+
 				int thisD = distance[n];
 				if (thisD < minD) {
 					minD = thisD;
@@ -115,10 +94,10 @@ public class PathFinder {
 		int best = from;
 		
 		int step, stepD;
-		
-		for (int i=0; i < dir.length; i++) {
 
-			if ((stepD = distance[step = from + dir[i]]) < minD) {
+		for (int value : dir) {
+
+			if ((stepD = distance[step = from + value]) < minD) {
 				minD = stepD;
 				best = step;
 			}
@@ -129,7 +108,7 @@ public class PathFinder {
 	
 	public static int getStepBack( int cur, int from, boolean[] passable ) {
 
-		int d = buildEscapeDistanceMap( cur, from, 2f, passable );
+		int d = buildEscapeDistanceMap( cur, from, passable );
 		for (int i=0; i < size; i++) {
 			goals[i] = distance[i] == d;
 		}
@@ -137,17 +116,15 @@ public class PathFinder {
 			return -1;
 		}
 
-		int s = cur;
-		
-		// From the starting position we are making one step downwards
-		int minD = distance[s];
-		int mins = s;
-		
-		for (int i=0; i < dir.length; i++) {
+        // From the starting position we are making one step downwards
+		int minD = distance[cur];
+		int mins = cur;
 
-			int n = s + dir[i];
+		for (int value : dir) {
+
+			int n = cur + value;
 			int thisD = distance[n];
-			
+
 			if (thisD < minD) {
 				minD = thisD;
 				mins = n;
@@ -285,7 +262,7 @@ public class PathFinder {
 		return pathFound;
 	}
 	
-	private static int buildEscapeDistanceMap( int cur, int from, float factor, boolean[] passable ) {
+	private static int buildEscapeDistanceMap(int cur, int from, boolean[] passable) {
 		
 		System.arraycopy(maxVal, 0, distance, 0, maxVal.length);
 		
@@ -311,7 +288,7 @@ public class PathFinder {
 			}
 			
 			if (step == cur) {
-				destDist = (int)(dist * factor) + 1;
+				destDist = (int)(dist * (float) 2.0) + 1;
 			}
 			
 			int nextDistance = dist + 1;

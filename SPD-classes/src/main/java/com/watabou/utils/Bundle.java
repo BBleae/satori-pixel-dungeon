@@ -1,24 +1,3 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.watabou.utils;
 
 import com.watabou.noosa.Game;
@@ -46,9 +25,9 @@ public class Bundle {
 
 	private static final String CLASS_NAME = "__className";
 	
-	private static HashMap<String,String> aliases = new HashMap<>();
+	private static final HashMap<String,String> aliases = new HashMap<>();
 	
-	private JSONObject data;
+	private final JSONObject data;
 	
 	public Bundle() {
 		this( new JSONObject() );
@@ -135,14 +114,11 @@ public class Bundle {
 	public <E extends Enum<E>> E getEnum( String key, Class<E> enumClass ) {
 		try {
 			return Enum.valueOf( enumClass, data.getString( key ) );
-		} catch (JSONException e) {
-			Game.reportException(e);
-			return enumClass.getEnumConstants()[0];
-		} catch (IllegalArgumentException e) {
+		} catch (JSONException | IllegalArgumentException e) {
 			Game.reportException(e);
 			return enumClass.getEnumConstants()[0];
 		}
-	}
+    }
 	
 	public int[] getIntArray( String key ) {
 		try {

@@ -1,24 +1,3 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.watabou.noosa;
 
 import com.badlogic.gdx.Application;
@@ -82,7 +61,7 @@ public class Game implements ApplicationListener {
 		sceneClass = c;
 		
 		instance = this;
-		this.platform = platform;
+		Game.platform = platform;
 	}
 	
 	private boolean paused;
@@ -176,7 +155,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void resetScene() {
-		switchScene( instance.sceneClass );
+		switchScene( sceneClass );
 	}
 
 	public static void switchScene(Class<? extends Scene> c) {
@@ -184,7 +163,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void switchScene(Class<? extends Scene> c, SceneChangeCallback callback) {
-		instance.sceneClass = c;
+		sceneClass = c;
 		instance.requestedReset = true;
 		instance.onChange = callback;
 	}
@@ -255,12 +234,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void runOnRenderThread(Callback c){
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run() {
-				c.call();
-			}
-		});
+		Gdx.app.postRunnable(() -> c.call());
 	}
 	
 	public static void vibrate( int milliseconds ) {

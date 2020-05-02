@@ -1,24 +1,3 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.watabou.noosa;
 
 import com.watabou.glwrap.Matrix;
@@ -53,7 +32,8 @@ public class Visual extends Gizmo {
 	public float angularSpeed;
 
 	private float lastX, lastY, lastW, lastH, lastA;
-	private PointF lastScale = new PointF(), lastOrigin = new PointF();
+	private final PointF lastScale = new PointF();
+    private final PointF lastOrigin = new PointF();
 	
 	public Visual( float x, float y, float width, float height ) {
 		this.x = x;
@@ -281,9 +261,6 @@ public class Visual extends Gizmo {
 		//y coord
 		if (y > c.scroll.y + c.height)
 			return false;
-		else if (!(y >= c.scroll.y || y + height() >= c.scroll.y))
-			return false;
-
-		return true;
-	}
+		else return y >= c.scroll.y || y + height() >= c.scroll.y;
+    }
 }

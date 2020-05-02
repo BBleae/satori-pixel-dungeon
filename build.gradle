@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
     }
 }
 
@@ -12,13 +12,13 @@ allprojects {
 
     ext {
         appName = 'Satori\'s Pixel Dungeon'
-        appPackageName = 'com.satorispixeldungeonteam.satorispixeldungeon'
+        appPackageName = 'studio.baka.satorispixeldungeon'
 
         appVersionCode = 383
         appVersionName = '1.7.3.10'
 
         appAndroidCompileSDK = 29
-        appAndroidMinSDK = 9
+        appAndroidMinSDK = 19
         appAndroidTargetSDK = 29
 
         gdxVersion = '1.9.10'

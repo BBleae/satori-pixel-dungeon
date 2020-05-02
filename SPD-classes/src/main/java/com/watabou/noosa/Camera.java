@@ -1,24 +1,3 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.watabou.noosa;
 
 import com.watabou.glwrap.Matrix;
@@ -30,7 +9,7 @@ import java.util.ArrayList;
 
 public class Camera extends Gizmo {
 
-	private static ArrayList<Camera> all = new ArrayList<>();
+	private static final ArrayList<Camera> all = new ArrayList<>();
 	
 	protected static float invW2;
 	protected static float invH2;
@@ -71,9 +50,9 @@ public class Camera extends Gizmo {
 		invH2 = 2f / Game.height;
 		
 		int length = all.size();
-		for (int i=0; i < length; i++) {
-			all.get( i ).destroy();
-		}
+        for (Camera value : all) {
+            value.destroy();
+        }
 		all.clear();
 		
 		return main = add( newCamera );
@@ -91,12 +70,11 @@ public class Camera extends Gizmo {
 	
 	public static synchronized void updateAll() {
 		int length = all.size();
-		for (int i=0; i < length; i++) {
-			Camera c = all.get( i );
-			if (c.exists && c.active) {
-				c.update();
-			}
-		}
+        for (Camera c : all) {
+            if (c.exists && c.active) {
+                c.update();
+            }
+        }
 	}
 	
 	public static Camera createFullscreen( float zoom ) {

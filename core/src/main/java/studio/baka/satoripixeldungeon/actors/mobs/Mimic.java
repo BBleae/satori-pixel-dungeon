@@ -1,0 +1,164 @@
+package studio.baka.satoripixeldungeon.actors.mobs;
+
+import studio.baka.satoripixeldungeon.Assets;
+import studio.baka.satoripixeldungeon.Challenges;
+import studio.baka.satoripixeldungeon.Dungeon;
+import studio.baka.satoripixeldungeon.actors.Actor;
+import studio.baka.satoripixeldungeon.actors.Char;
+import studio.baka.satoripixeldungeon.effects.CellEmitter;
+import studio.baka.satoripixeldungeon.effects.Pushing;
+import studio.baka.satoripixeldungeon.effects.Speck;
+import studio.baka.satoripixeldungeon.items.Generator;
+import studio.baka.satoripixeldungeon.items.Gold;
+import studio.baka.satoripixeldungeon.items.Item;
+import studio.baka.satoripixeldungeon.items.scrolls.ScrollOfRetribution;
+import studio.baka.satoripixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
+import studio.baka.satoripixeldungeon.scenes.GameScene;
+import studio.baka.satoripixeldungeon.sprites.MimicSprite;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class Mimic extends Mob {
+
+    private int level;
+
+    {
+        spriteClass = MimicSprite.class;
+
+        properties.add(Property.DEMONIC);
+    }
+
+    public ArrayList<Item> items;
+
+    private static final String LEVEL = "level";
+    private static final String ITEMS = "items";
+
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        if (items != null) bundle.put(ITEMS, items);
+        bundle.put(LEVEL, level);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void restoreFromBundle(Bundle bundle) {
+        if (bundle.contains(ITEMS)) {
+            items = new ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
+        }
+        adjustStats(bundle.getInt(LEVEL));
+        super.restoreFromBundle(bundle);
+    }
+
+    @Override
+    public int damageRoll() {
+        return Random.NormalIntRange(HT / 10, HT / 4);
+    }
+
+    @Override
+    public int attackSkill(Char target) {
+        return 9 + level;
+    }
+
+    public void adjustStats(int level) {
+        this.level = level;
+
+        HP = HT = (1 + level) * 6;
+        EXP = 2 + 2 * (level - 1) / 5;
+        defenseSkill = attackSkill(null) / 2;
+
+        enemySeen = true;
+    }
+
+    @Override
+    public void rollToDropLoot() {
+
+        if (items != null) {
+            for (Item item : items) {
+                Dungeon.level.drop(item, pos).sprite.drop();
+            }
+            items = null;
+        }
+        super.rollToDropLoot();
+    }
+
+    @Override
+    public boolean reset() {
+        state = WANDERING;
+        return true;
+    }
+
+    public static Mimic spawnAt(int pos, List<Item> items) {
+        if (Dungeon.level.pit[pos]) return null;
+        Char ch = Actor.findChar(pos);
+        if (ch != null) {
+            ArrayList<Integer> candidates = new ArrayList<>();
+            for (int n : PathFinder.NEIGHBOURS8) {
+                int cell = pos + n;
+                if ((Dungeon.level.passable[cell] || Dungeon.level.avoid[cell]) && Actor.findChar(cell) == null) {
+                    candidates.add(cell);
+                }
+            }
+            if (candidates.size() > 0) {
+                int newPos = Random.element(candidates);
+                Actor.addDelayed(new Pushing(ch, ch.pos, newPos), -1);
+
+                ch.pos = newPos;
+                Dungeon.level.occupyCell(ch);
+
+            } else {
+                return null;
+            }
+        }
+
+        Mimic m = new Mimic();
+        m.items = new ArrayList<>(items);
+        m.adjustStats(Dungeon.depth);
+        m.pos = pos;
+        m.state = m.HUNTING;
+        GameScene.add(m, 1);
+
+        m.sprite.turnTo(pos, Dungeon.hero.pos);
+
+        if (Dungeon.level.heroFOV[m.pos]) {
+            CellEmitter.get(pos).burst(Speck.factory(Speck.STAR), 10);
+            Sample.INSTANCE.play(Assets.SND_MIMIC);
+        }
+
+        //generate an extra reward for killing the mimic
+        Item reward = null;
+        do {
+            switch (Random.Int(5)) {
+                case 0:
+                    reward = new Gold().random();
+                    break;
+                case 1:
+                    reward = Generator.randomMissile();
+                    break;
+                case 2:
+                    reward = Generator.randomArmor();
+                    break;
+                case 3:
+                    reward = Generator.randomWeapon();
+                    break;
+                case 4:
+                    reward = Generator.random(Generator.Category.RING);
+                    break;
+            }
+        } while (reward == null || Challenges.isItemBlocked(reward));
+        m.items.add(reward);
+
+        return m;
+    }
+
+    {
+        immunities.add(ScrollOfRetribution.class);
+        immunities.add(ScrollOfPsionicBlast.class);
+    }
+}
